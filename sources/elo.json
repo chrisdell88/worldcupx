@@ -1,0 +1,1229 @@
+{
+ "system": "ELO",
+ "name": "World Football Elo Ratings",
+ "type": "rating",
+ "fetched": "2026-06-11",
+ "url": "https://www.eloratings.net/",
+ "teams": [
+  {
+   "team": "Spain",
+   "code": "ES",
+   "value": 2157
+  },
+  {
+   "team": "Argentina",
+   "code": "AR",
+   "value": 2115
+  },
+  {
+   "team": "France",
+   "code": "FR",
+   "value": 2063
+  },
+  {
+   "team": "England",
+   "code": "EN",
+   "value": 2024
+  },
+  {
+   "team": "Brazil",
+   "code": "BR",
+   "value": 1991
+  },
+  {
+   "team": "Portugal",
+   "code": "PT",
+   "value": 1989
+  },
+  {
+   "team": "Colombia",
+   "code": "CO",
+   "value": 1982
+  },
+  {
+   "team": "Netherlands",
+   "code": "NL",
+   "value": 1948
+  },
+  {
+   "team": "Ecuador",
+   "code": "EC",
+   "value": 1938
+  },
+  {
+   "team": "Germany",
+   "code": "DE",
+   "value": 1932
+  },
+  {
+   "team": "Norway",
+   "code": "NO",
+   "value": 1914
+  },
+  {
+   "team": "Croatia",
+   "code": "HR",
+   "value": 1912
+  },
+  {
+   "team": "Turkey",
+   "code": "TR",
+   "value": 1911
+  },
+  {
+   "team": "Japan",
+   "code": "JP",
+   "value": 1906
+  },
+  {
+   "team": "Belgium",
+   "code": "BE",
+   "value": 1894
+  },
+  {
+   "team": "Uruguay",
+   "code": "UY",
+   "value": 1892
+  },
+  {
+   "team": "Switzerland",
+   "code": "CH",
+   "value": 1891
+  },
+  {
+   "team": "Mexico",
+   "code": "MX",
+   "value": 1875
+  },
+  {
+   "team": "Denmark",
+   "code": "DK",
+   "value": 1869
+  },
+  {
+   "team": "Italy",
+   "code": "IT",
+   "value": 1869
+  },
+  {
+   "team": "Senegal",
+   "code": "SN",
+   "value": 1860
+  },
+  {
+   "team": "Paraguay",
+   "code": "PY",
+   "value": 1834
+  },
+  {
+   "team": "Austria",
+   "code": "AT",
+   "value": 1830
+  },
+  {
+   "team": "Morocco",
+   "code": "MA",
+   "value": 1827
+  },
+  {
+   "team": "Canada",
+   "code": "CA",
+   "value": 1788
+  },
+  {
+   "team": "Scotland",
+   "code": "SQ",
+   "value": 1782
+  },
+  {
+   "team": "Ukraine",
+   "code": "UA",
+   "value": 1780
+  },
+  {
+   "team": "Australia",
+   "code": "AU",
+   "value": 1777
+  },
+  {
+   "team": "Algeria",
+   "code": "DZ",
+   "value": 1772
+  },
+  {
+   "team": "Iran",
+   "code": "IR",
+   "value": 1772
+  },
+  {
+   "team": "Russia",
+   "code": "RU",
+   "value": 1772
+  },
+  {
+   "team": "Nigeria",
+   "code": "NG",
+   "value": 1767
+  },
+  {
+   "team": "South Korea",
+   "code": "KR",
+   "value": 1758
+  },
+  {
+   "team": "Greece",
+   "code": "GR",
+   "value": 1744
+  },
+  {
+   "team": "Czechia",
+   "code": "CZ",
+   "value": 1740
+  },
+  {
+   "team": "Serbia",
+   "code": "RS",
+   "value": 1734
+  },
+  {
+   "team": "Venezuela",
+   "code": "VE",
+   "value": 1733
+  },
+  {
+   "team": "Panama",
+   "code": "PA",
+   "value": 1730
+  },
+  {
+   "team": "United States",
+   "code": "US",
+   "value": 1726
+  },
+  {
+   "team": "Chile",
+   "code": "CL",
+   "value": 1717
+  },
+  {
+   "team": "Kosovo",
+   "code": "KO",
+   "value": 1715
+  },
+  {
+   "team": "Uzbekistan",
+   "code": "UZ",
+   "value": 1714
+  },
+  {
+   "team": "Sweden",
+   "code": "SE",
+   "value": 1712
+  },
+  {
+   "team": "Hungary",
+   "code": "HU",
+   "value": 1710
+  },
+  {
+   "team": "Poland",
+   "code": "PL",
+   "value": 1710
+  },
+  {
+   "team": "Peru",
+   "code": "PE",
+   "value": 1700
+  },
+  {
+   "team": "Ireland",
+   "code": "IE",
+   "value": 1699
+  },
+  {
+   "team": "Egypt",
+   "code": "EG",
+   "value": 1696
+  },
+  {
+   "team": "Ivory Coast",
+   "code": "CI",
+   "value": 1695
+  },
+  {
+   "team": "Wales",
+   "code": "WA",
+   "value": 1682
+  },
+  {
+   "team": "Slovenia",
+   "code": "SI",
+   "value": 1682
+  },
+  {
+   "team": "Jordan",
+   "code": "JO",
+   "value": 1680
+  },
+  {
+   "team": "Slovakia",
+   "code": "SK",
+   "value": 1667
+  },
+  {
+   "team": "Georgia",
+   "code": "GE",
+   "value": 1654
+  },
+  {
+   "team": "DR Congo",
+   "code": "CD",
+   "value": 1652
+  },
+  {
+   "team": "Israel",
+   "code": "IL",
+   "value": 1647
+  },
+  {
+   "team": "Romania",
+   "code": "RO",
+   "value": 1639
+  },
+  {
+   "team": "Tunisia",
+   "code": "TN",
+   "value": 1628
+  },
+  {
+   "team": "Bolivia",
+   "code": "BO",
+   "value": 1621
+  },
+  {
+   "team": "Albania",
+   "code": "AL",
+   "value": 1616
+  },
+  {
+   "team": "Cameroon",
+   "code": "CM",
+   "value": 1614
+  },
+  {
+   "team": "Costa Rica",
+   "code": "CR",
+   "value": 1608
+  },
+  {
+   "team": "Iraq",
+   "code": "IQ",
+   "value": 1607
+  },
+  {
+   "team": "Northern Ireland",
+   "code": "EI",
+   "value": 1605
+  },
+  {
+   "team": "Bosnia and Herzegovina",
+   "code": "BA",
+   "value": 1595
+  },
+  {
+   "team": "North Macedonia",
+   "code": "NM",
+   "value": 1589
+  },
+  {
+   "team": "Mali",
+   "code": "ML",
+   "value": 1588
+  },
+  {
+   "team": "Cape Verde",
+   "code": "CV",
+   "value": 1578
+  },
+  {
+   "team": "Saudi Arabia",
+   "code": "SA",
+   "value": 1576
+  },
+  {
+   "team": "Honduras",
+   "code": "HN",
+   "value": 1570
+  },
+  {
+   "team": "Iceland",
+   "code": "IS",
+   "value": 1568
+  },
+  {
+   "team": "New Zealand",
+   "code": "NZ",
+   "value": 1562
+  },
+  {
+   "team": "Haiti",
+   "code": "HT",
+   "value": 1548
+  },
+  {
+   "team": "Angola",
+   "code": "AO",
+   "value": 1542
+  },
+  {
+   "team": "United Arab Emirates",
+   "code": "AE",
+   "value": 1540
+  },
+  {
+   "team": "Finland",
+   "code": "FI",
+   "value": 1536
+  },
+  {
+   "team": "Burkina Faso",
+   "code": "BF",
+   "value": 1529
+  },
+  {
+   "team": "Jamaica",
+   "code": "JM",
+   "value": 1527
+  },
+  {
+   "team": "Belarus",
+   "code": "BY",
+   "value": 1522
+  },
+  {
+   "team": "South Africa",
+   "code": "ZA",
+   "value": 1517
+  },
+  {
+   "team": "Ghana",
+   "code": "GH",
+   "value": 1510
+  },
+  {
+   "team": "Guatemala",
+   "code": "GT",
+   "value": 1504
+  },
+  {
+   "team": "Oman",
+   "code": "OM",
+   "value": 1480
+  },
+  {
+   "team": "Syria",
+   "code": "SY",
+   "value": 1479
+  },
+  {
+   "team": "Palestine",
+   "code": "PS",
+   "value": 1465
+  },
+  {
+   "team": "Guinea",
+   "code": "GN",
+   "value": 1463
+  },
+  {
+   "team": "Montenegro",
+   "code": "ME",
+   "value": 1461
+  },
+  {
+   "team": "Bulgaria",
+   "code": "BG",
+   "value": 1458
+  },
+  {
+   "team": "Luxembourg",
+   "code": "LU",
+   "value": 1450
+  },
+  {
+   "team": "Northern Cyprus",
+   "code": "NS",
+   "value": 1442
+  },
+  {
+   "team": "Cura\u00e7ao",
+   "code": "CW",
+   "value": 1434
+  },
+  {
+   "team": "Suriname",
+   "code": "SR",
+   "value": 1431
+  },
+  {
+   "team": "Kazakhstan",
+   "code": "KZ",
+   "value": 1428
+  },
+  {
+   "team": "China",
+   "code": "CN",
+   "value": 1424
+  },
+  {
+   "team": "Kurdistan",
+   "code": "KD",
+   "value": 1424
+  },
+  {
+   "team": "Qatar",
+   "code": "QA",
+   "value": 1421
+  },
+  {
+   "team": "Libya",
+   "code": "LY",
+   "value": 1420
+  },
+  {
+   "team": "Gambia",
+   "code": "GM",
+   "value": 1419
+  },
+  {
+   "team": "Bahrain",
+   "code": "BH",
+   "value": 1414
+  },
+  {
+   "team": "Benin",
+   "code": "BJ",
+   "value": 1405
+  },
+  {
+   "team": "Gabon",
+   "code": "GA",
+   "value": 1401
+  },
+  {
+   "team": "Uganda",
+   "code": "UG",
+   "value": 1394
+  },
+  {
+   "team": "Trinidad and Tobago",
+   "code": "TT",
+   "value": 1386
+  },
+  {
+   "team": "Faroe Islands",
+   "code": "FO",
+   "value": 1386
+  },
+  {
+   "team": "Niger",
+   "code": "NE",
+   "value": 1382
+  },
+  {
+   "team": "Madagascar",
+   "code": "MG",
+   "value": 1380
+  },
+  {
+   "team": "Equatorial Guinea",
+   "code": "GQ",
+   "value": 1380
+  },
+  {
+   "team": "Togo",
+   "code": "TG",
+   "value": 1379
+  },
+  {
+   "team": "Thailand",
+   "code": "TH",
+   "value": 1376
+  },
+  {
+   "team": "North Korea",
+   "code": "KP",
+   "value": 1375
+  },
+  {
+   "team": "Comoros",
+   "code": "KM",
+   "value": 1374
+  },
+  {
+   "team": "Armenia",
+   "code": "AM",
+   "value": 1373
+  },
+  {
+   "team": "Zimbabwe",
+   "code": "ZW",
+   "value": 1372
+  },
+  {
+   "team": "Indonesia",
+   "code": "ID",
+   "value": 1372
+  },
+  {
+   "team": "Zambia",
+   "code": "ZM",
+   "value": 1371
+  },
+  {
+   "team": "Kenya",
+   "code": "KE",
+   "value": 1363
+  },
+  {
+   "team": "Estonia",
+   "code": "EE",
+   "value": 1360
+  },
+  {
+   "team": "Vietnam",
+   "code": "VN",
+   "value": 1351
+  },
+  {
+   "team": "Sudan",
+   "code": "SD",
+   "value": 1350
+  },
+  {
+   "team": "Reunion",
+   "code": "RE",
+   "value": 1345
+  },
+  {
+   "team": "El Salvador",
+   "code": "SV",
+   "value": 1342
+  },
+  {
+   "team": "Mozambique",
+   "code": "MZ",
+   "value": 1342
+  },
+  {
+   "team": "Sierra Leone",
+   "code": "SL",
+   "value": 1341
+  },
+  {
+   "team": "Guadeloupe",
+   "code": "GP",
+   "value": 1338
+  },
+  {
+   "team": "Rwanda",
+   "code": "RW",
+   "value": 1336
+  },
+  {
+   "team": "Nicaragua",
+   "code": "NI",
+   "value": 1333
+  },
+  {
+   "team": "Kuwait",
+   "code": "KW",
+   "value": 1332
+  },
+  {
+   "team": "Mauritania",
+   "code": "MR",
+   "value": 1329
+  },
+  {
+   "team": "Azerbaijan",
+   "code": "AZ",
+   "value": 1322
+  },
+  {
+   "team": "Zanzibar",
+   "code": "ZN",
+   "value": 1320
+  },
+  {
+   "team": "Cyprus",
+   "code": "CY",
+   "value": 1314
+  },
+  {
+   "team": "Tanzania",
+   "code": "TZ",
+   "value": 1313
+  },
+  {
+   "team": "Martinique",
+   "code": "MQ",
+   "value": 1312
+  },
+  {
+   "team": "Liberia",
+   "code": "LR",
+   "value": 1304
+  },
+  {
+   "team": "Namibia",
+   "code": "NA",
+   "value": 1303
+  },
+  {
+   "team": "Kyrgyzstan",
+   "code": "KG",
+   "value": 1295
+  },
+  {
+   "team": "Malaysia",
+   "code": "MY",
+   "value": 1293
+  },
+  {
+   "team": "Guyana",
+   "code": "GY",
+   "value": 1292
+  },
+  {
+   "team": "Lebanon",
+   "code": "LB",
+   "value": 1288
+  },
+  {
+   "team": "Latvia",
+   "code": "LV",
+   "value": 1288
+  },
+  {
+   "team": "Ethiopia",
+   "code": "ET",
+   "value": 1287
+  },
+  {
+   "team": "New Caledonia",
+   "code": "NC",
+   "value": 1286
+  },
+  {
+   "team": "Tajikistan",
+   "code": "TJ",
+   "value": 1285
+  },
+  {
+   "team": "Burundi",
+   "code": "BI",
+   "value": 1285
+  },
+  {
+   "team": "Dominican Republic",
+   "code": "DO",
+   "value": 1283
+  },
+  {
+   "team": "Lithuania",
+   "code": "LT",
+   "value": 1279
+  },
+  {
+   "team": "Moldova",
+   "code": "MD",
+   "value": 1270
+  },
+  {
+   "team": "Botswana",
+   "code": "BW",
+   "value": 1267
+  },
+  {
+   "team": "Malta",
+   "code": "MT",
+   "value": 1255
+  },
+  {
+   "team": "Guinea-Bissau",
+   "code": "GW",
+   "value": 1248
+  },
+  {
+   "team": "Cuba",
+   "code": "CU",
+   "value": 1239
+  },
+  {
+   "team": "Malawi",
+   "code": "MW",
+   "value": 1239
+  },
+  {
+   "team": "Central African Republic",
+   "code": "CF",
+   "value": 1236
+  },
+  {
+   "team": "French Guiana",
+   "code": "GF",
+   "value": 1223
+  },
+  {
+   "team": "Mayotte",
+   "code": "YT",
+   "value": 1216
+  },
+  {
+   "team": "Turkmenistan",
+   "code": "TM",
+   "value": 1209
+  },
+  {
+   "team": "Congo",
+   "code": "CG",
+   "value": 1207
+  },
+  {
+   "team": "Eritrea",
+   "code": "ER",
+   "value": 1201
+  },
+  {
+   "team": "Lesotho",
+   "code": "LS",
+   "value": 1198
+  },
+  {
+   "team": "Yemen",
+   "code": "YE",
+   "value": 1195
+  },
+  {
+   "team": "Philippines",
+   "code": "PH",
+   "value": 1179
+  },
+  {
+   "team": "Tahiti",
+   "code": "TI",
+   "value": 1177
+  },
+  {
+   "team": "Eswatini",
+   "code": "SW",
+   "value": 1148
+  },
+  {
+   "team": "Saint Vincent and the Grenadines",
+   "code": "VC",
+   "value": 1141
+  },
+  {
+   "team": "Papua New Guinea",
+   "code": "PG",
+   "value": 1135
+  },
+  {
+   "team": "Puerto Rico",
+   "code": "PR",
+   "value": 1135
+  },
+  {
+   "team": "Singapore",
+   "code": "SG",
+   "value": 1134
+  },
+  {
+   "team": "India",
+   "code": "IN",
+   "value": 1128
+  },
+  {
+   "team": "Vanuatu",
+   "code": "VU",
+   "value": 1118
+  },
+  {
+   "team": "Bermuda",
+   "code": "BM",
+   "value": 1117
+  },
+  {
+   "team": "South Sudan",
+   "code": "SS",
+   "value": 1109
+  },
+  {
+   "team": "Fiji",
+   "code": "FJ",
+   "value": 1104
+  },
+  {
+   "team": "Hong Kong",
+   "code": "HK",
+   "value": 1101
+  },
+  {
+   "team": "Grenada",
+   "code": "GD",
+   "value": 1098
+  },
+  {
+   "team": "Andorra",
+   "code": "AD",
+   "value": 1080
+  },
+  {
+   "team": "Mauritius",
+   "code": "MU",
+   "value": 1073
+  },
+  {
+   "team": "Chad",
+   "code": "TD",
+   "value": 1073
+  },
+  {
+   "team": "Belize",
+   "code": "BZ",
+   "value": 1073
+  },
+  {
+   "team": "Solomon Islands",
+   "code": "SB",
+   "value": 1054
+  },
+  {
+   "team": "Saint Martin",
+   "code": "MF",
+   "value": 1042
+  },
+  {
+   "team": "Sao Tome and Principe",
+   "code": "ST",
+   "value": 1035
+  },
+  {
+   "team": "Saint Kitts and Nevis",
+   "code": "KN",
+   "value": 1029
+  },
+  {
+   "team": "Gibraltar",
+   "code": "GI",
+   "value": 1011
+  },
+  {
+   "team": "Somaliland",
+   "code": "JS",
+   "value": 1005
+  },
+  {
+   "team": "Saint Lucia",
+   "code": "LC",
+   "value": 1003
+  },
+  {
+   "team": "Western Sahara",
+   "code": "EH",
+   "value": 996
+  },
+  {
+   "team": "Myanmar",
+   "code": "MM",
+   "value": 984
+  },
+  {
+   "team": "Somalia",
+   "code": "SO",
+   "value": 979
+  },
+  {
+   "team": "Aruba",
+   "code": "AW",
+   "value": 978
+  },
+  {
+   "team": "Sint Maarten",
+   "code": "SX",
+   "value": 975
+  },
+  {
+   "team": "Montserrat",
+   "code": "MS",
+   "value": 972
+  },
+  {
+   "team": "Afghanistan",
+   "code": "AF",
+   "value": 961
+  },
+  {
+   "team": "Greenland",
+   "code": "GL",
+   "value": 945
+  },
+  {
+   "team": "Bangladesh",
+   "code": "BD",
+   "value": 942
+  },
+  {
+   "team": "Djibouti",
+   "code": "DJ",
+   "value": 940
+  },
+  {
+   "team": "Dominica",
+   "code": "DM",
+   "value": 934
+  },
+  {
+   "team": "Pakistan",
+   "code": "PK",
+   "value": 909
+  },
+  {
+   "team": "Monaco",
+   "code": "MC",
+   "value": 903
+  },
+  {
+   "team": "Barbados",
+   "code": "BB",
+   "value": 898
+  },
+  {
+   "team": "Antigua and Barbuda",
+   "code": "AG",
+   "value": 895
+  },
+  {
+   "team": "Liechtenstein",
+   "code": "LI",
+   "value": 895
+  },
+  {
+   "team": "Nepal",
+   "code": "NP",
+   "value": 893
+  },
+  {
+   "team": "Cambodia",
+   "code": "KH",
+   "value": 871
+  },
+  {
+   "team": "Seychelles",
+   "code": "SC",
+   "value": 853
+  },
+  {
+   "team": "Sri Lanka",
+   "code": "LK",
+   "value": 836
+  },
+  {
+   "team": "San Marino",
+   "code": "SM",
+   "value": 825
+  },
+  {
+   "team": "Taiwan",
+   "code": "TW",
+   "value": 822
+  },
+  {
+   "team": "Bonaire",
+   "code": "BQ",
+   "value": 817
+  },
+  {
+   "team": "Maldives",
+   "code": "MV",
+   "value": 801
+  },
+  {
+   "team": "Cayman Islands",
+   "code": "KY",
+   "value": 800
+  },
+  {
+   "team": "Chagos Islands",
+   "code": "HG",
+   "value": 782
+  },
+  {
+   "team": "Tuvalu",
+   "code": "TV",
+   "value": 756
+  },
+  {
+   "team": "British Virgin Islands",
+   "code": "VG",
+   "value": 743
+  },
+  {
+   "team": "Sint Eustatius",
+   "code": "EU",
+   "value": 737
+  },
+  {
+   "team": "Laos",
+   "code": "LA",
+   "value": 734
+  },
+  {
+   "team": "East Timor",
+   "code": "TL",
+   "value": 734
+  },
+  {
+   "team": "Samoa",
+   "code": "WS",
+   "value": 728
+  },
+  {
+   "team": "Mongolia",
+   "code": "MN",
+   "value": 726
+  },
+  {
+   "team": "Saint Barthelemy",
+   "code": "BL",
+   "value": 725
+  },
+  {
+   "team": "Guam",
+   "code": "GU",
+   "value": 706
+  },
+  {
+   "team": "Wallis and Futuna",
+   "code": "WF",
+   "value": 699
+  },
+  {
+   "team": "Vatican",
+   "code": "VA",
+   "value": 692
+  },
+  {
+   "team": "Saba",
+   "code": "AB",
+   "value": 691
+  },
+  {
+   "team": "Bahamas",
+   "code": "BS",
+   "value": 685
+  },
+  {
+   "team": "Saint Pierre and Miquelon",
+   "code": "PM",
+   "value": 677
+  },
+  {
+   "team": "Turks and Caicos Islands",
+   "code": "TC",
+   "value": 657
+  },
+  {
+   "team": "Anguilla",
+   "code": "AI",
+   "value": 646
+  },
+  {
+   "team": "Tibet",
+   "code": "TE",
+   "value": 629
+  },
+  {
+   "team": "US Virgin Islands",
+   "code": "VI",
+   "value": 628
+  },
+  {
+   "team": "Bhutan",
+   "code": "BT",
+   "value": 623
+  },
+  {
+   "team": "Cook Islands",
+   "code": "CK",
+   "value": 622
+  },
+  {
+   "team": "Macao",
+   "code": "MO",
+   "value": 589
+  },
+  {
+   "team": "Christmas Island",
+   "code": "CX",
+   "value": 578
+  },
+  {
+   "team": "Brunei",
+   "code": "BN",
+   "value": 572
+  },
+  {
+   "team": "Falkland Islands",
+   "code": "FK",
+   "value": 571
+  },
+  {
+   "team": "FS Micronesia",
+   "code": "FM",
+   "value": 564
+  },
+  {
+   "team": "Marshall Islands",
+   "code": "MH",
+   "value": 559
+  },
+  {
+   "team": "Kiribati",
+   "code": "KI",
+   "value": 544
+  },
+  {
+   "team": "Tonga",
+   "code": "TO",
+   "value": 520
+  },
+  {
+   "team": "Niue",
+   "code": "NU",
+   "value": 496
+  },
+  {
+   "team": "Northern Mariana Islands",
+   "code": "MP",
+   "value": 432
+  },
+  {
+   "team": "Cocos Islands",
+   "code": "CC",
+   "value": 422
+  },
+  {
+   "team": "Palau",
+   "code": "PW",
+   "value": 402
+  },
+  {
+   "team": "Eastern Samoa",
+   "code": "AS",
+   "value": 369
+  }
+ ]
+}

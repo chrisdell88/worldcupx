@@ -1,0 +1,509 @@
+{
+ "system": "FIFA",
+ "name": "FIFA Men's World Ranking (via Transfermarkt mirror)",
+ "type": "rating",
+ "fetched": "2026-06-11",
+ "url": "https://inside.fifa.com/fifa-world-ranking/men",
+ "teams": [
+  {
+   "team": "France",
+   "rank": 1,
+   "value": 1877.0
+  },
+  {
+   "team": "Spain",
+   "rank": 2,
+   "value": 1876.0
+  },
+  {
+   "team": "Argentina",
+   "rank": 3,
+   "value": 1875.0
+  },
+  {
+   "team": "England",
+   "rank": 4,
+   "value": 1826.0
+  },
+  {
+   "team": "Portugal",
+   "rank": 5,
+   "value": 1764.0
+  },
+  {
+   "team": "Brazil",
+   "rank": 6,
+   "value": 1761.0
+  },
+  {
+   "team": "Netherlands",
+   "rank": 7,
+   "value": 1758.0
+  },
+  {
+   "team": "Morocco",
+   "rank": 8,
+   "value": 1756.0
+  },
+  {
+   "team": "Belgium",
+   "rank": 9,
+   "value": 1735.0
+  },
+  {
+   "team": "Germany",
+   "rank": 10,
+   "value": 1730.0
+  },
+  {
+   "team": "Croatia",
+   "rank": 11,
+   "value": 1717.0
+  },
+  {
+   "team": "Italy",
+   "rank": 12,
+   "value": 1700.0
+  },
+  {
+   "team": "Colombia",
+   "rank": 13,
+   "value": 1693.0
+  },
+  {
+   "team": "Senegal",
+   "rank": 14,
+   "value": 1689.0
+  },
+  {
+   "team": "Mexico",
+   "rank": 15,
+   "value": 1681.0
+  },
+  {
+   "team": "USA",
+   "rank": 16,
+   "value": 1673.0
+  },
+  {
+   "team": "Uruguay",
+   "rank": 17,
+   "value": 1673.0
+  },
+  {
+   "team": "Japan",
+   "rank": 18,
+   "value": 1660.0
+  },
+  {
+   "team": "Switzerland",
+   "rank": 19,
+   "value": 1649.0
+  },
+  {
+   "team": "Denmark",
+   "rank": 20,
+   "value": 1621.0
+  },
+  {
+   "team": "Iran",
+   "rank": 21,
+   "value": 1615.0
+  },
+  {
+   "team": "Turkiye",
+   "rank": 22,
+   "value": 1599.0
+  },
+  {
+   "team": "Ecuador",
+   "rank": 23,
+   "value": 1595.0
+  },
+  {
+   "team": "Austria",
+   "rank": 24,
+   "value": 1593.0
+  },
+  {
+   "team": "South Korea",
+   "rank": 25,
+   "value": 1589.0
+  },
+  {
+   "team": "Nigeria",
+   "rank": 26,
+   "value": 1585.0
+  },
+  {
+   "team": "Australia",
+   "rank": 27,
+   "value": 1581.0
+  },
+  {
+   "team": "Algeria",
+   "rank": 28,
+   "value": 1564.0
+  },
+  {
+   "team": "Egypt",
+   "rank": 29,
+   "value": 1563.0
+  },
+  {
+   "team": "Canada",
+   "rank": 30,
+   "value": 1556.0
+  },
+  {
+   "team": "Norway",
+   "rank": 31,
+   "value": 1551.0
+  },
+  {
+   "team": "Ukraine",
+   "rank": 32,
+   "value": 1547.0
+  },
+  {
+   "team": "Panama",
+   "rank": 33,
+   "value": 1541.0
+  },
+  {
+   "team": "Ivory Coast",
+   "rank": 34,
+   "value": 1533.0
+  },
+  {
+   "team": "Poland",
+   "rank": 35,
+   "value": 1528.0
+  },
+  {
+   "team": "Russia",
+   "rank": 36,
+   "value": 1526.0
+  },
+  {
+   "team": "Wales",
+   "rank": 37,
+   "value": 1524.0
+  },
+  {
+   "team": "Sweden",
+   "rank": 38,
+   "value": 1515.0
+  },
+  {
+   "team": "Serbia",
+   "rank": 39,
+   "value": 1509.0
+  },
+  {
+   "team": "Paraguay",
+   "rank": 40,
+   "value": 1504.0
+  },
+  {
+   "team": "Czechia",
+   "rank": 41,
+   "value": 1501.0
+  },
+  {
+   "team": "Hungary",
+   "rank": 42,
+   "value": 1501.0
+  },
+  {
+   "team": "Scotland",
+   "rank": 43,
+   "value": 1498.0
+  },
+  {
+   "team": "Tunisia",
+   "rank": 44,
+   "value": 1483.0
+  },
+  {
+   "team": "Cameroon",
+   "rank": 45,
+   "value": 1481.0
+  },
+  {
+   "team": "DR Congo",
+   "rank": 46,
+   "value": 1478.0
+  },
+  {
+   "team": "Greece",
+   "rank": 47,
+   "value": 1476.0
+  },
+  {
+   "team": "Slovakia",
+   "rank": 48,
+   "value": 1474.0
+  },
+  {
+   "team": "Venezuela",
+   "rank": 49,
+   "value": 1468.0
+  },
+  {
+   "team": "Uzbekistan",
+   "rank": 50,
+   "value": 1465.0
+  },
+  {
+   "team": "Costa Rica",
+   "rank": 51,
+   "value": 1460.0
+  },
+  {
+   "team": "Mali",
+   "rank": 52,
+   "value": 1459.0
+  },
+  {
+   "team": "Peru",
+   "rank": 53,
+   "value": 1456.0
+  },
+  {
+   "team": "Chile",
+   "rank": 54,
+   "value": 1455.0
+  },
+  {
+   "team": "Qatar",
+   "rank": 55,
+   "value": 1455.0
+  },
+  {
+   "team": "Romania",
+   "rank": 56,
+   "value": 1451.0
+  },
+  {
+   "team": "Iraq",
+   "rank": 57,
+   "value": 1447.0
+  },
+  {
+   "team": "Slovenia",
+   "rank": 58,
+   "value": 1446.0
+  },
+  {
+   "team": "Ireland",
+   "rank": 59,
+   "value": 1437.0
+  },
+  {
+   "team": "South Africa",
+   "rank": 60,
+   "value": 1430.0
+  },
+  {
+   "team": "Saudi Arabia",
+   "rank": 61,
+   "value": 1421.0
+  },
+  {
+   "team": "Burkina Faso",
+   "rank": 62,
+   "value": 1412.0
+  },
+  {
+   "team": "Jordan",
+   "rank": 63,
+   "value": 1391.0
+  },
+  {
+   "team": "Albania",
+   "rank": 64,
+   "value": 1388.0
+  },
+  {
+   "team": "Bosnia",
+   "rank": 65,
+   "value": 1386.0
+  },
+  {
+   "team": "Honduras",
+   "rank": 66,
+   "value": 1380.0
+  },
+  {
+   "team": "North Macedonia",
+   "rank": 67,
+   "value": 1372.0
+  },
+  {
+   "team": "UAE",
+   "rank": 68,
+   "value": 1370.0
+  },
+  {
+   "team": "Cape Verde",
+   "rank": 69,
+   "value": 1366.0
+  },
+  {
+   "team": "N. Ireland",
+   "rank": 70,
+   "value": 1362.0
+  },
+  {
+   "team": "Jamaica",
+   "rank": 71,
+   "value": 1358.0
+  },
+  {
+   "team": "Georgia",
+   "rank": 72,
+   "value": 1350.0
+  },
+  {
+   "team": "Finland",
+   "rank": 73,
+   "value": 1346.0
+  },
+  {
+   "team": "Ghana",
+   "rank": 74,
+   "value": 1346.0
+  },
+  {
+   "team": "Iceland",
+   "rank": 75,
+   "value": 1345.0
+  },
+  {
+   "team": "Bolivia",
+   "rank": 76,
+   "value": 1329.0
+  },
+  {
+   "team": "Israel",
+   "rank": 77,
+   "value": 1328.0
+  },
+  {
+   "team": "Kosovo",
+   "rank": 78,
+   "value": 1319.0
+  },
+  {
+   "team": "Oman",
+   "rank": 79,
+   "value": 1313.0
+  },
+  {
+   "team": "Guinea",
+   "rank": 80,
+   "value": 1300.0
+  },
+  {
+   "team": "Montenegro",
+   "rank": 81,
+   "value": 1296.0
+  },
+  {
+   "team": "Cura\u00e7ao",
+   "rank": 82,
+   "value": 1295.0
+  },
+  {
+   "team": "Haiti",
+   "rank": 83,
+   "value": 1292.0
+  },
+  {
+   "team": "Syria",
+   "rank": 84,
+   "value": 1289.0
+  },
+  {
+   "team": "New Zealand",
+   "rank": 85,
+   "value": 1282.0
+  },
+  {
+   "team": "Bulgaria",
+   "rank": 86,
+   "value": 1279.0
+  },
+  {
+   "team": "Gabon",
+   "rank": 87,
+   "value": 1273.0
+  },
+  {
+   "team": "Uganda",
+   "rank": 88,
+   "value": 1264.0
+  },
+  {
+   "team": "Angola",
+   "rank": 89,
+   "value": 1263.0
+  },
+  {
+   "team": "Benin",
+   "rank": 90,
+   "value": 1259.0
+  },
+  {
+   "team": "Bahrain",
+   "rank": 91,
+   "value": 1259.0
+  },
+  {
+   "team": "Zambia",
+   "rank": 92,
+   "value": 1256.0
+  },
+  {
+   "team": "Thailand",
+   "rank": 93,
+   "value": 1252.0
+  },
+  {
+   "team": "China",
+   "rank": 94,
+   "value": 1252.0
+  },
+  {
+   "team": "Palestine",
+   "rank": 95,
+   "value": 1245.0
+  },
+  {
+   "team": "Guatemala",
+   "rank": 96,
+   "value": 1243.0
+  },
+  {
+   "team": "Belarus",
+   "rank": 97,
+   "value": 1236.0
+  },
+  {
+   "team": "Luxembourg",
+   "rank": 98,
+   "value": 1228.0
+  },
+  {
+   "team": "Vietnam",
+   "rank": 99,
+   "value": 1226.0
+  },
+  {
+   "team": "El Salvador",
+   "rank": 100,
+   "value": 1225.0
+  }
+ ]
+}

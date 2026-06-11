@@ -1,0 +1,202 @@
+{
+ "system": "LALAS",
+ "name": "Fox Sports \u2014 Alexi Lalas Power Rankings",
+ "type": "rank",
+ "fetched": "2026-06-11",
+ "url": "https://www.foxsports.com/stories/soccer/2026-world-cup-power-rankings-alexi-lalas",
+ "teams": [
+  {
+   "team": "France",
+   "rank": 1
+  },
+  {
+   "team": "Spain",
+   "rank": 2
+  },
+  {
+   "team": "England",
+   "rank": 3
+  },
+  {
+   "team": "Colombia",
+   "rank": 4
+  },
+  {
+   "team": "Argentina",
+   "rank": 5
+  },
+  {
+   "team": "Portugal",
+   "rank": 6
+  },
+  {
+   "team": "Brazil",
+   "rank": 7
+  },
+  {
+   "team": "Netherlands",
+   "rank": 8
+  },
+  {
+   "team": "Germany",
+   "rank": 9
+  },
+  {
+   "team": "Croatia",
+   "rank": 10
+  },
+  {
+   "team": "Belgium",
+   "rank": 11
+  },
+  {
+   "team": "United States",
+   "rank": 12
+  },
+  {
+   "team": "Morocco",
+   "rank": 13
+  },
+  {
+   "team": "Mexico",
+   "rank": 14
+  },
+  {
+   "team": "Uruguay",
+   "rank": 15
+  },
+  {
+   "team": "Norway",
+   "rank": 16
+  },
+  {
+   "team": "Ecuador",
+   "rank": 17
+  },
+  {
+   "team": "Japan",
+   "rank": 18
+  },
+  {
+   "team": "Switzerland",
+   "rank": 19
+  },
+  {
+   "team": "South Korea",
+   "rank": 20
+  },
+  {
+   "team": "Turkey",
+   "rank": 21
+  },
+  {
+   "team": "Canada",
+   "rank": 22
+  },
+  {
+   "team": "Senegal",
+   "rank": 23
+  },
+  {
+   "team": "Austria",
+   "rank": 24
+  },
+  {
+   "team": "Sweden",
+   "rank": 25
+  },
+  {
+   "team": "Paraguay",
+   "rank": 26
+  },
+  {
+   "team": "Scotland",
+   "rank": 27
+  },
+  {
+   "team": "Ghana",
+   "rank": 28
+  },
+  {
+   "team": "Czechia",
+   "rank": 29
+  },
+  {
+   "team": "Iran",
+   "rank": 30
+  },
+  {
+   "team": "Saudi Arabia",
+   "rank": 31
+  },
+  {
+   "team": "Bosnia and Herzegovina",
+   "rank": 32
+  },
+  {
+   "team": "Algeria",
+   "rank": 33
+  },
+  {
+   "team": "Egypt",
+   "rank": 34
+  },
+  {
+   "team": "Ivory Coast",
+   "rank": 35
+  },
+  {
+   "team": "Australia",
+   "rank": 36
+  },
+  {
+   "team": "Jordan",
+   "rank": 37
+  },
+  {
+   "team": "Tunisia",
+   "rank": 38
+  },
+  {
+   "team": "DR Congo",
+   "rank": 39
+  },
+  {
+   "team": "Uzbekistan",
+   "rank": 40
+  },
+  {
+   "team": "Qatar",
+   "rank": 41
+  },
+  {
+   "team": "Iraq",
+   "rank": 42
+  },
+  {
+   "team": "New Zealand",
+   "rank": 43
+  },
+  {
+   "team": "Cape Verde",
+   "rank": 44
+  },
+  {
+   "team": "South Africa",
+   "rank": 45
+  },
+  {
+   "team": "Panama",
+   "rank": 46
+  },
+  {
+   "team": "Curacao",
+   "rank": 47
+  },
+  {
+   "team": "Haiti",
+   "rank": 48
+  }
+ ],
+ "notes": "Updated Jun 10, 2026; full 48"
+}

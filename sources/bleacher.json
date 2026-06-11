@@ -1,0 +1,202 @@
+{
+ "system": "BR",
+ "name": "Bleacher Report Final 48-Team Power Ranking",
+ "type": "rank",
+ "fetched": "2026-06-11",
+ "url": "https://bleacherreport.com/articles/25434991-final-power-ranking-all-48-teams-2026-world-cup",
+ "teams": [
+  {
+   "team": "France",
+   "rank": 1
+  },
+  {
+   "team": "Spain",
+   "rank": 2
+  },
+  {
+   "team": "Argentina",
+   "rank": 3
+  },
+  {
+   "team": "Germany",
+   "rank": 4
+  },
+  {
+   "team": "England",
+   "rank": 5
+  },
+  {
+   "team": "Portugal",
+   "rank": 6
+  },
+  {
+   "team": "Morocco",
+   "rank": 7
+  },
+  {
+   "team": "Netherlands",
+   "rank": 8
+  },
+  {
+   "team": "Mexico",
+   "rank": 9
+  },
+  {
+   "team": "Croatia",
+   "rank": 10
+  },
+  {
+   "team": "Brazil",
+   "rank": 11
+  },
+  {
+   "team": "Belgium",
+   "rank": 12
+  },
+  {
+   "team": "Colombia",
+   "rank": 13
+  },
+  {
+   "team": "Senegal",
+   "rank": 14
+  },
+  {
+   "team": "Norway",
+   "rank": 15
+  },
+  {
+   "team": "Japan",
+   "rank": 16
+  },
+  {
+   "team": "Switzerland",
+   "rank": 17
+  },
+  {
+   "team": "Turkey",
+   "rank": 18
+  },
+  {
+   "team": "Ivory Coast",
+   "rank": 19
+  },
+  {
+   "team": "Uruguay",
+   "rank": 20
+  },
+  {
+   "team": "South Korea",
+   "rank": 21
+  },
+  {
+   "team": "Austria",
+   "rank": 22
+  },
+  {
+   "team": "Ecuador",
+   "rank": 23
+  },
+  {
+   "team": "United States",
+   "rank": 24
+  },
+  {
+   "team": "Canada",
+   "rank": 25
+  },
+  {
+   "team": "Czechia",
+   "rank": 26
+  },
+  {
+   "team": "Egypt",
+   "rank": 27
+  },
+  {
+   "team": "Scotland",
+   "rank": 28
+  },
+  {
+   "team": "Panama",
+   "rank": 29
+  },
+  {
+   "team": "Iran",
+   "rank": 30
+  },
+  {
+   "team": "Paraguay",
+   "rank": 31
+  },
+  {
+   "team": "Tunisia",
+   "rank": 32
+  },
+  {
+   "team": "Bosnia and Herzegovina",
+   "rank": 33
+  },
+  {
+   "team": "Algeria",
+   "rank": 34
+  },
+  {
+   "team": "Uzbekistan",
+   "rank": 35
+  },
+  {
+   "team": "Sweden",
+   "rank": 36
+  },
+  {
+   "team": "Australia",
+   "rank": 37
+  },
+  {
+   "team": "Ghana",
+   "rank": 38
+  },
+  {
+   "team": "Cape Verde",
+   "rank": 39
+  },
+  {
+   "team": "New Zealand",
+   "rank": 40
+  },
+  {
+   "team": "DR Congo",
+   "rank": 41
+  },
+  {
+   "team": "Saudi Arabia",
+   "rank": 42
+  },
+  {
+   "team": "South Africa",
+   "rank": 43
+  },
+  {
+   "team": "Jordan",
+   "rank": 44
+  },
+  {
+   "team": "Qatar",
+   "rank": 45
+  },
+  {
+   "team": "Curacao",
+   "rank": 46
+  },
+  {
+   "team": "Iraq",
+   "rank": 47
+  },
+  {
+   "team": "Haiti",
+   "rank": 48
+  }
+ ],
+ "notes": "Jun 10, 2026"
+}

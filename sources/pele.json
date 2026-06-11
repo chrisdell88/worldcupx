@@ -1,0 +1,1276 @@
+{
+ "system": "PELE",
+ "name": "Nate Silver PELE International Rankings",
+ "type": "rating",
+ "fetched": "2026-06-11",
+ "url": "https://natesilver.net",
+ "source_file": "data-4oVop.csv",
+ "teams": [
+  {
+   "team": "Spain",
+   "code": "ESP",
+   "value": 2085.4,
+   "qualified": true
+  },
+  {
+   "team": "Argentina",
+   "code": "ARG",
+   "value": 2070.3,
+   "qualified": true
+  },
+  {
+   "team": "England",
+   "code": "ENG",
+   "value": 2030.6,
+   "qualified": true
+  },
+  {
+   "team": "France",
+   "code": "FRA",
+   "value": 2020.2,
+   "qualified": true
+  },
+  {
+   "team": "Brazil",
+   "code": "BRA",
+   "value": 2004.6,
+   "qualified": true
+  },
+  {
+   "team": "Germany",
+   "code": "GER",
+   "value": 1975.9,
+   "qualified": true
+  },
+  {
+   "team": "Portugal",
+   "code": "POR",
+   "value": 1972.5,
+   "qualified": true
+  },
+  {
+   "team": "Colombia",
+   "code": "COL",
+   "value": 1950.6,
+   "qualified": true
+  },
+  {
+   "team": "Netherlands",
+   "code": "NED",
+   "value": 1948.4,
+   "qualified": true
+  },
+  {
+   "team": "Norway",
+   "code": "NOR",
+   "value": 1941.4,
+   "qualified": true
+  },
+  {
+   "team": "Ecuador",
+   "code": "ECU",
+   "value": 1928.0,
+   "qualified": true
+  },
+  {
+   "team": "Uruguay",
+   "code": "URU",
+   "value": 1923.7,
+   "qualified": true
+  },
+  {
+   "team": "Italy",
+   "code": "ITA",
+   "value": 1907.9,
+   "qualified": false
+  },
+  {
+   "team": "Belgium",
+   "code": "BEL",
+   "value": 1907.1,
+   "qualified": true
+  },
+  {
+   "team": "Turkey",
+   "code": "TUR",
+   "value": 1905.5,
+   "qualified": true
+  },
+  {
+   "team": "Switzerland",
+   "code": "SUI",
+   "value": 1890.0,
+   "qualified": true
+  },
+  {
+   "team": "Senegal",
+   "code": "SEN",
+   "value": 1886.4,
+   "qualified": true
+  },
+  {
+   "team": "Japan",
+   "code": "JPN",
+   "value": 1874.5,
+   "qualified": true
+  },
+  {
+   "team": "Croatia",
+   "code": "CRO",
+   "value": 1873.5,
+   "qualified": true
+  },
+  {
+   "team": "Denmark",
+   "code": "DEN",
+   "value": 1867.8,
+   "qualified": false
+  },
+  {
+   "team": "Mexico",
+   "code": "MEX",
+   "value": 1860.2,
+   "qualified": true
+  },
+  {
+   "team": "Morocco",
+   "code": "MAR",
+   "value": 1857.0,
+   "qualified": true
+  },
+  {
+   "team": "Paraguay",
+   "code": "PAR",
+   "value": 1856.2,
+   "qualified": true
+  },
+  {
+   "team": "Austria",
+   "code": "AUT",
+   "value": 1836.8,
+   "qualified": true
+  },
+  {
+   "team": "Russia",
+   "code": "RUS",
+   "value": 1819.1,
+   "qualified": false
+  },
+  {
+   "team": "Nigeria",
+   "code": "NGA",
+   "value": 1818.3,
+   "qualified": false
+  },
+  {
+   "team": "Scotland",
+   "code": "SCO",
+   "value": 1816.5,
+   "qualified": true
+  },
+  {
+   "team": "Canada",
+   "code": "CAN",
+   "value": 1814.6,
+   "qualified": true
+  },
+  {
+   "team": "United States",
+   "code": "USA",
+   "value": 1808.4,
+   "qualified": true
+  },
+  {
+   "team": "Algeria",
+   "code": "ALG",
+   "value": 1799.6,
+   "qualified": true
+  },
+  {
+   "team": "Greece",
+   "code": "GRE",
+   "value": 1795.6,
+   "qualified": false
+  },
+  {
+   "team": "Ukraine",
+   "code": "UKR",
+   "value": 1792.1,
+   "qualified": false
+  },
+  {
+   "team": "Sweden",
+   "code": "SWE",
+   "value": 1790.9,
+   "qualified": true
+  },
+  {
+   "team": "Chile",
+   "code": "CHI",
+   "value": 1782.7,
+   "qualified": false
+  },
+  {
+   "team": "Cote d'Ivoire",
+   "code": "CIV",
+   "value": 1781.2,
+   "qualified": true
+  },
+  {
+   "team": "Poland",
+   "code": "POL",
+   "value": 1779.3,
+   "qualified": false
+  },
+  {
+   "team": "Czechia",
+   "code": "CZE",
+   "value": 1778.8,
+   "qualified": true
+  },
+  {
+   "team": "Hungary",
+   "code": "HUN",
+   "value": 1774.5,
+   "qualified": false
+  },
+  {
+   "team": "Venezuela",
+   "code": "VEN",
+   "value": 1772.9,
+   "qualified": false
+  },
+  {
+   "team": "Australia",
+   "code": "AUS",
+   "value": 1768.2,
+   "qualified": true
+  },
+  {
+   "team": "Serbia",
+   "code": "SRB",
+   "value": 1765.2,
+   "qualified": false
+  },
+  {
+   "team": "Egypt",
+   "code": "EGY",
+   "value": 1763.6,
+   "qualified": true
+  },
+  {
+   "team": "South Korea",
+   "code": "KOR",
+   "value": 1763.4,
+   "qualified": true
+  },
+  {
+   "team": "Rep. Ireland",
+   "code": "IRL",
+   "value": 1759.0,
+   "qualified": false
+  },
+  {
+   "team": "Peru",
+   "code": "PER",
+   "value": 1748.7,
+   "qualified": false
+  },
+  {
+   "team": "Wales",
+   "code": "WAL",
+   "value": 1747.8,
+   "qualified": false
+  },
+  {
+   "team": "Kosovo",
+   "code": "KOS",
+   "value": 1742.5,
+   "qualified": false
+  },
+  {
+   "team": "Panama",
+   "code": "PAN",
+   "value": 1740.0,
+   "qualified": true
+  },
+  {
+   "team": "Slovenia",
+   "code": "SVN",
+   "value": 1734.2,
+   "qualified": false
+  },
+  {
+   "team": "Dem. Rep. Congo",
+   "code": "COD",
+   "value": 1734.1,
+   "qualified": true
+  },
+  {
+   "team": "Iran",
+   "code": "IRN",
+   "value": 1734.0,
+   "qualified": true
+  },
+  {
+   "team": "Slovakia",
+   "code": "SVK",
+   "value": 1729.4,
+   "qualified": false
+  },
+  {
+   "team": "Romania",
+   "code": "ROU",
+   "value": 1725.7,
+   "qualified": false
+  },
+  {
+   "team": "Georgia",
+   "code": "GEO",
+   "value": 1713.3,
+   "qualified": false
+  },
+  {
+   "team": "Uzbekistan",
+   "code": "UZB",
+   "value": 1708.8,
+   "qualified": true
+  },
+  {
+   "team": "Israel",
+   "code": "ISR",
+   "value": 1704.9,
+   "qualified": false
+  },
+  {
+   "team": "Bosnia/Herzegovina",
+   "code": "BIH",
+   "value": 1704.3,
+   "qualified": true
+  },
+  {
+   "team": "Cameroon",
+   "code": "CMR",
+   "value": 1700.4,
+   "qualified": false
+  },
+  {
+   "team": "Mali",
+   "code": "MLI",
+   "value": 1697.9,
+   "qualified": false
+  },
+  {
+   "team": "Albania",
+   "code": "ALB",
+   "value": 1695.7,
+   "qualified": false
+  },
+  {
+   "team": "Tunisia",
+   "code": "TUN",
+   "value": 1692.1,
+   "qualified": true
+  },
+  {
+   "team": "Northern Ireland",
+   "code": "NIR",
+   "value": 1689.2,
+   "qualified": false
+  },
+  {
+   "team": "Costa Rica",
+   "code": "CRC",
+   "value": 1676.2,
+   "qualified": false
+  },
+  {
+   "team": "Iceland",
+   "code": "ISL",
+   "value": 1675.3,
+   "qualified": false
+  },
+  {
+   "team": "Ghana",
+   "code": "GHA",
+   "value": 1674.1,
+   "qualified": true
+  },
+  {
+   "team": "South Africa",
+   "code": "RSA",
+   "value": 1672.3,
+   "qualified": true
+  },
+  {
+   "team": "Burkina Faso",
+   "code": "BFA",
+   "value": 1660.4,
+   "qualified": false
+  },
+  {
+   "team": "Bolivia",
+   "code": "BOL",
+   "value": 1656.7,
+   "qualified": false
+  },
+  {
+   "team": "Jordan",
+   "code": "JOR",
+   "value": 1656.0,
+   "qualified": true
+  },
+  {
+   "team": "Iraq",
+   "code": "IRQ",
+   "value": 1651.5,
+   "qualified": true
+  },
+  {
+   "team": "North Macedonia",
+   "code": "MKD",
+   "value": 1643.3,
+   "qualified": false
+  },
+  {
+   "team": "Saudi Arabia",
+   "code": "KSA",
+   "value": 1640.4,
+   "qualified": true
+  },
+  {
+   "team": "Honduras",
+   "code": "HON",
+   "value": 1637.4,
+   "qualified": false
+  },
+  {
+   "team": "New Zealand",
+   "code": "NZL",
+   "value": 1636.9,
+   "qualified": true
+  },
+  {
+   "team": "Finland",
+   "code": "FIN",
+   "value": 1630.2,
+   "qualified": false
+  },
+  {
+   "team": "Haiti",
+   "code": "HAI",
+   "value": 1626.5,
+   "qualified": true
+  },
+  {
+   "team": "Cape Verde",
+   "code": "CPV",
+   "value": 1625.9,
+   "qualified": true
+  },
+  {
+   "team": "Guinea",
+   "code": "GUI",
+   "value": 1620.4,
+   "qualified": false
+  },
+  {
+   "team": "Angola",
+   "code": "ANG",
+   "value": 1611.5,
+   "qualified": false
+  },
+  {
+   "team": "Belarus",
+   "code": "BLR",
+   "value": 1606.3,
+   "qualified": false
+  },
+  {
+   "team": "Unit. Arab Emir.",
+   "code": "UAE",
+   "value": 1604.9,
+   "qualified": false
+  },
+  {
+   "team": "Guatemala",
+   "code": "GUA",
+   "value": 1601.7,
+   "qualified": false
+  },
+  {
+   "team": "Jamaica",
+   "code": "JAM",
+   "value": 1600.8,
+   "qualified": false
+  },
+  {
+   "team": "Bulgaria",
+   "code": "BUL",
+   "value": 1586.8,
+   "qualified": false
+  },
+  {
+   "team": "Gambia",
+   "code": "GAM",
+   "value": 1586.1,
+   "qualified": false
+  },
+  {
+   "team": "Luxembourg",
+   "code": "LUX",
+   "value": 1583.0,
+   "qualified": false
+  },
+  {
+   "team": "Suriname",
+   "code": "SUR",
+   "value": 1577.7,
+   "qualified": false
+  },
+  {
+   "team": "Montenegro",
+   "code": "MNE",
+   "value": 1571.7,
+   "qualified": false
+  },
+  {
+   "team": "Curacao",
+   "code": "CUW",
+   "value": 1569.5,
+   "qualified": true
+  },
+  {
+   "team": "Kazakhstan",
+   "code": "KAZ",
+   "value": 1566.9,
+   "qualified": false
+  },
+  {
+   "team": "Gabon",
+   "code": "GAB",
+   "value": 1556.8,
+   "qualified": false
+  },
+  {
+   "team": "Benin",
+   "code": "BEN",
+   "value": 1552.2,
+   "qualified": false
+  },
+  {
+   "team": "Qatar",
+   "code": "QAT",
+   "value": 1548.4,
+   "qualified": true
+  },
+  {
+   "team": "Palestine",
+   "code": "PLE",
+   "value": 1548.3,
+   "qualified": false
+  },
+  {
+   "team": "Niger",
+   "code": "NIG",
+   "value": 1545.7,
+   "qualified": false
+  },
+  {
+   "team": "Libya",
+   "code": "LBY",
+   "value": 1541.7,
+   "qualified": false
+  },
+  {
+   "team": "Syria",
+   "code": "SYR",
+   "value": 1541.3,
+   "qualified": false
+  },
+  {
+   "team": "Oman",
+   "code": "OMA",
+   "value": 1541.0,
+   "qualified": false
+  },
+  {
+   "team": "China",
+   "code": "CHN",
+   "value": 1539.4,
+   "qualified": false
+  },
+  {
+   "team": "Togo",
+   "code": "TOG",
+   "value": 1532.3,
+   "qualified": false
+  },
+  {
+   "team": "Uganda",
+   "code": "UGA",
+   "value": 1532.3,
+   "qualified": false
+  },
+  {
+   "team": "Zambia",
+   "code": "ZAM",
+   "value": 1532.2,
+   "qualified": false
+  },
+  {
+   "team": "Dominican Rep.",
+   "code": "DOM",
+   "value": 1530.4,
+   "qualified": false
+  },
+  {
+   "team": "Sierra Leone",
+   "code": "SLE",
+   "value": 1530.4,
+   "qualified": false
+  },
+  {
+   "team": "Armenia",
+   "code": "ARM",
+   "value": 1529.1,
+   "qualified": false
+  },
+  {
+   "team": "Comoros",
+   "code": "COM",
+   "value": 1528.9,
+   "qualified": false
+  },
+  {
+   "team": "Trinidad & Tobago",
+   "code": "TRI",
+   "value": 1527.4,
+   "qualified": false
+  },
+  {
+   "team": "Zimbabwe",
+   "code": "ZIM",
+   "value": 1520.6,
+   "qualified": false
+  },
+  {
+   "team": "Estonia",
+   "code": "EST",
+   "value": 1517.4,
+   "qualified": false
+  },
+  {
+   "team": "Kenya",
+   "code": "KEN",
+   "value": 1517.1,
+   "qualified": false
+  },
+  {
+   "team": "Madagascar",
+   "code": "MAD",
+   "value": 1515.4,
+   "qualified": false
+  },
+  {
+   "team": "Tanzania",
+   "code": "TAN",
+   "value": 1512.5,
+   "qualified": false
+  },
+  {
+   "team": "Faroe Islands",
+   "code": "FRO",
+   "value": 1512.4,
+   "qualified": false
+  },
+  {
+   "team": "Nicaragua",
+   "code": "NCA",
+   "value": 1512.4,
+   "qualified": false
+  },
+  {
+   "team": "Equatorial Guinea",
+   "code": "EQG",
+   "value": 1512.3,
+   "qualified": false
+  },
+  {
+   "team": "Cyprus",
+   "code": "CYP",
+   "value": 1511.6,
+   "qualified": false
+  },
+  {
+   "team": "Mozambique",
+   "code": "MOZ",
+   "value": 1509.7,
+   "qualified": false
+  },
+  {
+   "team": "El Salvador",
+   "code": "SLV",
+   "value": 1508.6,
+   "qualified": false
+  },
+  {
+   "team": "Indonesia",
+   "code": "IDN",
+   "value": 1504.7,
+   "qualified": false
+  },
+  {
+   "team": "Azerbaijan",
+   "code": "AZE",
+   "value": 1500.0,
+   "qualified": false
+  },
+  {
+   "team": "Sudan",
+   "code": "SDN",
+   "value": 1495.0,
+   "qualified": false
+  },
+  {
+   "team": "Latvia",
+   "code": "LVA",
+   "value": 1493.6,
+   "qualified": false
+  },
+  {
+   "team": "Mauritania",
+   "code": "MTN",
+   "value": 1492.2,
+   "qualified": false
+  },
+  {
+   "team": "Lithuania",
+   "code": "LTU",
+   "value": 1490.5,
+   "qualified": false
+  },
+  {
+   "team": "Bahrain",
+   "code": "BHR",
+   "value": 1481.6,
+   "qualified": false
+  },
+  {
+   "team": "Thailand",
+   "code": "THA",
+   "value": 1480.5,
+   "qualified": false
+  },
+  {
+   "team": "Rwanda",
+   "code": "RWA",
+   "value": 1479.6,
+   "qualified": false
+  },
+  {
+   "team": "Burundi",
+   "code": "BDI",
+   "value": 1470.9,
+   "qualified": false
+  },
+  {
+   "team": "Liberia",
+   "code": "LBR",
+   "value": 1470.1,
+   "qualified": false
+  },
+  {
+   "team": "Guinea-Bissau",
+   "code": "GNB",
+   "value": 1467.6,
+   "qualified": false
+  },
+  {
+   "team": "Malta",
+   "code": "MLT",
+   "value": 1465.0,
+   "qualified": false
+  },
+  {
+   "team": "Ethiopia",
+   "code": "ETH",
+   "value": 1459.8,
+   "qualified": false
+  },
+  {
+   "team": "Guyana",
+   "code": "GUY",
+   "value": 1454.3,
+   "qualified": false
+  },
+  {
+   "team": "Vietnam",
+   "code": "VIE",
+   "value": 1452.7,
+   "qualified": false
+  },
+  {
+   "team": "Lebanon",
+   "code": "LBN",
+   "value": 1445.3,
+   "qualified": false
+  },
+  {
+   "team": "Tajikistan",
+   "code": "TJK",
+   "value": 1445.1,
+   "qualified": false
+  },
+  {
+   "team": "Cuba",
+   "code": "CUB",
+   "value": 1442.3,
+   "qualified": false
+  },
+  {
+   "team": "North Korea",
+   "code": "PRK",
+   "value": 1439.4,
+   "qualified": false
+  },
+  {
+   "team": "Kyrgyzstan",
+   "code": "KGZ",
+   "value": 1439.0,
+   "qualified": false
+  },
+  {
+   "team": "Moldova",
+   "code": "MDA",
+   "value": 1437.9,
+   "qualified": false
+  },
+  {
+   "team": "Namibia",
+   "code": "NAM",
+   "value": 1434.8,
+   "qualified": false
+  },
+  {
+   "team": "Puerto Rico",
+   "code": "PUR",
+   "value": 1433.6,
+   "qualified": false
+  },
+  {
+   "team": "Rep, Congo",
+   "code": "CGO",
+   "value": 1430.4,
+   "qualified": false
+  },
+  {
+   "team": "Cent. Afr. Rep.",
+   "code": "CTA",
+   "value": 1425.7,
+   "qualified": false
+  },
+  {
+   "team": "Kuwait",
+   "code": "KUW",
+   "value": 1423.7,
+   "qualified": false
+  },
+  {
+   "team": "Botswana",
+   "code": "BOT",
+   "value": 1420.0,
+   "qualified": false
+  },
+  {
+   "team": "Malaysia",
+   "code": "MAS",
+   "value": 1403.4,
+   "qualified": false
+  },
+  {
+   "team": "Malawi",
+   "code": "MWI",
+   "value": 1392.9,
+   "qualified": false
+  },
+  {
+   "team": "Turkmenistan",
+   "code": "TKM",
+   "value": 1356.8,
+   "qualified": false
+  },
+  {
+   "team": "Philippines",
+   "code": "PHI",
+   "value": 1352.8,
+   "qualified": false
+  },
+  {
+   "team": "Yemen",
+   "code": "YEM",
+   "value": 1349.5,
+   "qualified": false
+  },
+  {
+   "team": "Lesotho",
+   "code": "LES",
+   "value": 1336.7,
+   "qualified": false
+  },
+  {
+   "team": "St. Vincent/Grenadines",
+   "code": "VIN",
+   "value": 1323.8,
+   "qualified": false
+  },
+  {
+   "team": "Chad",
+   "code": "CHA",
+   "value": 1313.1,
+   "qualified": false
+  },
+  {
+   "team": "India",
+   "code": "IND",
+   "value": 1312.9,
+   "qualified": false
+  },
+  {
+   "team": "Andorra",
+   "code": "AND",
+   "value": 1310.7,
+   "qualified": false
+  },
+  {
+   "team": "New Caledonia",
+   "code": "NCL",
+   "value": 1304.6,
+   "qualified": false
+  },
+  {
+   "team": "Eswatini",
+   "code": "SWZ",
+   "value": 1303.4,
+   "qualified": false
+  },
+  {
+   "team": "Somalia",
+   "code": "SOM",
+   "value": 1300.8,
+   "qualified": false
+  },
+  {
+   "team": "Grenada",
+   "code": "GRN",
+   "value": 1299.4,
+   "qualified": false
+  },
+  {
+   "team": "Hong Kong",
+   "code": "HKG",
+   "value": 1296.7,
+   "qualified": false
+  },
+  {
+   "team": "South Sudan",
+   "code": "SSD",
+   "value": 1296.1,
+   "qualified": false
+  },
+  {
+   "team": "Singapore",
+   "code": "SGP",
+   "value": 1291.6,
+   "qualified": false
+  },
+  {
+   "team": "Bermuda",
+   "code": "BER",
+   "value": 1291.4,
+   "qualified": false
+  },
+  {
+   "team": "Eritrea",
+   "code": "ERI",
+   "value": 1290.5,
+   "qualified": false
+  },
+  {
+   "team": "Mauritius",
+   "code": "MRI",
+   "value": 1278.4,
+   "qualified": false
+  },
+  {
+   "team": "Aruba",
+   "code": "ARU",
+   "value": 1248.0,
+   "qualified": false
+  },
+  {
+   "team": "Belize",
+   "code": "BLZ",
+   "value": 1225.8,
+   "qualified": false
+  },
+  {
+   "team": "Sao Tome/Principe",
+   "code": "STP",
+   "value": 1225.8,
+   "qualified": false
+  },
+  {
+   "team": "St. Kitts & Nevis",
+   "code": "SKN",
+   "value": 1220.9,
+   "qualified": false
+  },
+  {
+   "team": "Saint Lucia",
+   "code": "LCA",
+   "value": 1207.7,
+   "qualified": false
+  },
+  {
+   "team": "Fiji",
+   "code": "FIJ",
+   "value": 1205.6,
+   "qualified": false
+  },
+  {
+   "team": "Barbados",
+   "code": "BRB",
+   "value": 1189.4,
+   "qualified": false
+  },
+  {
+   "team": "Gibraltar",
+   "code": "GIB",
+   "value": 1180.0,
+   "qualified": false
+  },
+  {
+   "team": "Tahiti",
+   "code": "TAH",
+   "value": 1179.5,
+   "qualified": false
+  },
+  {
+   "team": "Montserrat",
+   "code": "MSR",
+   "value": 1178.9,
+   "qualified": false
+  },
+  {
+   "team": "Antigua & Barbuda",
+   "code": "ATG",
+   "value": 1176.6,
+   "qualified": false
+  },
+  {
+   "team": "Papua New Guinea",
+   "code": "PNG",
+   "value": 1175.1,
+   "qualified": false
+  },
+  {
+   "team": "Djibouti",
+   "code": "DJI",
+   "value": 1170.6,
+   "qualified": false
+  },
+  {
+   "team": "Myanmar",
+   "code": "MYA",
+   "value": 1166.1,
+   "qualified": false
+  },
+  {
+   "team": "Liechtenstein",
+   "code": "LIE",
+   "value": 1164.9,
+   "qualified": false
+  },
+  {
+   "team": "Solomon Islands",
+   "code": "SOL",
+   "value": 1162.0,
+   "qualified": false
+  },
+  {
+   "team": "Afghanistan",
+   "code": "AFG",
+   "value": 1149.1,
+   "qualified": false
+  },
+  {
+   "team": "Bangladesh",
+   "code": "BAN",
+   "value": 1148.0,
+   "qualified": false
+  },
+  {
+   "team": "Dominica",
+   "code": "DMA",
+   "value": 1141.6,
+   "qualified": false
+  },
+  {
+   "team": "Vanuatu",
+   "code": "VAN",
+   "value": 1140.0,
+   "qualified": false
+  },
+  {
+   "team": "Taiwan",
+   "code": "TPE",
+   "value": 1125.1,
+   "qualified": false
+  },
+  {
+   "team": "Cambodia",
+   "code": "CAM",
+   "value": 1120.1,
+   "qualified": false
+  },
+  {
+   "team": "San Marino",
+   "code": "SMR",
+   "value": 1093.9,
+   "qualified": false
+  },
+  {
+   "team": "Seychelles",
+   "code": "SEY",
+   "value": 1090.8,
+   "qualified": false
+  },
+  {
+   "team": "Pakistan",
+   "code": "PAK",
+   "value": 1088.7,
+   "qualified": false
+  },
+  {
+   "team": "Sri Lanka",
+   "code": "SRI",
+   "value": 1077.9,
+   "qualified": false
+  },
+  {
+   "team": "Nepal",
+   "code": "NEP",
+   "value": 1067.5,
+   "qualified": false
+  },
+  {
+   "team": "Cayman Islands",
+   "code": "CAY",
+   "value": 1066.3,
+   "qualified": false
+  },
+  {
+   "team": "Laos",
+   "code": "LAO",
+   "value": 1018.9,
+   "qualified": false
+  },
+  {
+   "team": "Brit. Virgin Islands",
+   "code": "VGB",
+   "value": 1008.8,
+   "qualified": false
+  },
+  {
+   "team": "Bahamas",
+   "code": "BAH",
+   "value": 1007.4,
+   "qualified": false
+  },
+  {
+   "team": "Maldives",
+   "code": "MDV",
+   "value": 995.4,
+   "qualified": false
+  },
+  {
+   "team": "Mongolia",
+   "code": "MNG",
+   "value": 984.3,
+   "qualified": false
+  },
+  {
+   "team": "Guam",
+   "code": "GUM",
+   "value": 973.7,
+   "qualified": false
+  },
+  {
+   "team": "Timor-Leste",
+   "code": "TLS",
+   "value": 948.0,
+   "qualified": false
+  },
+  {
+   "team": "U.S. Virgin Islands",
+   "code": "VIR",
+   "value": 940.7,
+   "qualified": false
+  },
+  {
+   "team": "Anguilla",
+   "code": "AIA",
+   "value": 932.9,
+   "qualified": false
+  },
+  {
+   "team": "Macau",
+   "code": "MAC",
+   "value": 910.8,
+   "qualified": false
+  },
+  {
+   "team": "Turks and Caicos",
+   "code": "TCA",
+   "value": 907.3,
+   "qualified": false
+  },
+  {
+   "team": "Samoa",
+   "code": "SAM",
+   "value": 902.1,
+   "qualified": false
+  },
+  {
+   "team": "Brunei",
+   "code": "BRU",
+   "value": 871.6,
+   "qualified": false
+  },
+  {
+   "team": "Bhutan",
+   "code": "BHU",
+   "value": 826.4,
+   "qualified": false
+  },
+  {
+   "team": "Cook Islands",
+   "code": "COK",
+   "value": 806.5,
+   "qualified": false
+  },
+  {
+   "team": "Tonga",
+   "code": "TGA",
+   "value": 774.6,
+   "qualified": false
+  },
+  {
+   "team": "American Samoa",
+   "code": "ASA",
+   "value": 705.0,
+   "qualified": false
+  }
+ ]
+}

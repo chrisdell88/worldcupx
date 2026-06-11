@@ -1,0 +1,56 @@
+{
+ "system": "OPTA",
+ "name": "Opta Power Rankings",
+ "type": "mixed",
+ "fetched": "2026-06-11",
+ "url": "https://theanalyst.com/articles/world-cup-groups-2026-easiest-hardest-opta-power-rankings",
+ "partial": true,
+ "teams": [
+  {
+   "team": "Spain",
+   "value": 100.0
+  },
+  {
+   "team": "France",
+   "value": 98.6
+  },
+  {
+   "team": "Brazil",
+   "value": 92.2
+  },
+  {
+   "team": "Germany",
+   "value": 89.6
+  },
+  {
+   "team": "Haiti",
+   "value": 57.1
+  },
+  {
+   "team": "Curacao",
+   "value": 49.5
+  }
+ ],
+ "global_ranks": {
+  "Colombia": 6,
+  "Portugal": 9,
+  "Switzerland": 17,
+  "Turkey": 20,
+  "Senegal": 21,
+  "Mexico": 24,
+  "Norway": 25,
+  "Australia": 28,
+  "Paraguay": 30,
+  "South Korea": 32,
+  "United States": 36,
+  "Canada": 37,
+  "Czechia": 40,
+  "Iraq": 62,
+  "South Africa": 64,
+  "Bosnia and Herzegovina": 77,
+  "Qatar": 80,
+  "Haiti": 92,
+  "Curacao": 131
+ },
+ "notes": "Article only discloses ratings for 6 teams + global ranks (of 131) for ~19. Compare-only until full data provided."
+}

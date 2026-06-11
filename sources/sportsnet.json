@@ -1,0 +1,201 @@
+{
+ "system": "SPNET",
+ "name": "Sportsnet World Cup Power Rankings",
+ "type": "rank",
+ "fetched": "2026-06-11",
+ "url": "https://www.sportsnet.ca/fifa-world-cup/article/fifa-world-cup-power-rankings-how-does-canada-stack-up-against-the-rest/",
+ "teams": [
+  {
+   "team": "Spain",
+   "rank": 1
+  },
+  {
+   "team": "France",
+   "rank": 2
+  },
+  {
+   "team": "England",
+   "rank": 3
+  },
+  {
+   "team": "Argentina",
+   "rank": 4
+  },
+  {
+   "team": "Portugal",
+   "rank": 5
+  },
+  {
+   "team": "Germany",
+   "rank": 6
+  },
+  {
+   "team": "Brazil",
+   "rank": 7
+  },
+  {
+   "team": "Netherlands",
+   "rank": 8
+  },
+  {
+   "team": "Croatia",
+   "rank": 9
+  },
+  {
+   "team": "Colombia",
+   "rank": 10
+  },
+  {
+   "team": "Norway",
+   "rank": 11
+  },
+  {
+   "team": "Senegal",
+   "rank": 12
+  },
+  {
+   "team": "Ecuador",
+   "rank": 13
+  },
+  {
+   "team": "Belgium",
+   "rank": 14
+  },
+  {
+   "team": "Mexico",
+   "rank": 15
+  },
+  {
+   "team": "Switzerland",
+   "rank": 16
+  },
+  {
+   "team": "Morocco",
+   "rank": 17
+  },
+  {
+   "team": "Uruguay",
+   "rank": 18
+  },
+  {
+   "team": "Japan",
+   "rank": 19
+  },
+  {
+   "team": "Canada",
+   "rank": 20
+  },
+  {
+   "team": "Egypt",
+   "rank": 21
+  },
+  {
+   "team": "United States",
+   "rank": 22
+  },
+  {
+   "team": "Austria",
+   "rank": 23
+  },
+  {
+   "team": "Turkey",
+   "rank": 24
+  },
+  {
+   "team": "Sweden",
+   "rank": 25
+  },
+  {
+   "team": "South Korea",
+   "rank": 26
+  },
+  {
+   "team": "Australia",
+   "rank": 27
+  },
+  {
+   "team": "Ivory Coast",
+   "rank": 28
+  },
+  {
+   "team": "Algeria",
+   "rank": 29
+  },
+  {
+   "team": "Paraguay",
+   "rank": 30
+  },
+  {
+   "team": "Iran",
+   "rank": 31
+  },
+  {
+   "team": "Scotland",
+   "rank": 32
+  },
+  {
+   "team": "Ghana",
+   "rank": 33
+  },
+  {
+   "team": "Czechia",
+   "rank": 34
+  },
+  {
+   "team": "Bosnia and Herzegovina",
+   "rank": 35
+  },
+  {
+   "team": "Tunisia",
+   "rank": 36
+  },
+  {
+   "team": "South Africa",
+   "rank": 37
+  },
+  {
+   "team": "Saudi Arabia",
+   "rank": 38
+  },
+  {
+   "team": "Panama",
+   "rank": 39
+  },
+  {
+   "team": "Uzbekistan",
+   "rank": 40
+  },
+  {
+   "team": "Iraq",
+   "rank": 41
+  },
+  {
+   "team": "DR Congo",
+   "rank": 42
+  },
+  {
+   "team": "Haiti",
+   "rank": 43
+  },
+  {
+   "team": "Qatar",
+   "rank": 44
+  },
+  {
+   "team": "New Zealand",
+   "rank": 45
+  },
+  {
+   "team": "Cape Verde",
+   "rank": 46
+  },
+  {
+   "team": "Jordan",
+   "rank": 47
+  },
+  {
+   "team": "Curacao",
+   "rank": 48
+  }
+ ]
+}

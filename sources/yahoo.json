@@ -1,0 +1,202 @@
+{
+ "system": "YAH",
+ "name": "Yahoo Sports Power Rankings 1-48",
+ "type": "rank",
+ "fetched": "2026-06-11",
+ "url": "https://sports.yahoo.com/soccer/betting/article/2026-world-cup-power-rankings-from-1-to-48-with-the-us-in-between-110000701.html",
+ "teams": [
+  {
+   "team": "France",
+   "rank": 1
+  },
+  {
+   "team": "Spain",
+   "rank": 2
+  },
+  {
+   "team": "Argentina",
+   "rank": 3
+  },
+  {
+   "team": "England",
+   "rank": 4
+  },
+  {
+   "team": "Portugal",
+   "rank": 5
+  },
+  {
+   "team": "Brazil",
+   "rank": 6
+  },
+  {
+   "team": "Germany",
+   "rank": 7
+  },
+  {
+   "team": "Netherlands",
+   "rank": 8
+  },
+  {
+   "team": "Belgium",
+   "rank": 9
+  },
+  {
+   "team": "Colombia",
+   "rank": 10
+  },
+  {
+   "team": "Morocco",
+   "rank": 11
+  },
+  {
+   "team": "Senegal",
+   "rank": 12
+  },
+  {
+   "team": "Ecuador",
+   "rank": 13
+  },
+  {
+   "team": "Uruguay",
+   "rank": 14
+  },
+  {
+   "team": "Croatia",
+   "rank": 15
+  },
+  {
+   "team": "Norway",
+   "rank": 16
+  },
+  {
+   "team": "Japan",
+   "rank": 17
+  },
+  {
+   "team": "Switzerland",
+   "rank": 18
+  },
+  {
+   "team": "United States",
+   "rank": 19
+  },
+  {
+   "team": "Mexico",
+   "rank": 20
+  },
+  {
+   "team": "Turkey",
+   "rank": 21
+  },
+  {
+   "team": "South Korea",
+   "rank": 22
+  },
+  {
+   "team": "Iran",
+   "rank": 23
+  },
+  {
+   "team": "Ghana",
+   "rank": 24
+  },
+  {
+   "team": "Austria",
+   "rank": 25
+  },
+  {
+   "team": "Ivory Coast",
+   "rank": 26
+  },
+  {
+   "team": "Paraguay",
+   "rank": 27
+  },
+  {
+   "team": "Czechia",
+   "rank": 28
+  },
+  {
+   "team": "Sweden",
+   "rank": 29
+  },
+  {
+   "team": "Bosnia and Herzegovina",
+   "rank": 30
+  },
+  {
+   "team": "Egypt",
+   "rank": 31
+  },
+  {
+   "team": "Algeria",
+   "rank": 32
+  },
+  {
+   "team": "Canada",
+   "rank": 33
+  },
+  {
+   "team": "Australia",
+   "rank": 34
+  },
+  {
+   "team": "Tunisia",
+   "rank": 35
+  },
+  {
+   "team": "Panama",
+   "rank": 36
+  },
+  {
+   "team": "South Africa",
+   "rank": 37
+  },
+  {
+   "team": "Saudi Arabia",
+   "rank": 38
+  },
+  {
+   "team": "Haiti",
+   "rank": 39
+  },
+  {
+   "team": "Scotland",
+   "rank": 40
+  },
+  {
+   "team": "Cape Verde",
+   "rank": 41
+  },
+  {
+   "team": "Curacao",
+   "rank": 42
+  },
+  {
+   "team": "DR Congo",
+   "rank": 43
+  },
+  {
+   "team": "New Zealand",
+   "rank": 44
+  },
+  {
+   "team": "Qatar",
+   "rank": 45
+  },
+  {
+   "team": "Uzbekistan",
+   "rank": 46
+  },
+  {
+   "team": "Iraq",
+   "rank": 47
+  },
+  {
+   "team": "Jordan",
+   "rank": 48
+  }
+ ],
+ "notes": "Jun 10, 2026"
+}

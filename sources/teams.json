@@ -1,0 +1,201 @@
+{
+ "teams": [
+  {
+   "team": "Czechia",
+   "group": "A"
+  },
+  {
+   "team": "Mexico",
+   "group": "A"
+  },
+  {
+   "team": "South Africa",
+   "group": "A"
+  },
+  {
+   "team": "South Korea",
+   "group": "A"
+  },
+  {
+   "team": "Bosnia and Herzegovina",
+   "group": "B"
+  },
+  {
+   "team": "Canada",
+   "group": "B"
+  },
+  {
+   "team": "Qatar",
+   "group": "B"
+  },
+  {
+   "team": "Switzerland",
+   "group": "B"
+  },
+  {
+   "team": "Brazil",
+   "group": "C"
+  },
+  {
+   "team": "Haiti",
+   "group": "C"
+  },
+  {
+   "team": "Morocco",
+   "group": "C"
+  },
+  {
+   "team": "Scotland",
+   "group": "C"
+  },
+  {
+   "team": "Australia",
+   "group": "D"
+  },
+  {
+   "team": "Paraguay",
+   "group": "D"
+  },
+  {
+   "team": "Turkey",
+   "group": "D"
+  },
+  {
+   "team": "United States",
+   "group": "D"
+  },
+  {
+   "team": "Curacao",
+   "group": "E"
+  },
+  {
+   "team": "Ecuador",
+   "group": "E"
+  },
+  {
+   "team": "Germany",
+   "group": "E"
+  },
+  {
+   "team": "Ivory Coast",
+   "group": "E"
+  },
+  {
+   "team": "Japan",
+   "group": "F"
+  },
+  {
+   "team": "Netherlands",
+   "group": "F"
+  },
+  {
+   "team": "Sweden",
+   "group": "F"
+  },
+  {
+   "team": "Tunisia",
+   "group": "F"
+  },
+  {
+   "team": "Belgium",
+   "group": "G"
+  },
+  {
+   "team": "Egypt",
+   "group": "G"
+  },
+  {
+   "team": "Iran",
+   "group": "G"
+  },
+  {
+   "team": "New Zealand",
+   "group": "G"
+  },
+  {
+   "team": "Cape Verde",
+   "group": "H"
+  },
+  {
+   "team": "Saudi Arabia",
+   "group": "H"
+  },
+  {
+   "team": "Spain",
+   "group": "H"
+  },
+  {
+   "team": "Uruguay",
+   "group": "H"
+  },
+  {
+   "team": "France",
+   "group": "I"
+  },
+  {
+   "team": "Iraq",
+   "group": "I"
+  },
+  {
+   "team": "Norway",
+   "group": "I"
+  },
+  {
+   "team": "Senegal",
+   "group": "I"
+  },
+  {
+   "team": "Algeria",
+   "group": "J"
+  },
+  {
+   "team": "Argentina",
+   "group": "J"
+  },
+  {
+   "team": "Austria",
+   "group": "J"
+  },
+  {
+   "team": "Jordan",
+   "group": "J"
+  },
+  {
+   "team": "Colombia",
+   "group": "K"
+  },
+  {
+   "team": "DR Congo",
+   "group": "K"
+  },
+  {
+   "team": "Portugal",
+   "group": "K"
+  },
+  {
+   "team": "Uzbekistan",
+   "group": "K"
+  },
+  {
+   "team": "Croatia",
+   "group": "L"
+  },
+  {
+   "team": "England",
+   "group": "L"
+  },
+  {
+   "team": "Ghana",
+   "group": "L"
+  },
+  {
+   "team": "Panama",
+   "group": "L"
+  }
+ ],
+ "sources": [
+  "FIFA final draw 2025-12-05",
+  "fifa.com standings",
+  "NBC Sports groups table"
+ ]
+}
