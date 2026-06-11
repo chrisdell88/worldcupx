@@ -111,6 +111,29 @@ def main():
             "best": min(have), "worst": max(have), "ranks": ranks,
         })
 
+    # fixtures with X-Spread + win probability
+    # SPREAD_K calibrated against opening bookmaker goal lines (see METHODOLOGY)
+    SPREAD_K = 0.9
+    WIN_K = 0.95
+    fixtures = []
+    fx_path = os.path.join(SRC, "fixtures_raw.json")
+    if os.path.exists(fx_path):
+        with open(fx_path) as f:
+            raw_fx = json.load(f)
+        for m in raw_fx:
+            if not m.get("Group"):
+                continue
+            h, a = normalize(m["HomeTeam"]), normalize(m["AwayTeam"])
+            zd = x[h] - x[a]
+            spread = round(zd * SPREAD_K * 2) / 2.0  # to nearest half-goal
+            pwin = 1.0 / (1.0 + math.exp(-WIN_K * zd))
+            fixtures.append({
+                "n": m["MatchNumber"], "rd": m["RoundNumber"], "date": m["DateUtc"],
+                "loc": m["Location"], "h": h, "a": a, "g": m["Group"][-1],
+                "spread": spread, "hwin": round(pwin * 100),
+                "hs": m.get("HomeTeamScore"), "as": m.get("AwayTeamScore"),
+            })
+
     out = {
         "computed": "2026-06-11",
         "weighted": weighted_systems,
@@ -118,6 +141,7 @@ def main():
         "tier": {s: (1 if s in T1 else 2) for s in weighted_systems} | {s: 3 for s in compare_systems},
         "coverage": coverage,
         "rows": rows,
+        "fixtures": fixtures,
     }
     here = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(here, "xscore.json"), "w") as f:

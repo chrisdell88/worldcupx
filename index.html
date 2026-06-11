@@ -197,6 +197,36 @@ function Groups(){
    e("span",null,e("span",{style:{color:"#566",marginRight:8}},"#"+t.xr),e("span",{className:"xs"},t.x.toFixed(2))))))));
 }
 
+function Matchups(){
+ const [rd,setRd]=React.useState(1);
+ const rows={};WCX.rows.forEach(r=>rows[r.team]=r);
+ const fx=WCX.fixtures.filter(f=>f.rd===rd);
+ const fmt=d=>{const dt=new Date(d.replace(" ","T"));return dt.toLocaleString(undefined,{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})};
+ return e(React.Fragment,null,
+  e("div",{className:"pills"},[1,2,3].map(r=>e("button",{key:r,className:"pill"+(rd===r?" on":""),style:rd===r?{background:"#00d4ff",borderColor:"#00d4ff"}:{color:"#00d4ff"},onClick:()=>setRd(r)},"MATCHDAY "+r))),
+  e("div",{className:"gwrap"},fx.map((f,i)=>{
+   const hr=rows[f.h],ar=rows[f.a];
+   const fav=f.spread>=0?f.h:f.a;
+   const line=f.spread===0?"PK":(fav===f.h?f.h:f.a)+" -"+Math.abs(f.spread).toFixed(1);
+   const played=f.hs!=null&&f.as!=null;
+   const tight=Math.abs(f.spread)<=0.5,big=Math.abs(f.spread)>=2;
+   return e("div",{className:"gcard",key:f.n,style:{"--gc":GROUP_COLORS[f.g],animationDelay:(i*0.03)+"s"}},
+    e("div",{className:"ghead"},
+     e("span",{style:{fontSize:10,color:"#8899aa"}},"GRP "+f.g+" · "+fmt(f.date)),
+     tight?e("span",{className:"badge",style:{background:"#00e676"}},"TIGHT"):big?e("span",{className:"badge",style:{background:"#ff6b35"}},"MISMATCH"):null),
+    [[f.h,hr,f.hs],[f.a,ar,f.as]].map(([t,r,sc])=>e("div",{className:"grow",key:t},
+     e("span",null,e("span",{className:"flag"},FLAGS[t]||""),e("span",{style:{color:"#fff",fontWeight:500}},t),e("span",{style:{color:"#566",marginLeft:7,fontSize:10}},"#"+r.xr)),
+     played?e("span",{style:{color:"#ffd600",fontWeight:700}},sc):e("span",{className:"xs"},r.x.toFixed(2)))),
+    e("div",{style:{marginTop:9}},
+     e("div",{style:{display:"flex",justifyContent:"space-between",fontSize:10,marginBottom:4}},
+      e("span",{style:{color:"#00d4ff"}},"X-SPREAD: "+line),
+      e("span",{style:{color:"#8899aa"}},f.hwin+"% "+f.h.split(" ")[0])),
+     e("div",{style:{height:5,background:"#1c2430",borderRadius:3,overflow:"hidden"}},
+      e("div",{style:{width:f.hwin+"%",height:"100%",background:"linear-gradient(90deg,#00d4ff,#00e676)",transition:"width .6s"}}))),
+    e("div",{style:{fontSize:9,color:"#566",marginTop:7,letterSpacing:.5}},f.loc.toUpperCase()));
+  })));
+}
+
 function Methodology(){
  return e("div",{className:"meth"},
   e("h3",null,"01 — WHAT IS X-SCORE?"),
@@ -209,18 +239,22 @@ function Methodology(){
   e("div",{className:"formula"},"X-Score = Σ(weight × z) ÷ Σ(weight)"),
   e("h3",null,"04 — DATA INTEGRITY"),
   e("p",null,"All values are real, fetched from sources on "+WCX.computed+" (hours before the opening match). Nothing is estimated. Every weighted system covers all 48 teams — no partial coverage is allowed into the composite."),
-  e("h3",null,"05 — WHAT'S NEXT"),
-  e("p",null,"Group-stage match cards with X-Spread projections, knockout bracket simulator, and futures probabilities ship during the group stage — the BracketX feature set, adapted for the World Cup."));
+  e("h3",null,"05 — X-SPREAD & WIN PROBABILITY"),
+  e("p",null,"The X-Spread converts the X-Score differential into a projected goal margin, calibrated against opening bookmaker lines and shown to the nearest half-goal. Win probability is a logistic transform of the same differential."),
+  e("div",{className:"formula"},"X-Spread = (X-Score A − X-Score B) × 0.9 goals"),
+  e("h3",null,"06 — WHAT'S NEXT"),
+  e("p",null,"Knockout bracket simulator and futures probabilities ship during the group stage — the full BracketX feature set, adapted for the World Cup. Rankings refresh after each matchday."));
 }
 
 function App(){
  const [tab,setTab]=React.useState("RANKINGS");
- const tabs=["RANKINGS","GROUPS","METHODOLOGY"];
+ const tabs=["RANKINGS","GROUPS","MATCHUPS","METHODOLOGY"];
  return e(React.Fragment,null,
   e(Header),
   e("div",{className:"tabs"},tabs.map(t=>e("button",{key:t,className:"tab"+(tab===t?" on":""),onClick:()=>setTab(t)},t))),
   tab==="RANKINGS"&&e(Rankings),
   tab==="GROUPS"&&e(Groups),
+  tab==="MATCHUPS"&&e(Matchups),
   tab==="METHODOLOGY"&&e(Methodology),
   e("div",{className:"ftr"},
    e("div",{className:"logo"},"WORLDCUP",e("span",{className:"x"},"X")),
