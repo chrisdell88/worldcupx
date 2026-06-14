@@ -4,7 +4,15 @@
 **Repo:** https://github.com/chrisdell88/worldcupx
 **Live:** worldcupx.co (GitHub Pages; HTTP live, HTTPS cert still provisioning — see open items)
 
-## Current state — v4 SHIPPED (secure, scheduled, reweighted)
+## v5 SHIPPED 2026-06-14 (book odds, PWA, SEO, team deep-dive)
+- **Live book odds + EDGE badges**: refresh.py pulls DraftKings Asian-handicap + O/U from ESPN (`pointSpread.home.{open,close,current}.line`, aligned to feed home) → sources/odds.json. compute attaches `fixture.book={spread,total,edge}` (edge = X model − market, goals). Match cards show BOOK line + O/U + an EDGE badge when |edge|≥0.75.
+- **PWA**: manifest.webmanifest + icon-192/512 + iOS web-app meta → installable to iPhone home screen (standalone). canonical added.
+- **Deep-link tabs**: URL hash routing (#rankings…#about via SLUG map); survives reload + back button; tabs shareable.
+- **SEO**: robots.txt, sitemap.xml, WebSite+SportsEvent JSON-LD.
+- **Team deep-dive**: click any team (Rankings/Standings) → TeamModal: per-system ranks (all weighted + ESPN), best/worst, live group table (team highlighted), fixtures with results or projected X-Spread from team's perspective.
+All verified desktop + mobile, no console errors.
+
+## Current state — v4 base (secure, scheduled, reweighted)
 Tabs: RANKINGS · STANDINGS · GROUPS · MATCHUPS · FUTURES · ABOUT(methodology)
 - **HTTPS LIVE**: cert approved + enforced (forced via `gh api DELETE` then `POST` recreate of the Pages site — the git CNAME toggle was a no-op). http→https 301.
 - **Auto-refresh scheduled**: local scheduled task `worldcupx-refresh` (~/.claude/scheduled-tasks/), cron `11 */3 * * *` (every 3h), runs refresh.py + pushes. RUNS ONLY WHILE CLAUDE APP IS OPEN (catches up on launch). For always-on, GitHub Actions still needs `gh auth refresh -s workflow` (open item #2).
