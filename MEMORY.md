@@ -4,9 +4,13 @@
 **Repo:** https://github.com/chrisdell88/worldcupx
 **Live:** worldcupx.co (GitHub Pages; HTTP live, HTTPS cert still provisioning — see open items)
 
-## Current state — v3 SHIPPED (reviewed + calibrated + branded)
+## Current state — v4 SHIPPED (secure, scheduled, reweighted)
 Tabs: RANKINGS · STANDINGS · GROUPS · MATCHUPS · FUTURES · ABOUT(methodology)
-- **8 weighted systems**: PELE/ELO/FIFA (T1×3) + LALAS/BR/YAH/SPNET/ATH (T2×1). Compare-only: ESPN(15), OPTA(partial). X-Score: Spain #1.
+- **HTTPS LIVE**: cert approved + enforced (forced via `gh api DELETE` then `POST` recreate of the Pages site — the git CNAME toggle was a no-op). http→https 301.
+- **Auto-refresh scheduled**: local scheduled task `worldcupx-refresh` (~/.claude/scheduled-tasks/), cron `11 */3 * * *` (every 3h), runs refresh.py + pushes. RUNS ONLY WHILE CLAUDE APP IS OPEN (catches up on launch). For always-on, GitHub Actions still needs `gh auth refresh -s workflow` (open item #2).
+- **8 weighted systems, REWEIGHTED 2026-06-14**: T1 core models PELE+ELO **×4**; T2 FIFA+LALAS+BR+YAH+SPNET+ATH **×1**. (Was PELE/ELO/FIFA ×3.) Chris's OWN rankings to be added ~2026-06-15 at T1 ×4 (equal to ELO/PELE) — he'll paste the 48-team list + a label.
+- **OPTA REMOVED**: only ~6 of 48 ratings are public (article cites scattered global ranks out of ~200), so the column mis-ranked Haiti/Curacao 5th/6th. Dropped from FILES/T3. opta.json kept in sources/ but unused. Re-add only if full 48 obtained.
+- Compare-only: ESPN (top-15). X-Score: Spain #1.
 - **Live results**: client-side ESPN fetch overlays live/just-finished scores (60s); STANDINGS + accuracy recompute in-browser; ticker, FT/LIVE badges, winner ▸, X-SCORE ✓/UPSET, next-kickoff countdown, goal-flash. Accuracy 5/7.
 - **FUTURES**: 20k Monte Carlo (WIN GROUP / REACH KO / TITLE). Spain ~27%.
 - **Branding**: favicon.svg + PNGs, apple-touch-icon, og-image (1200×630), OG/Twitter meta. Rendered via macOS `qlmanage` (no PIL/rsvg/convert available; `sips` for crop).
@@ -32,11 +36,12 @@ P4 (deferred, minor): footer link target, deep-link tabs, data.js fetch-vs-scrip
 - ESPN odds: `competitions[].odds[0]` has `pointSpread.home.{open,close,current}.line` (Asian handicap), `moneyline`, `total`, `overUnder`. CORS-open, no key.
 
 ## ⚠️ OPEN ITEMS
-1. **HTTPS cert** — still not issued after ~12h (DNS/CAA correct, domain verified, Let's Encrypt allowed). Git-side CNAME remove/re-add is a NO-OP (Pages keeps the domain setting). It's GitHub's auto-provision queue; completes within 24h. Watcher armed to enable enforcement on issue. Manual force (if still stuck >24h): repo Settings → Pages → clear custom domain, save, re-enter `worldcupx.co`, save (briefly 404s the apex). Do NOT delete/recreate Pages on a live site.
-2. **GitHub Actions cron** — `.github/workflows/refresh.yml` written but gitignored & unpushed (gh token lacks `workflow` scope). To enable: `gh auth refresh -h github.com -s workflow`, then un-gitignore + push. Not blocking — client-side fetch keeps visitors live; run refresh.py + push manually to bake history.
-3. **Weekly X-Score re-pull** (deferred per Chris).
-4. **Knockout bracket** (deferred until group stage ends ~June 27) — then real bracket + replace futures' seeded-knockout approximation.
-5. Possible later: live BOOK-odds column (ESPN moneyline/spread) like bracketx; win% recalibration vs market 3-way ML.
+1. **Chris's own rankings** — he'll paste the 48-team list (ranks or ratings) + a label (~2026-06-15). Add as sources/<abbr>.json, put in T1 at weight 4.0, recompute, push.
+2. **HTTPS — DONE** (cert approved + enforced). Resolved by `gh api DELETE` + `POST` recreate of the Pages site. (Kept for reference: the recreate forces a fresh cert request; git CNAME toggle does NOT.)
+3. **GitHub Actions cron (optional upgrade)** — `.github/workflows/refresh.yml` written but gitignored & unpushed (gh token lacks `workflow` scope). The local scheduled task covers refresh while the app is open; for always-on server-side, run `gh auth refresh -h github.com -s workflow`, then un-gitignore + push the workflow file (and optionally disable the local task to avoid double-pushes).
+4. **Weekly X-Score re-pull** (deferred per Chris).
+5. **Knockout bracket** (deferred until group stage ends ~June 27) — then real bracket + replace futures' seeded-knockout approximation.
+6. Possible later: live BOOK-odds column (ESPN moneyline/spread) like bracketx; win% recalibration vs market 3-way ML.
 
 ## Environment quirks
 - gh token scopes: gist, read:org, repo (NO workflow). SSH not set up (publickey denied).
