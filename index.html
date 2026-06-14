@@ -131,6 +131,17 @@
   .tabwrap{position:relative}
   .tabwrap::after{content:"";position:absolute;top:0;right:0;height:100%;width:26px;background:linear-gradient(90deg,transparent,#0e1218);pointer-events:none}
   .tied-dot{color:#ffab40;font-size:9px;margin-left:5px}
+  /* team deep-dive */
+  .clk{cursor:pointer}
+  .clk:hover{text-decoration:underline;text-decoration-color:#00d4ff}
+  .tm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:8px;margin:10px 0}
+  .tm-cell{background:#10161f;border:1px solid #1c2430;border-radius:6px;padding:7px 4px;text-align:center}
+  .tm-cell .s{font-size:9px;letter-spacing:1px;color:#8899aa}
+  .tm-cell .r{font-size:15px;font-weight:700;margin-top:2px}
+  .tm-sec{font-size:10px;letter-spacing:2px;color:#ffd600;margin:16px 0 6px;font-weight:700}
+  .tm-fx{display:flex;justify-content:space-between;align-items:center;padding:7px 2px;border-bottom:1px solid #151c26;font-size:12px}
+  .tm-res{font-weight:700;font-family:'Outfit',sans-serif}
+  .tm-W{color:#00e676}.tm-L{color:#ff4444}.tm-D{color:#ffd600}
   /* accuracy chip */
   .acc{display:inline-flex;align-items:center;gap:6px;background:#0e1218;border:1px solid #00e67655;border-radius:14px;padding:3px 11px;font-size:11px;color:#00e676;margin-top:10px}
   .acc b{color:#fff}
@@ -340,7 +351,7 @@ function Ticker({ov}){
  return e("div",{className:"ticker"},e("div",{className:"ticker-track",style:{animationDuration:dur+"s"}},seq.map(item)));
 }
 
-function Standings({standings}){
+function Standings({standings,onTeam}){
  const st=standings||WCX.standings;
  const order=Object.keys(st).sort();
  return e("div",{className:"gwrap"},order.map((g,gi)=>e("div",{className:"gcard",key:g,style:{"--gc":GROUP_COLORS[g],animationDelay:(gi*0.04)+"s"}},
@@ -350,7 +361,7 @@ function Standings({standings}){
    e("tbody",null,st[g].map((s,i)=>{
     const cls=i<2?"qual":i===2?"qual3":"out";
     return e("tr",{key:s.team},
-     e("td",{className:"teamcell "+cls,style:{minWidth:0}},e("span",{className:"flag"},FLAGS[s.team]||""),s.team,s.tied?e("span",{className:"tied-dot",title:"Level on points/GD/GF — tiebreaker pending"},"≈"):null),
+     e("td",{className:"teamcell clk "+cls,style:{minWidth:0},onClick:()=>onTeam&&onTeam(s.team)},e("span",{className:"flag"},FLAGS[s.team]||""),s.team,s.tied?e("span",{className:"tied-dot",title:"Level on points/GD/GF — tiebreaker pending"},"≈"):null),
      e("td",null,s.p),e("td",null,s.w),e("td",null,s.d),e("td",null,s.l),
      e("td",{style:{color:s.gd>0?"#00e676":s.gd<0?"#ff4444":"#aab"}},(s.gd>0?"+":"")+s.gd),
      e("td",{className:"xs"},s.pts));
@@ -367,7 +378,7 @@ function Pills({sel,setSel}){
  }));
 }
 
-function Rankings(){
+function Rankings({onTeam}){
  const [sel,setSel]=React.useState("ALL");
  const [key,setKey]=React.useState(false);
  const systems=WCX.weighted.concat(WCX.compare);
@@ -391,7 +402,7 @@ function Rankings(){
      }))),
     e("tbody",null,rows.map((r,i)=>e("tr",{key:r.team,style:{animationDelay:Math.min(i*0.012,0.35)+"s"}},
      e("td",{className:"xnum"},r.xr),
-     e("td",{className:"teamcell"},e("span",{className:"flag"},FLAGS[r.team]||""),r.team),
+     e("td",{className:"teamcell clk",onClick:()=>onTeam&&onTeam(r.team)},e("span",{className:"flag"},FLAGS[r.team]||""),r.team),
      e("td",null,e("span",{className:"grp",style:{background:GROUP_COLORS[r.group]+"33",color:GROUP_COLORS[r.group]}},r.group)),
      e("td",{className:"xs"},r.x.toFixed(3)),
      e("td",{className:"best"},r.best),
@@ -526,6 +537,48 @@ function Futures(){
    "Group finish simulated via twin-Poisson scorelines from each team's X-Score, banking results already played. Title odds use a seeded knockout approximation — the exact bracket replaces it once the group stage finalizes."));
 }
 
+function TeamModal({team,ov,standings,close}){
+ const r=WCX.rows.find(x=>x.team===team);
+ if(!r)return null;
+ const sys=WCX.weighted.concat(WCX.compare);
+ const fx=WCX.fixtures.filter(f=>f.h===team||f.a===team).map(f=>mergeLive(f,ov)).sort((a,b)=>a.n-b.n);
+ const fmt=d=>{const dt=new Date(d.replace(" ","T"));return dt.toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})};
+ const gc=GROUP_COLORS[r.group];
+ const table=(standings&&standings[r.group])||[];
+ return e("div",{className:"modalbg",onClick:close},
+  e("div",{className:"modal",onClick:ev=>ev.stopPropagation()},
+   e("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:6}},
+    e("div",null,
+     e("div",{style:{fontFamily:"Outfit",fontWeight:800,fontSize:20,color:"#fff"}},e("span",{className:"flag"},FLAGS[team]||""),team),
+     e("div",{style:{fontSize:11,color:"#8899aa",marginTop:3}},
+      e("span",{style:{color:"#00d4ff",fontWeight:700}},"X#"+r.xr)," · X-Score ",e("span",{style:{color:"#00d4ff"}},r.x.toFixed(3))," · ",
+      e("span",{className:"grp",style:{background:gc+"33",color:gc}},"GRP "+r.group))),
+    e("button",{className:"keybtn",onClick:close},"CLOSE")),
+   e("div",{className:"tm-sec"},"PER-SYSTEM RANK (best ",e("span",{style:{color:"#00e676"}},r.best)," · worst ",e("span",{style:{color:"#ff4444"}},r.worst),")"),
+   e("div",{className:"tm-grid"},sys.map(s=>{
+    const v=r.ranks[s],cls=WCX.tier[s]===1?"t1":WCX.tier[s]===2?"t2":"t3";
+    return e("div",{className:"tm-cell",key:s},e("div",{className:"s "+cls},s),e("div",{className:"r "+cls},v==null?"—":v));
+   })),
+   e("div",{className:"tm-sec"},"GROUP "+r.group),
+   table.map(s=>e("div",{className:"tm-fx",key:s.team,style:s.team===team?{background:"#121a25",borderRadius:4}:null},
+    e("span",null,e("span",{className:"flag"},FLAGS[s.team]||""),e("span",{style:{color:s.team===team?"#fff":"#aab",fontWeight:s.team===team?700:400}},s.team)),
+    e("span",{style:{color:"#8899aa",fontSize:11}},s.p+"P · "+(s.gd>0?"+":"")+s.gd+" GD · ",e("span",{className:"xs"},s.pts+"pts")))),
+   e("div",{className:"tm-sec"},"FIXTURES"),
+   fx.map(f=>{
+    const home=f.h===team,opp=home?f.a:f.h;
+    const tSpread=home?f.spread:-f.spread;
+    const played=f.status==="FT"||f.status==="LIVE";
+    let res=null;
+    if(played){const ts=home?f.hs:f.as,os=home?f.as:f.hs;const wl=ts>os?"W":ts<os?"L":"D";res=e("span",{className:"tm-res tm-"+wl},ts+"–"+os+" "+wl);}
+    const line=tSpread===0?"PK":(tSpread>0?"-":"+")+Math.abs(tSpread).toFixed(1);
+    return e("div",{className:"tm-fx",key:f.n},
+     e("span",null,e("span",{style:{color:"#566",fontSize:10,marginRight:7}},f.status==="LIVE"?(f.clock||"LIVE"):played?"FT":fmt(f.date)),
+      e("span",{className:"flag"},FLAGS[opp]||""),e("span",{style:{color:"#fff"}},opp),e("span",{style:{color:"#566",fontSize:10}}," ("+(home?"H":"A")+")")),
+     played?res:e("span",{style:{color:"#00d4ff",fontSize:11}},"X "+line));
+   }),
+   e("p",{style:{fontSize:10,color:"#566",marginTop:12}},"X-Score is the tier-weighted mean of this team's z-scores across the weighted systems. Fixture line is from "+team+"'s perspective.")));
+}
+
 function Methodology(){
  return e("div",{className:"meth"},
   e("h3",null,"01 — WHAT IS X-SCORE?"),
@@ -556,17 +609,19 @@ function App(){
  const go=k=>{setTab(k);if(history.replaceState)history.replaceState(null,"","#"+SLUG[k]);else location.hash=SLUG[k];};
  const {ov,stale}=useLive();
  const {standings,accuracy}=React.useMemo(()=>computeLive(ov),[ov]);
+ const [team,setTeam]=React.useState(null);
  return e(React.Fragment,null,
   e(Header,{accuracy,stale}),
   e(Ticker,{ov}),
   e(NextMatch,{ov}),
   e("div",{className:"tabwrap"},e("div",{className:"tabs"},tabs.map(([k,lbl])=>e("button",{key:k,className:"tab"+(tab===k?" on":""),onClick:()=>go(k)},lbl)))),
-  tab==="RANKINGS"&&e(Rankings),
-  tab==="STANDINGS"&&e(Standings,{standings}),
+  tab==="RANKINGS"&&e(Rankings,{onTeam:setTeam}),
+  tab==="STANDINGS"&&e(Standings,{standings,onTeam:setTeam}),
   tab==="GROUPS"&&e(Groups),
   tab==="MATCHUPS"&&e(Matchups,{ov}),
   tab==="FUTURES"&&e(Futures),
   tab==="METHODOLOGY"&&e(Methodology),
+  team&&e(TeamModal,{team,ov,standings,close:()=>setTeam(null)}),
   e("div",{className:"ftr"},
    e("div",{className:"logo"},"WORLDCUP",e("span",{className:"x"},"X")),
    e("div",{className:"who"},"CHRIS DELL: FOUNDER · SIBLING OF ",e("a",{href:"https://bracketx.co"},"BRACKETX.CO"))));
