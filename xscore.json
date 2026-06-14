@@ -11,8 +11,7 @@
   "ATH"
  ],
  "compare": [
-  "ESPN",
-  "OPTA"
+  "ESPN"
  ],
  "tier": {
   "PELE": 1,
@@ -23,8 +22,7 @@
   "YAH": 2,
   "SPNET": 2,
   "ATH": 2,
-  "ESPN": 3,
-  "OPTA": 3
+  "ESPN": 3
  },
  "coverage": {
   "PELE": 48,
@@ -35,8 +33,7 @@
   "YAH": 48,
   "SPNET": 48,
   "ATH": 48,
-  "ESPN": 15,
-  "OPTA": 6
+  "ESPN": 15
  },
  "rows": [
   {
@@ -55,8 +52,7 @@
     "YAH": 2,
     "SPNET": 1,
     "ATH": 1,
-    "ESPN": 1,
-    "OPTA": 1
+    "ESPN": 1
    }
   },
   {
@@ -75,8 +71,7 @@
     "YAH": 3,
     "SPNET": 4,
     "ATH": 3,
-    "ESPN": 3,
-    "OPTA": null
+    "ESPN": 3
    }
   },
   {
@@ -95,8 +90,7 @@
     "YAH": 1,
     "SPNET": 2,
     "ATH": 2,
-    "ESPN": 2,
-    "OPTA": 2
+    "ESPN": 2
    }
   },
   {
@@ -115,8 +109,7 @@
     "YAH": 4,
     "SPNET": 3,
     "ATH": 5,
-    "ESPN": 4,
-    "OPTA": null
+    "ESPN": 4
    }
   },
   {
@@ -135,8 +128,7 @@
     "YAH": 6,
     "SPNET": 7,
     "ATH": 4,
-    "ESPN": 5,
-    "OPTA": 3
+    "ESPN": 5
    }
   },
   {
@@ -155,8 +147,7 @@
     "YAH": 5,
     "SPNET": 5,
     "ATH": 8,
-    "ESPN": 6,
-    "OPTA": null
+    "ESPN": 6
    }
   },
   {
@@ -175,8 +166,7 @@
     "YAH": 7,
     "SPNET": 6,
     "ATH": 6,
-    "ESPN": 7,
-    "OPTA": 4
+    "ESPN": 7
    }
   },
   {
@@ -195,8 +185,7 @@
     "YAH": 8,
     "SPNET": 8,
     "ATH": 7,
-    "ESPN": 8,
-    "OPTA": null
+    "ESPN": 8
    }
   },
   {
@@ -215,8 +204,7 @@
     "YAH": 10,
     "SPNET": 10,
     "ATH": 9,
-    "ESPN": 12,
-    "OPTA": null
+    "ESPN": 12
    }
   },
   {
@@ -235,8 +223,7 @@
     "YAH": 9,
     "SPNET": 14,
     "ATH": 17,
-    "ESPN": 11,
-    "OPTA": null
+    "ESPN": 11
    }
   },
   {
@@ -255,8 +242,7 @@
     "YAH": 15,
     "SPNET": 9,
     "ATH": 10,
-    "ESPN": 14,
-    "OPTA": null
+    "ESPN": 14
    }
   },
   {
@@ -275,8 +261,7 @@
     "YAH": 11,
     "SPNET": 17,
     "ATH": 12,
-    "ESPN": 9,
-    "OPTA": null
+    "ESPN": 9
    }
   },
   {
@@ -295,8 +280,7 @@
     "YAH": 14,
     "SPNET": 18,
     "ATH": 11,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -315,8 +299,7 @@
     "YAH": 12,
     "SPNET": 12,
     "ATH": 15,
-    "ESPN": 13,
-    "OPTA": null
+    "ESPN": 13
    }
   },
   {
@@ -335,8 +318,7 @@
     "YAH": 13,
     "SPNET": 13,
     "ATH": 18,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -355,8 +337,7 @@
     "YAH": 20,
     "SPNET": 15,
     "ATH": 13,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -375,8 +356,7 @@
     "YAH": 16,
     "SPNET": 11,
     "ATH": 21,
-    "ESPN": 10,
-    "OPTA": null
+    "ESPN": 10
    }
   },
   {
@@ -395,8 +375,7 @@
     "YAH": 17,
     "SPNET": 19,
     "ATH": 23,
-    "ESPN": 15,
-    "OPTA": null
+    "ESPN": 15
    }
   },
   {
@@ -415,8 +394,7 @@
     "YAH": 18,
     "SPNET": 16,
     "ATH": 22,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -435,8 +413,7 @@
     "YAH": 21,
     "SPNET": 24,
     "ATH": 24,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -455,8 +432,7 @@
     "YAH": 19,
     "SPNET": 22,
     "ATH": 19,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -475,8 +451,7 @@
     "YAH": 25,
     "SPNET": 23,
     "ATH": 28,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -495,8 +470,7 @@
     "YAH": 22,
     "SPNET": 26,
     "ATH": 14,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -515,8 +489,7 @@
     "YAH": 33,
     "SPNET": 20,
     "ATH": 29,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -535,8 +508,7 @@
     "YAH": 27,
     "SPNET": 30,
     "ATH": 34,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -555,8 +527,7 @@
     "YAH": 23,
     "SPNET": 31,
     "ATH": 30,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -575,8 +546,7 @@
     "YAH": 32,
     "SPNET": 29,
     "ATH": 26,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -595,8 +565,7 @@
     "YAH": 31,
     "SPNET": 21,
     "ATH": 16,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -615,8 +584,7 @@
     "YAH": 26,
     "SPNET": 28,
     "ATH": 20,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -635,8 +603,7 @@
     "YAH": 34,
     "SPNET": 27,
     "ATH": 25,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -655,8 +622,7 @@
     "YAH": 40,
     "SPNET": 32,
     "ATH": 33,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -675,8 +641,7 @@
     "YAH": 29,
     "SPNET": 25,
     "ATH": 31,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -695,8 +660,7 @@
     "YAH": 28,
     "SPNET": 34,
     "ATH": 39,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -715,8 +679,7 @@
     "YAH": 36,
     "SPNET": 39,
     "ATH": 32,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -735,8 +698,7 @@
     "YAH": 35,
     "SPNET": 36,
     "ATH": 37,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -755,8 +717,7 @@
     "YAH": 46,
     "SPNET": 40,
     "ATH": 41,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -775,8 +736,7 @@
     "YAH": 43,
     "SPNET": 42,
     "ATH": 44,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -795,8 +755,7 @@
     "YAH": 30,
     "SPNET": 35,
     "ATH": 35,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -815,8 +774,7 @@
     "YAH": 24,
     "SPNET": 33,
     "ATH": 27,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -835,8 +793,7 @@
     "YAH": 38,
     "SPNET": 38,
     "ATH": 36,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -855,8 +812,7 @@
     "YAH": 48,
     "SPNET": 47,
     "ATH": 43,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -875,8 +831,7 @@
     "YAH": 37,
     "SPNET": 37,
     "ATH": 42,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -895,8 +850,7 @@
     "YAH": 47,
     "SPNET": 41,
     "ATH": 47,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -915,8 +869,7 @@
     "YAH": 41,
     "SPNET": 46,
     "ATH": 46,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -935,8 +888,7 @@
     "YAH": 44,
     "SPNET": 45,
     "ATH": 40,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -955,8 +907,7 @@
     "YAH": 45,
     "SPNET": 44,
     "ATH": 38,
-    "ESPN": null,
-    "OPTA": null
+    "ESPN": null
    }
   },
   {
@@ -975,8 +926,7 @@
     "YAH": 39,
     "SPNET": 43,
     "ATH": 48,
-    "ESPN": null,
-    "OPTA": 5
+    "ESPN": null
    }
   },
   {
@@ -995,8 +945,7 @@
     "YAH": 42,
     "SPNET": 48,
     "ATH": 45,
-    "ESPN": null,
-    "OPTA": 6
+    "ESPN": null
    }
   }
  ],

@@ -95,12 +95,12 @@ SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sources")
 
 T1 = {"PELE": 3.0, "ELO": 3.0, "FIFA": 3.0}
 T2 = {"LALAS": 1.0, "BR": 1.0, "YAH": 1.0, "SPNET": 1.0, "ATH": 1.0}
-T3 = {"ESPN", "OPTA"}
+T3 = {"ESPN"}  # OPTA dropped: only ~6 of 48 ratings public, so the column was misleading
 FILES = {
     "PELE": "pele.json", "ELO": "elo.json", "FIFA": "fifa.json",
     "LALAS": "foxlalas.json", "BR": "bleacher.json", "YAH": "yahoo.json",
     "SPNET": "sportsnet.json", "ATH": "athletic.json",
-    "ESPN": "espn.json", "OPTA": "opta.json",
+    "ESPN": "espn.json",
 }
 
 
