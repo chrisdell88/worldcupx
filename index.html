@@ -177,8 +177,32 @@ function useLive(){
 }
 function mergeLive(f,ov){const o=ov[f.n];return o?Object.assign({},f,o):f;}
 
-function Header(){
- const a=WCX.accuracy||{correct:0,total:0};
+// recompute standings + accuracy client-side from baked results + live overlay,
+// so the site stays current for visitors even between server refreshes
+function computeLive(ov){
+ const groups={};WCX.rows.forEach(r=>{groups[r.team]=r.group;});
+ const stand={};Object.keys(WCX.standings).forEach(g=>{stand[g]={};WCX.standings[g].forEach(s=>{stand[g][s.team]={team:s.team,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0};});});
+ let correct=0,total=0;
+ WCX.fixtures.map(f=>mergeLive(f,ov)).forEach(f=>{
+  if(f.status!=="FT"||f.hs==null||f.as==null)return;
+  const g=f.g;
+  [[f.h,f.hs,f.as],[f.a,f.as,f.hs]].forEach(([t,gf,ga])=>{
+   const s=stand[g]&&stand[g][t];if(!s)return;
+   s.p++;s.gf+=gf;s.ga+=ga;
+   if(gf>ga){s.w++;s.pts+=3;}else if(gf===ga){s.d++;s.pts++;}else s.l++;
+  });
+  total++;
+  if(f.hs===f.as)correct+=Math.abs(f.spread)<0.75?1:0;
+  else correct+=((f.spread>0)===(f.hs>f.as))?1:0;
+ });
+ const out={};Object.keys(stand).forEach(g=>{
+  out[g]=Object.values(stand[g]).map(s=>(s.gd=s.gf-s.ga,s)).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf);
+ });
+ return {standings:out,accuracy:{correct,total}};
+}
+
+function Header({accuracy}){
+ const a=accuracy||WCX.accuracy||{correct:0,total:0};
  const pct=a.total?Math.round(100*a.correct/a.total):0;
  return e("div",{className:"hdr"},
   e("div",{className:"logo"},"WORLDCUP",e("span",{className:"x"},"X")),
@@ -201,13 +225,14 @@ function Ticker({ov}){
  return e("div",{className:"ticker"},e("div",{className:"ticker-track"},seq.map(item)));
 }
 
-function Standings(){
- const order=Object.keys(WCX.standings).sort();
+function Standings({standings}){
+ const st=standings||WCX.standings;
+ const order=Object.keys(st).sort();
  return e("div",{className:"gwrap"},order.map((g,gi)=>e("div",{className:"gcard",key:g,style:{"--gc":GROUP_COLORS[g],animationDelay:(gi*0.04)+"s"}},
   e("div",{className:"ghead"},e("span",{className:"gname"},"GROUP "+g)),
   e("table",{className:"stand",style:{width:"100%",borderLeft:"none",fontSize:12}},
    e("thead",null,e("tr",null,["TEAM","P","W","D","L","GD","PTS"].map((h,i)=>e("th",{key:h,style:{textAlign:i?"center":"left",position:"static"}},h)))),
-   e("tbody",null,WCX.standings[g].map((s,i)=>{
+   e("tbody",null,st[g].map((s,i)=>{
     const cls=i<2?"qual":i===2?"qual3":"out";
     return e("tr",{key:s.team},
      e("td",{className:"teamcell "+cls,style:{minWidth:0}},e("span",{className:"flag"},FLAGS[s.team]||""),s.team),
@@ -365,14 +390,14 @@ function Methodology(){
 function App(){
  const [tab,setTab]=React.useState("RANKINGS");
  const ov=useLive();
- const hasResults=WCX.fixtures.some(f=>f.status==="FT"||f.status==="LIVE")||Object.keys(ov).length>0;
+ const {standings,accuracy}=React.useMemo(()=>computeLive(ov),[ov]);
  const tabs=["RANKINGS","STANDINGS","GROUPS","MATCHUPS","METHODOLOGY"];
  return e(React.Fragment,null,
-  e(Header),
+  e(Header,{accuracy}),
   e(Ticker,{ov}),
   e("div",{className:"tabs"},tabs.map(t=>e("button",{key:t,className:"tab"+(tab===t?" on":""),onClick:()=>setTab(t)},t))),
   tab==="RANKINGS"&&e(Rankings),
-  tab==="STANDINGS"&&e(Standings),
+  tab==="STANDINGS"&&e(Standings,{standings}),
   tab==="GROUPS"&&e(Groups),
   tab==="MATCHUPS"&&e(Matchups,{ov}),
   tab==="METHODOLOGY"&&e(Methodology),
