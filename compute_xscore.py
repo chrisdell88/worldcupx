@@ -204,6 +204,15 @@ def main():
             for lm in json.load(f).get("matches", []):
                 live[lm["n"]] = lm
 
+    # bookmaker lines (DraftKings via ESPN), written by refresh.py
+    odds = {}
+    odds_path = os.path.join(SRC, "odds.json")
+    if os.path.exists(odds_path):
+        try:
+            odds = {int(k): v for k, v in json.load(open(odds_path)).items()}
+        except Exception:
+            odds = {}
+
     if os.path.exists(fx_path):
         with open(fx_path) as f:
             raw_fx = json.load(f)
@@ -222,12 +231,17 @@ def main():
             elif n in live:
                 status, hs, as_ = "LIVE", live[n].get("hs"), live[n].get("as")
                 clock = live[n].get("clock", "")
-            fixtures.append({
+            row = {
                 "n": n, "rd": m["RoundNumber"], "date": m["DateUtc"],
                 "loc": m["Location"], "h": h, "a": a, "g": m["Group"][-1],
                 "spread": spread, "hwin": round(pwin * 100),
                 "hs": hs, "as": as_, "status": status, "clock": clock,
-            })
+            }
+            if n in odds and odds[n].get("sup") is not None:
+                book_sup = round(odds[n]["sup"] * 2) / 2.0  # nearest half-goal, home supremacy
+                edge = round((zd * SPREAD_K - odds[n]["sup"]), 2)  # X model vs market, goals
+                row["book"] = {"spread": book_sup, "total": odds[n].get("total"), "edge": edge}
+            fixtures.append(row)
 
     # group standings + prediction accuracy from completed (FT) matches
     standings = {g: {t: {"team": t, "p": 0, "w": 0, "d": 0, "l": 0, "gf": 0, "ga": 0, "pts": 0}

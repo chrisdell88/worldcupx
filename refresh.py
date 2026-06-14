@@ -54,6 +54,7 @@ def main():
     #    would be ideal, but a full sweep is cheap and robust against schedule drift)
     live_matches = []
     espn_ft = {}  # pair_key -> (home_norm, hs, as) for FT games ESPN knows
+    odds_out = {}  # match number -> {sup, total} (DraftKings line via ESPN)
     for date in ESPN_DATES:
         try:
             d = get(f"{ESPN}?dates={date}")
@@ -91,6 +92,20 @@ def main():
                 })
             elif state == "post" and hs is not None:
                 espn_ft[pk] = (h, hs, as_)
+            # bookmaker line (DraftKings via ESPN) — store home goal-supremacy aligned to feed home
+            o = (comp.get("odds") or [None])[0]
+            if o:
+                ps = (o.get("pointSpread") or {}).get("home") or {}
+                line = next((( ps.get(ph) or {}).get("line") for ph in ("open", "close", "current")
+                             if (ps.get(ph) or {}).get("line") not in (None, "")), None)
+                if line is not None:
+                    try:
+                        sup = -float(str(line).replace("+", ""))  # -handicap = home supremacy (ESPN home)
+                        if normalize(m["HomeTeam"]) != h:
+                            sup = -sup  # align to feed's home team
+                        odds_out[m["MatchNumber"]] = {"sup": sup, "total": o.get("overUnder")}
+                    except ValueError:
+                        pass
 
     # 3. patch fixtures: if ESPN says FT but feed hasn't caught up, fill the score
     patched = 0
@@ -119,11 +134,23 @@ def main():
     with open(os.path.join(SRC, "live.json"), "w") as f:
         json.dump({"matches": live_matches}, f)
 
+    # 4b. merge new odds into odds.json (keep prior lines for matches ESPN no longer lists)
+    odds_path = os.path.join(SRC, "odds.json")
+    existing = {}
+    if os.path.exists(odds_path):
+        try:
+            existing = {int(k): v for k, v in json.load(open(odds_path)).items()}
+        except Exception:
+            existing = {}
+    existing.update(odds_out)
+    with open(odds_path, "w") as f:
+        json.dump({str(k): v for k, v in existing.items()}, f)
+
     # 5. recompute data.js
     subprocess.run([sys.executable, os.path.join(HERE, "compute_xscore.py")], check=True)
 
     completed = len(ft_nums)
-    print(f"refresh ok: {completed} completed, {len(live_matches)} live, {patched} ESPN-patched")
+    print(f"refresh ok: {completed} completed, {len(live_matches)} live, {patched} ESPN-patched, {len(odds_out)} odds")
 
 
 if __name__ == "__main__":

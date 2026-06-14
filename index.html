@@ -118,6 +118,9 @@
   .hit{background:rgba(0,230,118,.2);color:#00e676}
   .miss{background:rgba(255,68,68,.2);color:#ff4444}
   .winflag{color:#00e676;margin-left:6px;font-weight:700}
+  .edge-badge{font-size:9px;letter-spacing:1px;background:linear-gradient(90deg,#ffd600,#ff6b35);color:#0d1117;border-radius:3px;padding:1px 7px;font-weight:700}
+  .bookline{display:flex;justify-content:space-between;font-size:10px;margin-top:6px;color:#8899aa}
+  .bookline .bk{color:#c0885a}
   /* standings */
   .stand th{font-size:9px}
   .stand td{font-size:12px;padding:6px 8px}
@@ -455,7 +458,14 @@ function Matchups({ov}){
       e("span",{style:{color:"#00d4ff"}},"X-SPREAD: "+line,hm),
       e("span",{style:{color:"#8899aa"}},f.hwin+"% "+f.h.split(" ")[0])),
      e("div",{style:{height:5,background:"#1c2430",borderRadius:3,overflow:"hidden"}},
-      e("div",{style:{width:f.hwin+"%",height:"100%",background:"linear-gradient(90deg,#00d4ff,#00e676)",transition:"width .6s"}}))),
+      e("div",{style:{width:Math.min(100,Math.max(0,f.hwin))+"%",height:"100%",background:"linear-gradient(90deg,#00d4ff,#00e676)",transition:"width .6s"}}))),
+    f.book?(function(){
+     const bs=f.book.spread, bl=bs===0?"PK":short(bs>0?f.h:f.a)+" -"+Math.abs(bs).toFixed(1);
+     const eMag=Math.abs(f.book.edge), eTeam=f.book.edge>0?f.h:f.a;
+     return e("div",{className:"bookline"},
+      e("span",null,"BOOK: ",e("span",{className:"bk"},bl),f.book.total?e("span",{style:{color:"#566"}}," · O/U "+f.book.total):null),
+      eMag>=0.75?e("span",{className:"edge-badge",title:"Model projects "+short(eTeam)+" "+eMag.toFixed(1)+" goals stronger than the market line"},"◆ EDGE "+short(eTeam)+" +"+eMag.toFixed(1)):null);
+    })():null,
     e("div",{style:{fontSize:9,color:"#566",marginTop:7,letterSpacing:.5}},f.loc.toUpperCase()));
   })));
 }
