@@ -114,6 +114,8 @@ def zscores(values):
     xs = list(values.values())
     mean = sum(xs) / len(xs)
     sd = math.sqrt(sum((x - mean) ** 2 for x in xs) / len(xs))
+    if sd == 0:  # degenerate source (all identical) — avoid divide-by-zero
+        return {t: 0.0 for t in values}
     return {t: (v - mean) / sd for t, v in values.items()}
 
 
@@ -159,6 +161,8 @@ def main():
         sys_rank[sysname] = {t: i + 1 for i, t in enumerate(ordered)}
 
     weights = {**T1, **T2}
+    if not sys_z:
+        raise SystemExit("FATAL: no complete weighted systems — refusing to publish empty X-Score")
     x = {}
     for team in CANONICAL:
         num, den = 0.0, 0.0
@@ -166,7 +170,7 @@ def main():
             w = weights[s]
             num += w * z[team]
             den += w
-        x[team] = num / den
+        x[team] = num / den if den else 0.0
 
     ordered = sorted(CANONICAL, key=lambda t: -x[t])
     xrank = {t: i + 1 for i, t in enumerate(ordered)}
@@ -236,19 +240,49 @@ def main():
             if gf > ga: s["w"] += 1; s["pts"] += 3
             elif gf == ga: s["d"] += 1; s["pts"] += 1
             else: s["l"] += 1
-        # accuracy: did the X-Score favorite avoid losing? (spread sign vs result)
+        # accuracy: X-Score "called" the match — the favorite won outright; a draw
+        # counts only when the projected line was essentially even (< 0.75 goals).
         total += 1
         if hs == as_:
             correct += 1 if abs(f["spread"]) < 0.75 else 0
         else:
-            fav_home = f["spread"] > 0
-            home_won = hs > as_
-            correct += 1 if fav_home == home_won else 0
+            correct += 1 if (f["spread"] > 0) == (hs > as_) else 0
+
+    # FIFA group ordering: overall pts -> GD -> GF; then head-to-head among teams
+    # still level; then X-rank as the drawing-of-lots proxy. Teams sharing overall
+    # pts/GD/GF are flagged "tied" so the UI can show a tiebreak-pending hint.
+    ft = [f for f in fixtures if f["status"] == "FT"]
     for g in standings:
-        table = sorted(standings[g].values(), key=lambda s: (-s["pts"], -(s["gf"] - s["ga"]), -s["gf"]))
-        for s in table:
+        for s in standings[g].values():
             s["gd"] = s["gf"] - s["ga"]
-        standings[g] = table
+
+        def h2h(cluster):
+            cs = set(cluster)
+            tab = {t: {"pts": 0, "gd": 0, "gf": 0} for t in cluster}
+            for f in ft:
+                if f["g"] == g and f["h"] in cs and f["a"] in cs:
+                    for t, gf, ga in ((f["h"], f["hs"], f["as"]), (f["a"], f["as"], f["hs"])):
+                        tab[t]["gf"] += gf; tab[t]["gd"] += gf - ga
+                        tab[t]["pts"] += 3 if gf > ga else 1 if gf == ga else 0
+            return tab
+
+        base = sorted(standings[g].values(), key=lambda s: (-s["pts"], -s["gd"], -s["gf"]))
+        out, i = [], 0
+        while i < len(base):
+            j = i
+            while j < len(base) and (base[j]["pts"], base[j]["gd"], base[j]["gf"]) == \
+                    (base[i]["pts"], base[i]["gd"], base[i]["gf"]):
+                j += 1
+            cluster = base[i:j]
+            if len(cluster) > 1 and base[i]["p"] > 0:  # genuine tie among teams that have played
+                ht = h2h([s["team"] for s in cluster])
+                cluster = sorted(cluster, key=lambda s: (-ht[s["team"]]["pts"], -ht[s["team"]]["gd"],
+                                                         -ht[s["team"]]["gf"], -x[s["team"]]))
+                for s in cluster:
+                    s["tied"] = True
+            out.extend(cluster)
+            i = j
+        standings[g] = out
 
     futures = simulate_futures(x, groups, fixtures)
 

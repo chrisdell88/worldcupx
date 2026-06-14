@@ -43,7 +43,7 @@
   /* table */
   .twrap{overflow-x:auto;padding:12px;background:#0d1117}
   table{border-collapse:collapse;margin:0 auto;background:#0e1218;border-left:3px solid #00d4ff;font-size:12px}
-  th{position:sticky;top:0;background:#10161f;color:#8899aa;font-weight:500;font-size:9px;letter-spacing:1px;padding:8px 7px;text-align:center;border-bottom:1px solid #1c2430;cursor:help;white-space:nowrap}
+  th{background:#10161f;color:#8899aa;font-weight:500;font-size:9px;letter-spacing:1px;padding:8px 7px;text-align:center;border-bottom:1px solid #1c2430;cursor:help;white-space:nowrap}
   td{padding:6px 7px;text-align:center;border-bottom:1px solid #151c26;background:#0e1218;white-space:nowrap}
   tr{animation:rise .4s ease both}
   @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -59,7 +59,7 @@
   .hi-r{background:rgba(255,68,68,.22)!important;border-radius:4px}
   .tip{position:relative}
   .tip .tiptext{visibility:hidden;position:absolute;top:115%;left:50%;transform:translateX(-50%);background:#1c2430;color:#e6edf3;font-size:10px;letter-spacing:.5px;padding:6px 9px;border-radius:5px;white-space:nowrap;z-index:60;border:1px solid #2a3545}
-  .tip:hover .tiptext{visibility:visible}
+  .tip:hover .tiptext,.tip:focus-within .tiptext,.tip:active .tiptext{visibility:visible}
   /* groups tab */
   .gwrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:14px;padding:16px;max-width:1240px;margin:0 auto}
   .gcard{background:#0e1218;border:1px solid #1c2430;border-top:3px solid var(--gc);border-radius:8px;padding:13px 14px;transition:transform .18s,box-shadow .18s;animation:rise .45s ease both}
@@ -86,8 +86,14 @@
   .nextbar .cd{color:#00d4ff;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:1px}
   .nextbar .vs{color:#fff;font-weight:500}
   .nextbar .lv{color:#ff4444;font-weight:700;animation:p 1.4s infinite}
-  @keyframes goalflash{0%{box-shadow:0 0 0 2px #ffd600 inset;background:rgba(255,214,0,.12)}100%{box-shadow:none;background:transparent}}
+  @keyframes goalflash{0%{box-shadow:inset 0 0 0 2px #ffd600;background:rgba(255,214,0,.18)}100%{box-shadow:inset 0 0 0 0 transparent;background:transparent}}
   .goal{animation:goalflash 1.4s ease}
+  /* staleness badge */
+  .stale{display:inline-flex;align-items:center;gap:6px;background:#1c1408;border:1px solid #ff6b3555;color:#ff6b35;border-radius:14px;padding:3px 11px;font-size:10px;letter-spacing:1px;margin-top:8px}
+  /* tab scroll hint on mobile */
+  .tabwrap{position:relative}
+  .tabwrap::after{content:"";position:absolute;top:0;right:0;height:100%;width:26px;background:linear-gradient(90deg,transparent,#0e1218);pointer-events:none}
+  .tied-dot{color:#ffab40;font-size:9px;margin-left:5px}
   /* accuracy chip */
   .acc{display:inline-flex;align-items:center;gap:6px;background:#0e1218;border:1px solid #00e67655;border-radius:14px;padding:3px 11px;font-size:11px;color:#00e676;margin-top:10px}
   .acc b{color:#fff}
@@ -125,7 +131,15 @@
 <div id="root"></div>
 <script>
 const e = React.createElement;
+// fail loud, not blank, if data.js didn't load
+if(typeof WCX==="undefined"||!WCX.rows){
+ document.getElementById("root").innerHTML='<div style="font-family:DM Mono,monospace;color:#e6edf3;text-align:center;padding:60px 20px"><div style="font-family:Outfit,sans-serif;font-weight:900;font-size:42px">WORLDCUP<span style="color:#00d4ff">X</span></div><p style="color:#ff6b35;margin-top:16px">Data failed to load. Please refresh.</p></div>';
+ throw new Error("WCX data unavailable");
+}
 const GROUP_COLORS = {A:"#00d4ff",B:"#00e676",C:"#ffd600",D:"#ff6b35",E:"#b388ff",F:"#ff4444",G:"#4dd0e1",H:"#aeea00",I:"#ffab40",J:"#f06292",K:"#80cbc4",L:"#c0885a"};
+// short display names so the ticker never collides ("South" for both Koreas/Africa)
+const ABBR={"South Korea":"S. Korea","South Africa":"S. Africa","United States":"USA","New Zealand":"N. Zealand","Saudi Arabia":"Saudi Arabia","Bosnia and Herzegovina":"Bosnia","DR Congo":"DR Congo","Cape Verde":"Cape Verde","Ivory Coast":"Ivory Coast"};
+const short=t=>ABBR[t]||t;
 const FLAGS = {"Czechia":"🇨🇿","Mexico":"🇲🇽","South Africa":"🇿🇦","South Korea":"🇰🇷","Bosnia and Herzegovina":"🇧🇦","Canada":"🇨🇦","Qatar":"🇶🇦","Switzerland":"🇨🇭","Brazil":"🇧🇷","Haiti":"🇭🇹","Morocco":"🇲🇦","Scotland":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","Australia":"🇦🇺","Paraguay":"🇵🇾","Turkey":"🇹🇷","United States":"🇺🇸","Curacao":"🇨🇼","Ecuador":"🇪🇨","Germany":"🇩🇪","Ivory Coast":"🇨🇮","Japan":"🇯🇵","Netherlands":"🇳🇱","Sweden":"🇸🇪","Tunisia":"🇹🇳","Belgium":"🇧🇪","Egypt":"🇪🇬","Iran":"🇮🇷","New Zealand":"🇳🇿","Cape Verde":"🇨🇻","Saudi Arabia":"🇸🇦","Spain":"🇪🇸","Uruguay":"🇺🇾","France":"🇫🇷","Iraq":"🇮🇶","Norway":"🇳🇴","Senegal":"🇸🇳","Algeria":"🇩🇿","Argentina":"🇦🇷","Austria":"🇦🇹","Jordan":"🇯🇴","Colombia":"🇨🇴","DR Congo":"🇨🇩","Portugal":"🇵🇹","Uzbekistan":"🇺🇿","Croatia":"🇭🇷","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Ghana":"🇬🇭","Panama":"🇵🇦"};
 const SYS_INFO = {
  PELE:["Nate Silver PELE International Ratings","T1 — raw rating values, z-scored","natesilver.net"],
@@ -148,19 +162,20 @@ function pairKey(a,b){return [a,b].sort().join("|");}
 // build fixture lookup by unordered team pair
 const FX_BY_PAIR={};WCX.fixtures.forEach(f=>{FX_BY_PAIR[pairKey(f.h,f.a)]=f;});
 function useLive(){
- const [ov,setOv]=React.useState({});
+ const [state,setState]=React.useState({ov:{},stale:false});
  React.useEffect(()=>{
-  let alive=true;
+  let alive=true,fails=0;
   const dates=[];const now=new Date();
   for(let i=-1;i<=1;i++){const d=new Date(now);d.setUTCDate(d.getUTCDate()+i);dates.push(""+d.getUTCFullYear()+String(d.getUTCMonth()+1).padStart(2,"0")+String(d.getUTCDate()).padStart(2,"0"));}
   async function pull(){
    try{
-    const out={};
+    const out={};let ok=false;
     for(const dt of dates){
      const r=await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates="+dt);
-     if(!r.ok)continue;const j=await r.json();
+     if(!r.ok)continue;const j=await r.json();ok=true;
      (j.events||[]).forEach(ev=>{
-      const c=ev.competitions[0],st=c.status.type,cs=c.competitors;
+      const c=(ev.competitions||[])[0];if(!c)return;
+      const st=(c.status||{}).type||{},cs=c.competitors||[];
       const hc=cs.find(x=>x.homeAway==="home"),ac=cs.find(x=>x.homeAway==="away");
       if(!hc||!ac)return;
       const h=canon(hc.team.displayName),a=canon(ac.team.displayName);
@@ -175,13 +190,15 @@ function useLive(){
       }
      });
     }
-    if(alive)setOv(out);
-   }catch(err){/* CORS or network — silently keep baked data */}
+    if(!alive)return;
+    if(ok){fails=0;setState({ov:out,stale:false});}
+    else {fails++;setState(s=>({ov:s.ov,stale:fails>=2}));}
+   }catch(err){fails++;if(alive)setState(s=>({ov:s.ov,stale:fails>=2}));}
   }
   pull();const id=setInterval(pull,60000);
   return ()=>{alive=false;clearInterval(id);};
  },[]);
- return ov;
+ return state;
 }
 function mergeLive(f,ov){const o=ov[f.n];return o?Object.assign({},f,o):f;}
 
@@ -203,13 +220,36 @@ function computeLive(ov){
   if(f.hs===f.as)correct+=Math.abs(f.spread)<0.75?1:0;
   else correct+=((f.spread>0)===(f.hs>f.as))?1:0;
  });
- const out={};Object.keys(stand).forEach(g=>{
-  out[g]=Object.values(stand[g]).map(s=>(s.gd=s.gf-s.ga,s)).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf);
+ // FIFA ordering: overall pts->GD->GF, then head-to-head among teams still level,
+ // then X-rank (lots proxy). Teams sharing overall pts/GD/GF are flagged tied.
+ const xr={};WCX.rows.forEach(r=>{xr[r.team]=r.xr;});
+ const ftAll=WCX.fixtures.map(f=>mergeLive(f,ov)).filter(f=>f.status==="FT"&&f.hs!=null);
+ const out={};
+ Object.keys(stand).forEach(g=>{
+  Object.values(stand[g]).forEach(s=>{s.gd=s.gf-s.ga;});
+  const base=Object.values(stand[g]).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf);
+  const res=[];let i=0;
+  while(i<base.length){
+   let j=i;
+   while(j<base.length&&base[j].pts===base[i].pts&&base[j].gd===base[i].gd&&base[j].gf===base[i].gf)j++;
+   let cl=base.slice(i,j);
+   if(cl.length>1&&base[i].p>0){
+    const cs=new Set(cl.map(s=>s.team));
+    const ht={};cl.forEach(s=>{ht[s.team]={pts:0,gd:0,gf:0};});
+    ftAll.forEach(f=>{if(f.g===g&&cs.has(f.h)&&cs.has(f.a)){
+     [[f.h,f.hs,f.as],[f.a,f.as,f.hs]].forEach(([t,gf,ga])=>{ht[t].gf+=gf;ht[t].gd+=gf-ga;ht[t].pts+=gf>ga?3:gf===ga?1:0;});
+    }});
+    cl=cl.sort((a,b)=>ht[b.team].pts-ht[a.team].pts||ht[b.team].gd-ht[a.team].gd||ht[b.team].gf-ht[a.team].gf||xr[a.team]-xr[b.team]);
+    cl.forEach(s=>{s.tied=true;});
+   }
+   res.push.apply(res,cl);i=j;
+  }
+  out[g]=res;
  });
  return {standings:out,accuracy:{correct,total}};
 }
 
-function Header({accuracy}){
+function Header({accuracy,stale}){
  const a=accuracy||WCX.accuracy||{correct:0,total:0};
  const pct=a.total?Math.round(100*a.correct/a.total):0;
  return e("div",{className:"hdr"},
@@ -217,6 +257,7 @@ function Header({accuracy}){
   e("div",{className:"sub"},"COMPOSITE POWER INDEX"),
   e("div",{className:"kick"},e("span",{className:"pulse"}),"WORLD CUP 2026 · 48 TEAMS · ",WCX.weighted.length," WEIGHTED SYSTEMS · UPDATED ",WCX.computed),
   a.total?e("div",null,e("span",{className:"acc"},"⚽ X-SCORE CALLED ",e("b",null,a.correct+"/"+a.total)," MATCHES (",pct,"%)")):null,
+  stale?e("div",null,e("span",{className:"stale"},"⚠ LIVE SCORES MAY BE DELAYED")):null,
   e("div",{className:"ball"},"⚽"));
 }
 
@@ -250,12 +291,13 @@ function Ticker({ov}){
  if(!done.length)return null;
  done.sort((a,b)=>(a.status==="LIVE"?-1:b.status==="LIVE"?1:b.n-a.n));
  const item=(f,i)=>e("span",{className:"tk",key:f.n+"-"+i},
-  e("span",{className:"flag"},FLAGS[f.h]||""),e("b",null,f.h.split(" ")[0]),
+  e("span",{className:"flag"},FLAGS[f.h]||""),e("b",null,short(f.h)),
   e("span",{className:"sc"},f.hs+"–"+f.as),
-  e("b",null,f.a.split(" ")[0]),e("span",{className:"flag"},FLAGS[f.a]||""),
+  e("b",null,short(f.a)),e("span",{className:"flag"},FLAGS[f.a]||""),
   f.status==="LIVE"?e("span",{className:"live"},f.clock||"LIVE"):e("span",{className:"ft"},"FT"));
  const seq=done.concat(done); // duplicate for seamless loop
- return e("div",{className:"ticker"},e("div",{className:"ticker-track"},seq.map(item)));
+ const dur=Math.max(24,done.length*5); // scale speed with item count so it stays readable
+ return e("div",{className:"ticker"},e("div",{className:"ticker-track",style:{animationDuration:dur+"s"}},seq.map(item)));
 }
 
 function Standings({standings}){
@@ -268,7 +310,7 @@ function Standings({standings}){
    e("tbody",null,st[g].map((s,i)=>{
     const cls=i<2?"qual":i===2?"qual3":"out";
     return e("tr",{key:s.team},
-     e("td",{className:"teamcell "+cls,style:{minWidth:0}},e("span",{className:"flag"},FLAGS[s.team]||""),s.team),
+     e("td",{className:"teamcell "+cls,style:{minWidth:0}},e("span",{className:"flag"},FLAGS[s.team]||""),s.team,s.tied?e("span",{className:"tied-dot",title:"Level on points/GD/GF — tiebreaker pending"},"≈"):null),
      e("td",null,s.p),e("td",null,s.w),e("td",null,s.d),e("td",null,s.l),
      e("td",{style:{color:s.gd>0?"#00e676":s.gd<0?"#ff4444":"#aab"}},(s.gd>0?"+":"")+s.gd),
      e("td",{className:"xs"},s.pts));
@@ -342,7 +384,7 @@ function KeyModal({close}){
      e("strong",{style:{color:c,display:"inline-block",minWidth:58}},s),
      SYS_INFO[s][0],
      e("span",{style:{color:"#566"}}," · "+SYS_INFO[s][2]))))),
-   e("p",{style:{fontSize:10,color:"#8899aa",marginTop:8}},"ATH (The Athletic) pending — will join T2 once its 1-48 list is loaded. ESPN ranks only its top 15 by editorial design; OPTA publishes partial public data. Both shown for comparison, excluded from X-Score.")));
+   e("p",{style:{fontSize:10,color:"#8899aa",marginTop:8}},"ESPN ranks only its top 15 by editorial design; OPTA publishes partial public data. Both are shown for comparison and excluded from the X-Score.")));
 }
 
 function Groups(){
@@ -359,11 +401,17 @@ function Groups(){
    e("span",null,e("span",{style:{color:"#566",marginRight:8}},"#"+t.xr),e("span",{className:"xs"},t.x.toFixed(2))))))));
 }
 
+function currentMatchday(ov){
+ for(const r of [1,2,3]){
+  if(WCX.fixtures.some(f=>f.rd===r&&mergeLive(f,ov).status!=="FT"))return r;
+ }
+ return 3; // all played → show the last matchday
+}
 function Matchups({ov}){
- const [rd,setRd]=React.useState(1);
+ const [rd,setRd]=React.useState(()=>currentMatchday(ov));
  const rows={};WCX.rows.forEach(r=>rows[r.team]=r);
  const fx=WCX.fixtures.filter(f=>f.rd===rd).map(f=>mergeLive(f,ov));
- const fmt=d=>{const dt=new Date(d.replace(" ","T"));return dt.toLocaleString(undefined,{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})};
+ const fmt=d=>{const dt=new Date(d.replace(" ","T"));return dt.toLocaleString(undefined,{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit",timeZoneName:"short"})};
  return e(React.Fragment,null,
   e("div",{className:"pills"},[1,2,3].map(r=>e("button",{key:r,className:"pill"+(rd===r?" on":""),style:rd===r?{background:"#00d4ff",borderColor:"#00d4ff"}:{color:"#00d4ff"},onClick:()=>setRd(r)},"MATCHDAY "+r))),
   e("div",{className:"gwrap"},fx.map((f,i)=>{
@@ -447,21 +495,21 @@ function Methodology(){
   e("p",null,"The X-Spread converts the X-Score differential into a projected goal margin, calibrated against opening bookmaker lines and shown to the nearest half-goal. Win probability is a logistic transform of the same differential."),
   e("div",{className:"formula"},"X-Spread = (X-Score A − X-Score B) × 0.9 goals"),
   e("h3",null,"06 — LIVE RESULTS"),
-  e("p",null,"Scores update automatically: a scheduled job pulls completed results every few minutes, and the page itself fetches the live in-progress match from ESPN. The accuracy chip tracks how often the X-Score favorite holds up — a non-draw counts as correct when the favored side avoids defeat; near-even matches (spread under ¾ goal) count a draw as correct."),
+  e("p",null,"Scores update automatically: the page fetches live and completed matches from ESPN and recomputes standings in your browser. The accuracy chip tracks how often the X-Score “called” a match — the favored side won outright. A draw counts as correct only when the projected line was essentially even (under ¾ of a goal); a draw against a clear favorite counts as a miss."),
   e("h3",null,"07 — WHAT'S NEXT"),
   e("p",null,"Knockout bracket simulator and futures/title probabilities ship as the group stage resolves — the full BracketX feature set, adapted for the World Cup."));
 }
 
 function App(){
  const [tab,setTab]=React.useState("RANKINGS");
- const ov=useLive();
+ const {ov,stale}=useLive();
  const {standings,accuracy}=React.useMemo(()=>computeLive(ov),[ov]);
- const tabs=["RANKINGS","STANDINGS","GROUPS","MATCHUPS","FUTURES","METHODOLOGY"];
+ const tabs=[["RANKINGS","RANKINGS"],["STANDINGS","STANDINGS"],["GROUPS","GROUPS"],["MATCHUPS","MATCHUPS"],["FUTURES","FUTURES"],["METHODOLOGY","ABOUT"]];
  return e(React.Fragment,null,
-  e(Header,{accuracy}),
+  e(Header,{accuracy,stale}),
   e(Ticker,{ov}),
   e(NextMatch,{ov}),
-  e("div",{className:"tabs"},tabs.map(t=>e("button",{key:t,className:"tab"+(tab===t?" on":""),onClick:()=>setTab(t)},t))),
+  e("div",{className:"tabwrap"},e("div",{className:"tabs"},tabs.map(([k,lbl])=>e("button",{key:k,className:"tab"+(tab===k?" on":""),onClick:()=>setTab(k)},lbl)))),
   tab==="RANKINGS"&&e(Rankings),
   tab==="STANDINGS"&&e(Standings,{standings}),
   tab==="GROUPS"&&e(Groups),
