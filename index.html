@@ -80,6 +80,14 @@
   .tk .sc{color:#ffd600;font-weight:700;letter-spacing:.5px}
   .tk .live{color:#ff4444;font-weight:700;animation:p 1.4s infinite}
   .tk .ft{color:#566;font-size:9px;letter-spacing:1px;border:1px solid #2a3545;border-radius:3px;padding:0 4px}
+  /* next-match countdown bar */
+  .nextbar{background:linear-gradient(90deg,#0e1218,#11171f,#0e1218);border-bottom:1px solid #1c2430;text-align:center;padding:8px 12px;font-size:12px;color:#cfd8e3;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+  .nextbar .lbl{color:#8899aa;letter-spacing:2px;font-size:9px}
+  .nextbar .cd{color:#00d4ff;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:1px}
+  .nextbar .vs{color:#fff;font-weight:500}
+  .nextbar .lv{color:#ff4444;font-weight:700;animation:p 1.4s infinite}
+  @keyframes goalflash{0%{box-shadow:0 0 0 2px #ffd600 inset;background:rgba(255,214,0,.12)}100%{box-shadow:none;background:transparent}}
+  .goal{animation:goalflash 1.4s ease}
   /* accuracy chip */
   .acc{display:inline-flex;align-items:center;gap:6px;background:#0e1218;border:1px solid #00e67655;border-radius:14px;padding:3px 11px;font-size:11px;color:#00e676;margin-top:10px}
   .acc b{color:#fff}
@@ -212,6 +220,31 @@ function Header({accuracy}){
   e("div",{className:"ball"},"⚽"));
 }
 
+function NextMatch({ov}){
+ const [now,setNow]=React.useState(Date.now());
+ React.useEffect(()=>{const id=setInterval(()=>setNow(Date.now()),1000);return ()=>clearInterval(id);},[]);
+ const merged=WCX.fixtures.map(f=>mergeLive(f,ov));
+ const liveM=merged.filter(f=>f.status==="LIVE");
+ if(liveM.length){
+  return e("div",{className:"nextbar"},liveM.slice(0,2).map((f,i)=>e("span",{key:i,style:{display:"inline-flex",gap:8,alignItems:"center"}},
+   e("span",{className:"lv"},"● LIVE"),
+   e("span",{className:"vs"},(FLAGS[f.h]||"")+" "+f.h+" "+f.hs+"–"+f.as+" "+f.a+" "+(FLAGS[f.a]||"")),
+   e("span",{className:"cd"},f.clock||""))));
+ }
+ const up=merged.filter(f=>!f.status&&new Date(f.date.replace(" ","T")).getTime()>now)
+   .sort((a,b)=>new Date(a.date.replace(" ","T"))-new Date(b.date.replace(" ","T")))[0];
+ if(!up)return null;
+ const diff=Math.max(0,new Date(up.date.replace(" ","T")).getTime()-now);
+ const s=Math.floor(diff/1000),dd=Math.floor(s/86400),hh=Math.floor(s%86400/3600),mm=Math.floor(s%3600/60),ss=s%60;
+ const pad=v=>String(v).padStart(2,"0");
+ const cd=(dd>0?dd+"d ":"")+pad(hh)+":"+pad(mm)+":"+pad(ss);
+ return e("div",{className:"nextbar"},
+  e("span",{className:"lbl"},"NEXT KICKOFF"),
+  e("span",{className:"vs"},(FLAGS[up.h]||"")+" "+up.h+"  vs  "+up.a+" "+(FLAGS[up.a]||"")),
+  e("span",{style:{color:"#566",fontSize:10}},"GRP "+up.g),
+  e("span",{className:"cd"},cd));
+}
+
 function Ticker({ov}){
  const done=WCX.fixtures.map(f=>mergeLive(f,ov)).filter(f=>f.status==="FT"||f.status==="LIVE");
  if(!done.length)return null;
@@ -274,7 +307,7 @@ function Rankings(){
       const cls=WCX.tier[s]===1?"t1":WCX.tier[s]===2?"t2":"t3";
       return e("th",{key:s,className:"tip "+cls},s,e("span",{className:"tiptext"},SYS_INFO[s][0]+" · "+SYS_INFO[s][1]));
      }))),
-    e("tbody",null,rows.map((r,i)=>e("tr",{key:r.team,style:{animationDelay:(i*0.012)+"s"}},
+    e("tbody",null,rows.map((r,i)=>e("tr",{key:r.team,style:{animationDelay:Math.min(i*0.012,0.35)+"s"}},
      e("td",{className:"xnum"},r.xr),
      e("td",{className:"teamcell"},e("span",{className:"flag"},FLAGS[r.team]||""),r.team),
      e("td",null,e("span",{className:"grp",style:{background:GROUP_COLORS[r.group]+"33",color:GROUP_COLORS[r.group]}},r.group)),
@@ -355,7 +388,7 @@ function Matchups({ov}){
      live?e("span",{className:"live-badge"},"● "+(f.clock||"LIVE")):ft?e("span",{className:"ft-badge"},"FULL TIME"):(tight?e("span",{className:"badge",style:{background:"#00e676"}},"TIGHT"):big?e("span",{className:"badge",style:{background:"#ff6b35"}},"MISMATCH"):null)),
     [[f.h,hr,f.hs,hWon],[f.a,ar,f.as,aWon]].map(([t,r,sc,won])=>e("div",{className:"grow",key:t},
      e("span",null,e("span",{className:"flag"},FLAGS[t]||""),e("span",{style:{color:"#fff",fontWeight:500}},t),won?e("span",{className:"winflag"},"▸"):null,e("span",{style:{color:"#566",marginLeft:7,fontSize:10}},"#"+r.xr)),
-     played?e("span",{className:"score"},sc):e("span",{className:"xs"},r.x.toFixed(2)))),
+     played?e("span",{className:"score"+(live?" goal":""),key:sc},sc):e("span",{className:"xs"},r.x.toFixed(2)))),
     e("div",{style:{marginTop:9}},
      e("div",{style:{display:"flex",justifyContent:"space-between",fontSize:10,marginBottom:4}},
       e("span",{style:{color:"#00d4ff"}},"X-SPREAD: "+line,hm),
@@ -386,7 +419,7 @@ function Futures(){
      e("th",{className:"tip",style:{color:"#00e676"}},"WIN GROUP",e("span",{className:"tiptext"},"Probability of finishing 1st in group")),
      e("th",{className:"tip",style:{color:"#00d4ff"}},"REACH KO",e("span",{className:"tiptext"},"Probability of reaching the 32-team knockout round")),
      e("th",{className:"tip",style:{color:"#ffd600"}},"TITLE",e("span",{className:"tiptext"},"Probability of winning the World Cup (pre-bracket estimate)")))),
-    e("tbody",null,teams.map((t,i)=>{const r=rows[t],v=f[t];return e("tr",{key:t,style:{animationDelay:(i*0.012)+"s"}},
+    e("tbody",null,teams.map((t,i)=>{const r=rows[t],v=f[t];return e("tr",{key:t,style:{animationDelay:Math.min(i*0.012,0.35)+"s"}},
      e("td",{className:"xnum"},r.xr),
      e("td",{className:"teamcell"},e("span",{className:"flag"},FLAGS[t]||""),t),
      e("td",null,e("span",{className:"grp",style:{background:GROUP_COLORS[r.group]+"33",color:GROUP_COLORS[r.group]}},r.group)),
@@ -427,6 +460,7 @@ function App(){
  return e(React.Fragment,null,
   e(Header,{accuracy}),
   e(Ticker,{ov}),
+  e(NextMatch,{ov}),
   e("div",{className:"tabs"},tabs.map(t=>e("button",{key:t,className:"tab"+(tab===t?" on":""),onClick:()=>setTab(t)},t))),
   tab==="RANKINGS"&&e(Rankings),
   tab==="STANDINGS"&&e(Standings,{standings}),

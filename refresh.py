@@ -60,9 +60,14 @@ def main():
         except Exception:
             continue
         for ev in d.get("events", []):
-            comp = ev["competitions"][0]
-            st = comp["status"]["type"]
-            cs = comp["competitors"]
+            comps = ev.get("competitions") or []
+            if not comps:
+                continue
+            comp = comps[0]
+            st = comp.get("status", {}).get("type", {})
+            cs = comp.get("competitors") or []
+            if not st or len(cs) < 2:
+                continue
             try:
                 hc = next(c for c in cs if c["homeAway"] == "home")
                 ac = next(c for c in cs if c["homeAway"] == "away")
