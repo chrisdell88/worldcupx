@@ -6,9 +6,14 @@
 <title>WorldCupX — Composite Power Index</title>
 <meta name="description" content="WorldCupX — World Cup 2026 national team composite power rankings. 10 ranking systems, z-score normalized into one consensus X-Score for all 48 teams, with live scores, standings, and title odds.">
 <meta name="theme-color" content="#0d1117">
+<link rel="canonical" href="https://worldcupx.co/">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" href="favicon-512.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WorldCupX">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://worldcupx.co/">
 <meta property="og:title" content="WorldCupX — Composite Power Index">
@@ -524,15 +529,19 @@ function Methodology(){
 }
 
 function App(){
- const [tab,setTab]=React.useState("RANKINGS");
+ const tabs=[["RANKINGS","RANKINGS"],["STANDINGS","STANDINGS"],["GROUPS","GROUPS"],["MATCHUPS","MATCHUPS"],["FUTURES","FUTURES"],["METHODOLOGY","ABOUT"]];
+ const SLUG={RANKINGS:"rankings",STANDINGS:"standings",GROUPS:"groups",MATCHUPS:"matchups",FUTURES:"futures",METHODOLOGY:"about"};
+ const fromHash=()=>{const s=(location.hash||"").replace("#","").toLowerCase();return Object.keys(SLUG).find(k=>SLUG[k]===s)||"RANKINGS";};
+ const [tab,setTab]=React.useState(fromHash);
+ React.useEffect(()=>{const on=()=>setTab(fromHash());window.addEventListener("hashchange",on);return ()=>window.removeEventListener("hashchange",on);},[]);
+ const go=k=>{setTab(k);if(history.replaceState)history.replaceState(null,"","#"+SLUG[k]);else location.hash=SLUG[k];};
  const {ov,stale}=useLive();
  const {standings,accuracy}=React.useMemo(()=>computeLive(ov),[ov]);
- const tabs=[["RANKINGS","RANKINGS"],["STANDINGS","STANDINGS"],["GROUPS","GROUPS"],["MATCHUPS","MATCHUPS"],["FUTURES","FUTURES"],["METHODOLOGY","ABOUT"]];
  return e(React.Fragment,null,
   e(Header,{accuracy,stale}),
   e(Ticker,{ov}),
   e(NextMatch,{ov}),
-  e("div",{className:"tabwrap"},e("div",{className:"tabs"},tabs.map(([k,lbl])=>e("button",{key:k,className:"tab"+(tab===k?" on":""),onClick:()=>setTab(k)},lbl)))),
+  e("div",{className:"tabwrap"},e("div",{className:"tabs"},tabs.map(([k,lbl])=>e("button",{key:k,className:"tab"+(tab===k?" on":""),onClick:()=>go(k)},lbl)))),
   tab==="RANKINGS"&&e(Rankings),
   tab==="STANDINGS"&&e(Standings,{standings}),
   tab==="GROUPS"&&e(Groups),
