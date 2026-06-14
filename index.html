@@ -155,9 +155,9 @@ const ABBR={"South Korea":"S. Korea","South Africa":"S. Africa","United States":
 const short=t=>ABBR[t]||t;
 const FLAGS = {"Czechia":"🇨🇿","Mexico":"🇲🇽","South Africa":"🇿🇦","South Korea":"🇰🇷","Bosnia and Herzegovina":"🇧🇦","Canada":"🇨🇦","Qatar":"🇶🇦","Switzerland":"🇨🇭","Brazil":"🇧🇷","Haiti":"🇭🇹","Morocco":"🇲🇦","Scotland":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","Australia":"🇦🇺","Paraguay":"🇵🇾","Turkey":"🇹🇷","United States":"🇺🇸","Curacao":"🇨🇼","Ecuador":"🇪🇨","Germany":"🇩🇪","Ivory Coast":"🇨🇮","Japan":"🇯🇵","Netherlands":"🇳🇱","Sweden":"🇸🇪","Tunisia":"🇹🇳","Belgium":"🇧🇪","Egypt":"🇪🇬","Iran":"🇮🇷","New Zealand":"🇳🇿","Cape Verde":"🇨🇻","Saudi Arabia":"🇸🇦","Spain":"🇪🇸","Uruguay":"🇺🇾","France":"🇫🇷","Iraq":"🇮🇶","Norway":"🇳🇴","Senegal":"🇸🇳","Algeria":"🇩🇿","Argentina":"🇦🇷","Austria":"🇦🇹","Jordan":"🇯🇴","Colombia":"🇨🇴","DR Congo":"🇨🇩","Portugal":"🇵🇹","Uzbekistan":"🇺🇿","Croatia":"🇭🇷","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Ghana":"🇬🇭","Panama":"🇵🇦"};
 const SYS_INFO = {
- PELE:["Nate Silver PELE International Ratings","T1 — raw rating values, z-scored","natesilver.net"],
- ELO:["World Football Elo Ratings","T1 — raw rating values, z-scored","eloratings.net"],
- FIFA:["FIFA Men's World Ranking (points)","T1 — raw rating values, z-scored","inside.fifa.com"],
+ PELE:["Nate Silver PELE International Ratings","T1 core model — raw values, z-scored (4×)","natesilver.net"],
+ ELO:["World Football Elo Ratings","T1 core model — raw values, z-scored (4×)","eloratings.net"],
+ FIFA:["FIFA Men's World Ranking (points)","T2 — raw rating values, z-scored (1×)","inside.fifa.com"],
  LALAS:["Fox Sports — Alexi Lalas Power Rankings","T2 — ordinal 1-48","foxsports.com"],
  BR:["Bleacher Report Final 48-Team Power Ranking","T2 — ordinal 1-48","bleacherreport.com"],
  YAH:["Yahoo Sports Power Rankings 1-48","T2 — ordinal 1-48","sports.yahoo.com"],
@@ -383,9 +383,9 @@ function Rankings(){
 }
 
 function KeyModal({close}){
- const tiers=[["T1 — MODEL RATINGS (3x weight)","#00d4ff",WCX.weighted.filter(s=>WCX.tier[s]===1)],
-  ["T2 — FULL-FIELD MEDIA RANKINGS (1x weight)","#c0885a",WCX.weighted.filter(s=>WCX.tier[s]===2)],
-  ["T3 — COMPARE / REFERENCE (unweighted)","#8899aa",WCX.compare]];
+ const tiers=[["T1 — CORE MODELS (4× weight)","#00d4ff",WCX.weighted.filter(s=>WCX.tier[s]===1)],
+  ["T2 — FIFA + MEDIA (1× weight)","#c0885a",WCX.weighted.filter(s=>WCX.tier[s]===2)],
+  ["COMPARE / REFERENCE (unweighted)","#8899aa",WCX.compare]];
  return e("div",{className:"modalbg",onClick:close},
   e("div",{className:"modal",onClick:ev=>ev.stopPropagation()},
    e("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:12}},
@@ -397,7 +397,7 @@ function KeyModal({close}){
      e("strong",{style:{color:c,display:"inline-block",minWidth:58}},s),
      SYS_INFO[s][0],
      e("span",{style:{color:"#566"}}," · "+SYS_INFO[s][2]))))),
-   e("p",{style:{fontSize:10,color:"#8899aa",marginTop:8}},"ESPN ranks only its top 15 by editorial design; OPTA publishes partial public data. Both are shown for comparison and excluded from the X-Score.")));
+   e("p",{style:{fontSize:10,color:"#8899aa",marginTop:8}},"ESPN ranks only its top 15 by editorial design, so it's shown for comparison and excluded from the X-Score.")));
 }
 
 function Groups(){
@@ -500,7 +500,7 @@ function Methodology(){
   e("p",null,"Systems publishing ",e("strong",{style:{color:"#00d4ff"}},"raw rating values")," (PELE, Elo, FIFA points) are z-scored on those values across the 48-team field — preserving the true gaps between teams, not just their order. Ordinal media rankings are standardized from inverted rank position."),
   e("div",{className:"formula"},"z = (value − field mean) ÷ field standard deviation"),
   e("h3",null,"03 — TIER WEIGHTING"),
-  e("p",null,e("strong",{style:{color:"#00d4ff"}},"T1 (3x)"),": numeric model ratings — PELE, Elo, FIFA points. ",e("strong",{style:{color:"#c0885a"}},"T2 (1x)"),": full-field 1-48 media power rankings — Fox (Lalas), Bleacher Report, Yahoo, Sportsnet, The Athletic. ",e("strong",{style:{color:"#8899aa"}},"T3 (0x)"),": partial-coverage systems (ESPN top-15 panel, public Opta data) shown for comparison only."),
+  e("p",null,e("strong",{style:{color:"#00d4ff"}},"T1 (4×)"),": the core models — PELE and Elo, weighted heavily because they're battle-tested rating systems. ",e("strong",{style:{color:"#c0885a"}},"T2 (1×)"),": FIFA ranking points plus the full-field media power rankings — Fox (Lalas), Bleacher Report, Yahoo, Sportsnet, The Athletic. ",e("strong",{style:{color:"#8899aa"}},"Compare-only (0×)"),": the ESPN reporter panel (top 15 by design) is shown alongside but excluded from the X-Score."),
   e("div",{className:"formula"},"X-Score = Σ(weight × z) ÷ Σ(weight)"),
   e("h3",null,"04 — DATA INTEGRITY"),
   e("p",null,"All values are real, fetched from sources. Nothing is estimated. Every weighted system covers all 48 teams — no partial coverage is allowed into the composite. The X-Score is the consensus power index from kickoff; results are tracked live against it."),

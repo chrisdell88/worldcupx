@@ -93,8 +93,10 @@ def _pois(lam):
 
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sources")
 
-T1 = {"PELE": 3.0, "ELO": 3.0, "FIFA": 3.0}
-T2 = {"LALAS": 1.0, "BR": 1.0, "YAH": 1.0, "SPNET": 1.0, "ATH": 1.0}
+# Tier 1 = core models Chris trusts most (heavy). Tier 2 = FIFA + media (×1).
+# Chris's own rankings will join T1 at 4.0 once provided.
+T1 = {"PELE": 4.0, "ELO": 4.0}
+T2 = {"FIFA": 1.0, "LALAS": 1.0, "BR": 1.0, "YAH": 1.0, "SPNET": 1.0, "ATH": 1.0}
 T3 = {"ESPN"}  # OPTA dropped: only ~6 of 48 ratings public, so the column was misleading
 FILES = {
     "PELE": "pele.json", "ELO": "elo.json", "FIFA": "fifa.json",
