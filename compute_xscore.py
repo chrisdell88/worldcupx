@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from name_map import normalize, CANONICAL
 
 
-def simulate_futures(x, groups, fixtures, n_sims=20000, spread_k=0.9):
+def simulate_futures(x, groups, fixtures, n_sims=20000, spread_k=0.74):
     """Monte Carlo: P(win group), P(advance to KO32), P(win cup).
 
     Conditioned on completed (FT) results; remaining matches simulated from X-Score
@@ -188,8 +188,9 @@ def main():
         })
 
     # fixtures with X-Spread + win probability
-    # SPREAD_K calibrated against opening bookmaker goal lines (see METHODOLOGY)
-    SPREAD_K = 0.9
+    # SPREAD_K=0.74 fitted to DraftKings Asian-handicap lines across 65 fixtures
+    # (RMSE 0.47 goals; see calibrate.py). Market mean total ~2.56 ≈ our 2.6.
+    SPREAD_K = 0.74
     WIN_K = 0.95
     fixtures = []
     fx_path = os.path.join(SRC, "fixtures_raw.json")
