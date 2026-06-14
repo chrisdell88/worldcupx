@@ -366,6 +366,38 @@ function Matchups({ov}){
   })));
 }
 
+function Futures(){
+ const rows={};WCX.rows.forEach(r=>rows[r.team]=r);
+ const f=WCX.futures||{};
+ const teams=Object.keys(f).sort((a,b)=>f[b].cup-f[a].cup||f[b].ko-f[a].ko);
+ const bar=(v,c)=>e("div",{style:{display:"flex",alignItems:"center",gap:6,justifyContent:"flex-end"}},
+  e("span",{style:{minWidth:38,textAlign:"right",color:c,fontWeight:700}},v+"%"),
+  e("div",{style:{width:54,height:5,background:"#1c2430",borderRadius:3,overflow:"hidden"}},
+   e("div",{style:{width:Math.min(100,v)+"%",height:"100%",background:c}})));
+ return e(React.Fragment,null,
+  e("div",{style:{textAlign:"center",padding:"14px 16px 4px",color:"#8899aa",fontSize:11,letterSpacing:1}},
+   "MONTE CARLO · 20,000 SIMULATIONS FROM X-SCORE · CONDITIONED ON RESULTS SO FAR"),
+  e("div",{className:"twrap"},
+   e("table",null,
+    e("thead",null,e("tr",null,
+     e("th",null,"X#"),
+     e("th",{style:{textAlign:"left"}},"TEAM"),
+     e("th",null,"GRP"),
+     e("th",{className:"tip",style:{color:"#00e676"}},"WIN GROUP",e("span",{className:"tiptext"},"Probability of finishing 1st in group")),
+     e("th",{className:"tip",style:{color:"#00d4ff"}},"REACH KO",e("span",{className:"tiptext"},"Probability of reaching the 32-team knockout round")),
+     e("th",{className:"tip",style:{color:"#ffd600"}},"TITLE",e("span",{className:"tiptext"},"Probability of winning the World Cup (pre-bracket estimate)")))),
+    e("tbody",null,teams.map((t,i)=>{const r=rows[t],v=f[t];return e("tr",{key:t,style:{animationDelay:(i*0.012)+"s"}},
+     e("td",{className:"xnum"},r.xr),
+     e("td",{className:"teamcell"},e("span",{className:"flag"},FLAGS[t]||""),t),
+     e("td",null,e("span",{className:"grp",style:{background:GROUP_COLORS[r.group]+"33",color:GROUP_COLORS[r.group]}},r.group)),
+     e("td",null,bar(v.grp,"#00e676")),
+     e("td",null,bar(v.ko,"#00d4ff")),
+     e("td",null,bar(v.cup,"#ffd600")));
+    })))),
+  e("p",{style:{textAlign:"center",color:"#566",fontSize:10,padding:"8px 16px 0",maxWidth:680,margin:"0 auto",lineHeight:1.6}},
+   "Group finish simulated via twin-Poisson scorelines from each team's X-Score, banking results already played. Title odds use a seeded knockout approximation — the exact bracket replaces it once the group stage finalizes."));
+}
+
 function Methodology(){
  return e("div",{className:"meth"},
   e("h3",null,"01 — WHAT IS X-SCORE?"),
@@ -391,7 +423,7 @@ function App(){
  const [tab,setTab]=React.useState("RANKINGS");
  const ov=useLive();
  const {standings,accuracy}=React.useMemo(()=>computeLive(ov),[ov]);
- const tabs=["RANKINGS","STANDINGS","GROUPS","MATCHUPS","METHODOLOGY"];
+ const tabs=["RANKINGS","STANDINGS","GROUPS","MATCHUPS","FUTURES","METHODOLOGY"];
  return e(React.Fragment,null,
   e(Header,{accuracy}),
   e(Ticker,{ov}),
@@ -400,6 +432,7 @@ function App(){
   tab==="STANDINGS"&&e(Standings,{standings}),
   tab==="GROUPS"&&e(Groups),
   tab==="MATCHUPS"&&e(Matchups,{ov}),
+  tab==="FUTURES"&&e(Futures),
   tab==="METHODOLOGY"&&e(Methodology),
   e("div",{className:"ftr"},
    e("div",{className:"logo"},"WORLDCUP",e("span",{className:"x"},"X")),

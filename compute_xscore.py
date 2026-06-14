@@ -14,10 +14,82 @@ Tiers (mirrors bracketx):
 import json
 import math
 import os
+import random
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from name_map import normalize, CANONICAL
+
+
+def simulate_futures(x, groups, fixtures, n_sims=20000, spread_k=0.9):
+    """Monte Carlo: P(win group), P(advance to KO32), P(win cup).
+
+    Conditioned on completed (FT) results; remaining matches simulated from X-Score
+    via twin-Poisson scorelines. Knockouts use a seeded re-bracket approximation
+    (exact WC bracket lands when the group stage finalizes).
+    """
+    random.seed(42)  # stable numbers between refreshes until results change
+    teams_by_group = {}
+    for t, g in groups.items():
+        teams_by_group.setdefault(g, []).append(t)
+    grp_fx = [f for f in fixtures if f["rd"] in (1, 2, 3)]
+    # banked points/gd/gf from FT matches
+    base = {t: {"pts": 0, "gd": 0, "gf": 0} for t in groups}
+    remaining = []
+    for f in grp_fx:
+        if f["status"] == "FT" and f["hs"] is not None:
+            for t, gf, ga in ((f["h"], f["hs"], f["as"]), (f["a"], f["as"], f["hs"])):
+                base[t]["gf"] += gf; base[t]["gd"] += gf - ga
+                base[t]["pts"] += 3 if gf > ga else 1 if gf == ga else 0
+        else:
+            remaining.append(f)
+
+    def sim_score(h, a):
+        mu = (x[h] - x[a]) * spread_k
+        hx = max(0.15, (2.6 + mu) / 2); ax = max(0.15, (2.6 - mu) / 2)
+        return _pois(hx), _pois(ax)
+
+    win_group = {t: 0 for t in groups}
+    advance = {t: 0 for t in groups}
+    champ = {t: 0 for t in groups}
+    for _ in range(n_sims):
+        st = {t: dict(base[t]) for t in groups}
+        for f in remaining:
+            hs, as_ = sim_score(f["h"], f["a"])
+            for t, gf, ga in ((f["h"], hs, as_), (f["a"], as_, hs)):
+                st[t]["gf"] += gf; st[t]["gd"] += gf - ga
+                st[t]["pts"] += 3 if gf > ga else 1 if gf == ga else 0
+        qualifiers, thirds = [], []
+        for g, ts in teams_by_group.items():
+            table = sorted(ts, key=lambda t: (st[t]["pts"], st[t]["gd"], st[t]["gf"], random.random()), reverse=True)
+            win_group[table[0]] += 1
+            qualifiers += table[:2]; advance[table[0]] += 1; advance[table[1]] += 1
+            thirds.append(table[2])
+        best_thirds = sorted(thirds, key=lambda t: (st[t]["pts"], st[t]["gd"], st[t]["gf"], random.random()), reverse=True)[:8]
+        for t in best_thirds:
+            advance[t] += 1
+        bracket = sorted(qualifiers + best_thirds, key=lambda t: x[t], reverse=True)
+        while len(bracket) > 1:
+            nxt = []
+            for i in range(len(bracket) // 2):
+                a, b = bracket[i], bracket[-1 - i]
+                p = 1.0 / (1.0 + math.exp(-0.95 * (x[a] - x[b])))
+                nxt.append(a if random.random() < p else b)
+            bracket = sorted(nxt, key=lambda t: x[t], reverse=True)
+        champ[bracket[0]] += 1
+
+    return {t: {"grp": round(100 * win_group[t] / n_sims, 1),
+                "ko": round(100 * advance[t] / n_sims, 1),
+                "cup": round(100 * champ[t] / n_sims, 1)} for t in groups}
+
+
+def _pois(lam):
+    # Knuth's algorithm — small lambdas, fine for goal counts
+    L, k, p = math.exp(-lam), 0, 1.0
+    while True:
+        k += 1; p *= random.random()
+        if p <= L:
+            return k - 1
 
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sources")
 
@@ -178,6 +250,8 @@ def main():
             s["gd"] = s["gf"] - s["ga"]
         standings[g] = table
 
+    futures = simulate_futures(x, groups, fixtures)
+
     out = {
         "computed": "2026-06-13",
         "weighted": weighted_systems,
@@ -188,6 +262,7 @@ def main():
         "fixtures": fixtures,
         "standings": standings,
         "accuracy": {"correct": correct, "total": total},
+        "futures": futures,
     }
     here = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(here, "xscore.json"), "w") as f:
