@@ -1,9 +1,202 @@
 {
  "system": "ATH",
- "name": "The Athletic (NYT) 48 Teams Ranked",
+ "name": "The Athletic (NYT) \u2014 48 Teams Ranked",
  "type": "rank",
- "status": "missing",
+ "fetched": "2026-06-13",
  "url": "https://www.nytimes.com/athletic/7329359/2026/06/06/world-cup-2026-teams-ranked/",
- "notes": "Hard paywall. Chris to paste the 1-48 list.",
- "teams": []
+ "notes": "Provided by Chris (paywalled). Post-matchday-1 update.",
+ "teams": [
+  {
+   "team": "Spain",
+   "rank": 1
+  },
+  {
+   "team": "France",
+   "rank": 2
+  },
+  {
+   "team": "Argentina",
+   "rank": 3
+  },
+  {
+   "team": "Brazil",
+   "rank": 4
+  },
+  {
+   "team": "England",
+   "rank": 5
+  },
+  {
+   "team": "Germany",
+   "rank": 6
+  },
+  {
+   "team": "Netherlands",
+   "rank": 7
+  },
+  {
+   "team": "Portugal",
+   "rank": 8
+  },
+  {
+   "team": "Colombia",
+   "rank": 9
+  },
+  {
+   "team": "Croatia",
+   "rank": 10
+  },
+  {
+   "team": "Uruguay",
+   "rank": 11
+  },
+  {
+   "team": "Morocco",
+   "rank": 12
+  },
+  {
+   "team": "Mexico",
+   "rank": 13
+  },
+  {
+   "team": "South Korea",
+   "rank": 14
+  },
+  {
+   "team": "Senegal",
+   "rank": 15
+  },
+  {
+   "team": "Egypt",
+   "rank": 16
+  },
+  {
+   "team": "Belgium",
+   "rank": 17
+  },
+  {
+   "team": "Ecuador",
+   "rank": 18
+  },
+  {
+   "team": "United States",
+   "rank": 19
+  },
+  {
+   "team": "Ivory Coast",
+   "rank": 20
+  },
+  {
+   "team": "Norway",
+   "rank": 21
+  },
+  {
+   "team": "Switzerland",
+   "rank": 22
+  },
+  {
+   "team": "Japan",
+   "rank": 23
+  },
+  {
+   "team": "Turkey",
+   "rank": 24
+  },
+  {
+   "team": "Australia",
+   "rank": 25
+  },
+  {
+   "team": "Algeria",
+   "rank": 26
+  },
+  {
+   "team": "Ghana",
+   "rank": 27
+  },
+  {
+   "team": "Austria",
+   "rank": 28
+  },
+  {
+   "team": "Canada",
+   "rank": 29
+  },
+  {
+   "team": "Iran",
+   "rank": 30
+  },
+  {
+   "team": "Sweden",
+   "rank": 31
+  },
+  {
+   "team": "Panama",
+   "rank": 32
+  },
+  {
+   "team": "Scotland",
+   "rank": 33
+  },
+  {
+   "team": "Paraguay",
+   "rank": 34
+  },
+  {
+   "team": "Bosnia and Herzegovina",
+   "rank": 35
+  },
+  {
+   "team": "Saudi Arabia",
+   "rank": 36
+  },
+  {
+   "team": "Tunisia",
+   "rank": 37
+  },
+  {
+   "team": "Qatar",
+   "rank": 38
+  },
+  {
+   "team": "Czechia",
+   "rank": 39
+  },
+  {
+   "team": "New Zealand",
+   "rank": 40
+  },
+  {
+   "team": "Uzbekistan",
+   "rank": 41
+  },
+  {
+   "team": "South Africa",
+   "rank": 42
+  },
+  {
+   "team": "Jordan",
+   "rank": 43
+  },
+  {
+   "team": "DR Congo",
+   "rank": 44
+  },
+  {
+   "team": "Curacao",
+   "rank": 45
+  },
+  {
+   "team": "Cape Verde",
+   "rank": 46
+  },
+  {
+   "team": "Iraq",
+   "rank": 47
+  },
+  {
+   "team": "Haiti",
+   "rank": 48
+  }
+ ]
 }

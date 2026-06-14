@@ -117,6 +117,14 @@ def main():
     WIN_K = 0.95
     fixtures = []
     fx_path = os.path.join(SRC, "fixtures_raw.json")
+    # optional live snapshot: live.json = {"matches":[{"n":9,"hs":0,"as":1,"clock":"43'"}]}
+    live = {}
+    live_path = os.path.join(SRC, "live.json")
+    if os.path.exists(live_path):
+        with open(live_path) as f:
+            for lm in json.load(f).get("matches", []):
+                live[lm["n"]] = lm
+
     if os.path.exists(fx_path):
         with open(fx_path) as f:
             raw_fx = json.load(f)
@@ -127,21 +135,59 @@ def main():
             zd = x[h] - x[a]
             spread = round(zd * SPREAD_K * 2) / 2.0  # to nearest half-goal
             pwin = 1.0 / (1.0 + math.exp(-WIN_K * zd))
+            n = m["MatchNumber"]
+            hs, as_ = m.get("HomeTeamScore"), m.get("AwayTeamScore")
+            status, clock = "", ""
+            if hs is not None and as_ is not None:
+                status = "FT"
+            elif n in live:
+                status, hs, as_ = "LIVE", live[n].get("hs"), live[n].get("as")
+                clock = live[n].get("clock", "")
             fixtures.append({
-                "n": m["MatchNumber"], "rd": m["RoundNumber"], "date": m["DateUtc"],
+                "n": n, "rd": m["RoundNumber"], "date": m["DateUtc"],
                 "loc": m["Location"], "h": h, "a": a, "g": m["Group"][-1],
                 "spread": spread, "hwin": round(pwin * 100),
-                "hs": m.get("HomeTeamScore"), "as": m.get("AwayTeamScore"),
+                "hs": hs, "as": as_, "status": status, "clock": clock,
             })
 
+    # group standings + prediction accuracy from completed (FT) matches
+    standings = {g: {t: {"team": t, "p": 0, "w": 0, "d": 0, "l": 0, "gf": 0, "ga": 0, "pts": 0}
+                     for t in CANONICAL if groups[t] == g} for g in sorted(set(groups.values()))}
+    correct = total = 0
+    for f in fixtures:
+        if f["status"] != "FT":
+            continue
+        g, h, a, hs, as_ = f["g"], f["h"], f["a"], f["hs"], f["as"]
+        for t, gf, ga in ((h, hs, as_), (a, as_, hs)):
+            s = standings[g][t]
+            s["p"] += 1; s["gf"] += gf; s["ga"] += ga
+            if gf > ga: s["w"] += 1; s["pts"] += 3
+            elif gf == ga: s["d"] += 1; s["pts"] += 1
+            else: s["l"] += 1
+        # accuracy: did the X-Score favorite avoid losing? (spread sign vs result)
+        total += 1
+        if hs == as_:
+            correct += 1 if abs(f["spread"]) < 0.75 else 0
+        else:
+            fav_home = f["spread"] > 0
+            home_won = hs > as_
+            correct += 1 if fav_home == home_won else 0
+    for g in standings:
+        table = sorted(standings[g].values(), key=lambda s: (-s["pts"], -(s["gf"] - s["ga"]), -s["gf"]))
+        for s in table:
+            s["gd"] = s["gf"] - s["ga"]
+        standings[g] = table
+
     out = {
-        "computed": "2026-06-11",
+        "computed": "2026-06-13",
         "weighted": weighted_systems,
         "compare": compare_systems,
         "tier": {s: (1 if s in T1 else 2) for s in weighted_systems} | {s: 3 for s in compare_systems},
         "coverage": coverage,
         "rows": rows,
         "fixtures": fixtures,
+        "standings": standings,
+        "accuracy": {"correct": correct, "total": total},
     }
     here = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(here, "xscore.json"), "w") as f:
