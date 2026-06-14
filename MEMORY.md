@@ -1,47 +1,40 @@
 # worldcupx — Project Memory
 
-**Last updated:** 2026-06-11 (launched hours before WC2026 opening match)
+**Last updated:** 2026-06-13 (tournament underway, matchday 1 ~complete)
 **Repo:** https://github.com/chrisdell88/worldcupx
-**Live:** worldcupx.co (GitHub Pages; HTTP live, HTTPS cert provisioning → enforce when ready)
+**Live:** worldcupx.co (GitHub Pages; HTTP live, HTTPS cert still provisioning)
 
-## Current state — SHIPPED v1
-- Dashboard live: RANKINGS (48 teams, 9 system columns, diff highlights, ratings key modal),
-  GROUPS (12 cards sorted by strength, toughest/softest badges), MATCHUPS (72 group fixtures,
-  X-Spread + win% + score-ready cards, matchday sub-tabs), METHODOLOGY.
-- X-Score v1 computed 2026-06-11: Spain #1 (+1.91), Argentina, France, England, Brazil top 5; Curacao #48.
-- GoDaddy DNS done via browser takeover: deleted parked A record, added 4 GitHub Pages A records,
-  www CNAME → chrisdell88.github.io. pay/_domainconnect/dmarc records left untouched.
+## Current state — v2 SHIPPED (live results)
+Tabs: RANKINGS · STANDINGS · GROUPS · MATCHUPS · FUTURES · METHODOLOGY
+- **8 weighted systems** now (The Athletic added — Chris pasted the 1-48 list). T1×3: PELE, ELO, FIFA. T2×1: LALAS, BR, YAH, SPNET, ATH. Compare-only T3: ESPN(15), OPTA(partial).
+- X-Score: Spain #1, Argentina, France, England, Brazil top 5.
+- **Live results pipeline** (no server infra needed for visitors):
+  - Client-side ESPN fetch (CORS-open) overlays live + just-finished scores, refreshes 60s.
+  - STANDINGS + accuracy chip recompute **client-side** from baked results + live overlay → site self-updates for every visitor.
+  - Scrolling results ticker, FT/LIVE badges, scores, winner ▸, X-SCORE ✓/UPSET tags, next-kickoff countdown banner, goal-flash.
+- **FUTURES:** 20k-sim Monte Carlo (compute_xscore.py) — WIN GROUP / REACH KO / TITLE odds. Spain 27% / Argentina 21% / France 15%. Seeded-knockout approx until bracket is known.
+- Accuracy through matchday 1: X-Score 5/7.
 
 ## Data pipeline
-- `sources/*.json` — one file per system. Complete weighted (7): PELE (Nate Silver CSV from Chris),
-  ELO (eloratings.net World.tsv), FIFA (points via Transfermarkt mirror, FIFA's own API serves stale data),
-  LALAS (Fox), BR (Bleacher), YAH (Yahoo), SPNET (Sportsnet — scraped via curl; their #29 needed manual fix).
-- Partial/compare T3 (2): ESPN (top-15 panel by design), OPTA (article only discloses ~6 ratings + ~19 global ranks).
-- Pending (1): ATH (The Athletic 1-48, hard paywall) — **Chris to paste list**, then it auto-joins T2.
-- `sources/teams.json` — 48 teams + groups A-L (FIFA draw 2025-12-05). PELE CSV's 🏆 flags = exactly the 48 qualifiers (validation trick).
-- `sources/fixtures_raw.json` — fixturedownload.com/feed/json/fifa-world-cup-2026 (has score fields; re-fetch for tracker updates).
-- `compute_xscore.py` → `data.js` + `xscore.json`. `name_map.py` = alias normalization.
+- `refresh.py` — pulls fixturedownload (completed) + ESPN sweep (live + patches FT the feed missed), writes live.json, recomputes. **Run this to bake fresh results, then commit+push.**
+- `compute_xscore.py` — X-Score + standings + accuracy + futures sim → data.js + xscore.json.
+- `name_map.py` — 48-team normalization (handles ESPN/feed spellings).
+- `sources/*.json` — one per system; teams.json (groups), fixtures_raw.json (schedule+scores), live.json.
 
-## Methodology decisions (v1)
-- Z-score over the 48-team field. Raw values for PELE/ELO/FIFA (T1, 3x weight); inverted ordinal ranks
-  for media lists (T2, 1x). Partial systems excluded from composite (no partial coverage rule, per bracketx).
-- X-Spread = z-diff × 0.9 goals (rough calibration vs opening lines; revisit after MD1 closing lines).
-- Win% = logistic(0.95 × z-diff).
+## ⚠️ OPEN ITEMS
+1. **HTTPS cert** — not provisioned after several hours (DNS + CAA all correct, Let's Encrypt allowed; just GitHub's queue). Background waiter armed to enable enforcement when it lands. If still stuck tomorrow: repo Settings → Pages → remove custom domain, re-add `worldcupx.co` to force re-provision.
+2. **GitHub Actions auto-refresh cron** — `.github/workflows/refresh.yml` is written but **gitignored & unpushed** because the `gh` OAuth token lacks `workflow` scope. To enable hands-off cron: run `gh auth refresh -h github.com -s workflow`, then `git rm .gitignore entry` / force-add the file and push. Until then: client-side fetch keeps visitors live; run `python3 refresh.py && git commit && git push` manually to bake history.
+3. **Weekly X-Score re-pull** (deferred per Chris) — re-fetch Elo/FIFA/media weekly to refresh the frozen index. Not urgent.
+4. **Knockout bracket simulator** (deferred until group stage ends ~June 27) — then build real bracket + replace futures' seeded-knockout approximation.
 
-## Refresh workflow (between matchdays)
-1. `curl -s "https://fixturedownload.com/feed/json/fifa-world-cup-2026" -o sources/fixtures_raw.json` (brings scores)
-2. Re-scrape any updated systems (media lists update between rounds)
-3. `python3 compute_xscore.py`
-4. `git add -A && git commit && git push` → live in ~2 min
+## Methodology notes
+- Z-score over 48-team field; raw values for PELE/ELO/FIFA, inverted ranks for media.
+- X-Spread = z-diff × 0.9 goals. Win% = logistic(0.95 × z-diff).
+- Futures: twin-Poisson scorelines (total 2.6 xG split by spread), top-2 + 8 best thirds advance, RNG seeded(42) for stable numbers between refreshes.
+- Accuracy: non-draw correct if favorite avoids defeat; draw correct if |spread|<0.75.
 
-## Next tasks
-- Get Athletic 1-48 list from Chris → sources/athletic.json → recompute
-- Confirm HTTPS enforced (background job may have done it)
-- Knockout bracket simulator + futures probabilities (BracketX-style) during group stage
-- Calibrate X-Spread factor vs MD1 closing lines
-- og-image / favicon assets (none yet)
-
-## Environment notes
-- This Mac's Chrome MCP can't navigate to localhost/fifa.com/worldcupx.co (domain allowlist); godaddy.com worked.
-- Claude_Preview panel works via sh -c trick in .claude/launch.json (python http.server direct hits sandbox error).
-- Background subagents have no web/Bash permissions — do scraping in main loop.
+## Environment quirks
+- gh token scopes: gist, read:org, repo (NO workflow). SSH not set up (publickey denied).
+- Chrome MCP can't navigate localhost/fifa.com/worldcupx.co (allowlist); godaddy worked.
+- Claude_Preview: use `sh -c 'cd ... && python3 -m http.server'` in .claude/launch.json.
+- Permission mode is per-session; global settings.json has bypassPermissions but session UI overrides — Chris must pick "Bypass permissions" in the session selector.
