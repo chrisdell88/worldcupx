@@ -256,9 +256,10 @@ function mergeLive(f,ov){const o=ov[f.n];return o?Object.assign({},f,o):f;}
 // recompute standings + accuracy client-side from baked results + live overlay,
 // so the site stays current for visitors even between server refreshes
 function computeLive(ov){
- const groups={};WCX.rows.forEach(r=>{groups[r.team]=r.group;});
+ const groups={},xrm={};WCX.rows.forEach(r=>{groups[r.team]=r.group;xrm[r.team]=r.xr;});
  const stand={};Object.keys(WCX.standings).forEach(g=>{stand[g]={};WCX.standings[g].forEach(s=>{stand[g][s.team]={team:s.team,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0};});});
  let correct=0,total=0;
+ let bw=0,bl=0,bp=0,bu=0; // ATS bet record vs the book line + units (flat -110)
  WCX.fixtures.map(f=>mergeLive(f,ov)).forEach(f=>{
   if(f.status!=="FT"||f.hs==null||f.as==null)return;
   const g=f.g;
@@ -270,6 +271,13 @@ function computeLive(ov){
   total++;
   if(f.hs===f.as)correct+=Math.abs(f.spread)<0.75?1:0;
   else correct+=((f.spread>0)===(f.hs>f.as))?1:0;
+  // grade our X-Spread as a bet vs the book's Asian line (rounded to 0.5 for now)
+  if(f.book&&f.book.spread!=null){
+   const Sb=Math.round(f.book.spread*2)/2, Sx=f.spread;
+   const betHome=Sx>Sb?true:Sx<Sb?false:(Sb>0?true:Sb<0?false:(xrm[f.h]<=xrm[f.a]));
+   const H=betHome?-Sb:Sb, adj=(betHome?(f.hs-f.as):(f.as-f.hs))+H;
+   if(adj>0){bw++;bu+=0.9091;}else if(adj<0){bl++;bu-=1;}else bp++;
+  }
  });
  // FIFA ordering: overall pts->GD->GF, then head-to-head among teams still level,
  // then X-rank (lots proxy). Teams sharing overall pts/GD/GF are flagged tied.
@@ -297,17 +305,31 @@ function computeLive(ov){
   }
   out[g]=res;
  });
- return {standings:out,accuracy:{correct,total}};
+ const bets={w:bw,l:bl,p:bp,units:+bu.toFixed(2),roi:(bw+bl)?Math.round(bu/(bw+bl)*100):0};
+ return {standings:out,accuracy:{correct,total},bets};
+}
+// grade one fixture's X-Spread bet vs the book line — returns null if no line to grade
+function gradeBet(f,xrm){
+ if(!f.book||f.book.spread==null||f.hs==null||f.as==null)return null;
+ const Sb=Math.round(f.book.spread*2)/2, Sx=f.spread;
+ const betHome=Sx>Sb?true:Sx<Sb?false:(Sb>0?true:Sb<0?false:((xrm[f.h]||99)<=(xrm[f.a]||99)));
+ const team=betHome?f.h:f.a, line=betHome?-Sb:Sb;
+ const adj=(betHome?(f.hs-f.as):(f.as-f.hs))+line;
+ const res=adj>0?"WIN":adj<0?"LOSS":"PUSH", units=adj>0?0.91:adj<0?-1:0;
+ const lbl=line===0?"PK":(line<0?"-":"+")+Math.abs(line).toFixed(1);
+ return {team,line:lbl,res,units};
 }
 
-function Header({accuracy,stale}){
- const a=accuracy||WCX.accuracy||{correct:0,total:0};
- const pct=a.total?Math.round(100*a.correct/a.total):0;
+function Header({bets,stale}){
+ const b=bets||{w:0,l:0,p:0,units:0,roi:0};
+ const graded=b.w+b.l;
+ const pct=graded?Math.round(100*b.w/graded):0;
+ const up=b.units>=0;
  return e("div",{className:"hdr"},
   e("div",{className:"logo"},"WORLDCUP",e("span",{className:"x"},"X")),
   e("div",{className:"sub"},"COMPOSITE POWER INDEX"),
   e("div",{className:"kick"},e("span",{className:"pulse"}),"WORLD CUP 2026 · 48 TEAMS · ",WCX.weighted.length," WEIGHTED SYSTEMS · UPDATED ",WCX.computed),
-  a.total?e("div",null,e("span",{className:"acc"},"⚽ X-SCORE CALLED ",e("b",null,a.correct+"/"+a.total)," MATCHES (",pct,"%)")):null,
+  graded?e("div",null,e("span",{className:"acc",style:{borderColor:(up?"#00e676":"#ff4444")+"55",color:up?"#00e676":"#ff4444"},title:"Betting our X-Spread against the sportsbook line, Asian-handicap settled, flat -110"},"⚽ X-SPREAD ATS ",e("b",null,b.w+"-"+b.l+(b.p?"-"+b.p:"")),"  ",e("b",{style:{color:up?"#00e676":"#ff4444"}},(up?"+":"")+b.units.toFixed(1)+"u"),"  ("+pct+"% · ROI "+(b.roi>=0?"+":"")+b.roi+"%)")):null,
   stale?e("div",null,e("span",{className:"stale"},"⚠ LIVE SCORES MAY BE DELAYED")):null,
   e("div",{className:"ball"},"⚽"));
 }
@@ -468,7 +490,7 @@ function currentMatchday(ov){
 }
 function Matchups({ov}){
  const [rd,setRd]=React.useState(()=>currentMatchday(ov));
- const rows={};WCX.rows.forEach(r=>rows[r.team]=r);
+ const rows={},xrm={};WCX.rows.forEach(r=>{rows[r.team]=r;xrm[r.team]=r.xr;});
  const fx=WCX.fixtures.filter(f=>f.rd===rd).map(f=>mergeLive(f,ov));
  const fmt=d=>{const dt=new Date(d.replace(" ","T"));return dt.toLocaleString(undefined,{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit",timeZoneName:"short"})};
  return e(React.Fragment,null,
@@ -483,10 +505,12 @@ function Matchups({ov}){
    // prediction hit/miss on FT
    let hm=null;
    if(ft){
-    let ok;
-    if(f.hs===f.as)ok=Math.abs(f.spread)<0.75;
-    else ok=(f.spread>0)===(f.hs>f.as);
-    hm=e("span",{className:"hitmiss "+(ok?"hit":"miss")},ok?"X-SCORE ✓":"UPSET");
+    const bet=gradeBet(f,xrm);
+    if(bet){
+     const cls=bet.res==="WIN"?"hit":bet.res==="LOSS"?"miss":"";
+     hm=e("span",{className:"hitmiss "+cls,style:bet.res==="PUSH"?{background:"#2a3545",color:"#aab"}:{}},
+      "BET "+short(bet.team)+" "+bet.line+" · "+bet.res+(bet.units?" "+(bet.units>0?"+":"")+bet.units+"u":""));
+    }
    }
    const hWon=played&&f.hs>f.as, aWon=played&&f.as>f.hs;
    return e("div",{className:"gcard",key:f.n,style:{"--gc":GROUP_COLORS[f.g],animationDelay:(i*0.03)+"s"}},
@@ -623,8 +647,8 @@ function Methodology(){
   e("h3",null,"05 — X-SPREAD & WIN PROBABILITY"),
   e("p",null,"The X-Spread converts the X-Score differential into a projected goal margin, ",e("strong",{style:{color:"#fff"}},"calibrated against DraftKings Asian-handicap lines across 65 fixtures")," (best-fit 0.74 goals per z-unit, error ~0.47 goals), shown to the nearest half-goal. Win probability is a logistic transform of the same differential."),
   e("div",{className:"formula"},"X-Spread = (X-Score A − X-Score B) × 0.74 goals"),
-  e("h3",null,"06 — LIVE RESULTS"),
-  e("p",null,"Scores update automatically: the page fetches live and completed matches from ESPN and recomputes standings in your browser. The accuracy chip tracks how often the X-Score “called” a match — the favored side won outright. A draw counts as correct only when the projected line was essentially even (under ¾ of a goal); a draw against a clear favorite counts as a miss."),
+  e("h3",null,"06 — RESULTS & ATS RECORD"),
+  e("p",null,"Scores update automatically from ESPN and standings recompute in your browser. The headline tracks the X-Spread ",e("strong",{style:{color:"#fff"}},"against the sportsbook"),": for every completed match we bet the side where our X-Spread disagrees with the book's Asian-handicap line (or back the favorite when we agree), settle it ",e("strong",{style:{color:"#fff"}},"at the book's line under Asian-handicap rules"),", and tally the record plus units at flat −110. Record is W-L (pushes excluded from the %). Lines are graded at the half-goal for now; true quarter-line (half-win/half-loss) settlement comes later. Note: book lines have only been captured since June 14, so the record covers matches from then on."),
   e("h3",null,"07 — WHAT'S NEXT"),
   e("p",null,"Knockout bracket simulator and futures/title probabilities ship as the group stage resolves — the full BracketX feature set, adapted for the World Cup."));
 }
@@ -637,10 +661,10 @@ function App(){
  React.useEffect(()=>{const on=()=>setTab(fromHash());window.addEventListener("hashchange",on);return ()=>window.removeEventListener("hashchange",on);},[]);
  const go=k=>{setTab(k);if(history.replaceState)history.replaceState(null,"","#"+SLUG[k]);else location.hash=SLUG[k];};
  const {ov,stale}=useLive();
- const {standings,accuracy}=React.useMemo(()=>computeLive(ov),[ov]);
+ const {standings,bets}=React.useMemo(()=>computeLive(ov),[ov]);
  const [team,setTeam]=React.useState(null);
  return e(React.Fragment,null,
-  e(Header,{accuracy,stale}),
+  e(Header,{bets,stale}),
   e(Ticker,{ov}),
   e(NextMatch,{ov}),
   e("div",{className:"tabwrap"},e("div",{className:"tabs"},tabs.map(([k,lbl])=>e("button",{key:k,className:"tab"+(tab===k?" on":""),onClick:()=>go(k)},lbl)))),
