@@ -12,6 +12,12 @@
 - **Team deep-dive**: click any team (Rankings/Standings) → TeamModal: per-system ranks (all weighted + ESPN), best/worst, live group table (team highlighted), fixtures with results or projected X-Spread from team's perspective.
 All verified desktop + mobile, no console errors.
 
+## v7 SHIPPED 2026-06-15 (systems swap)
+- **Removed ESPN + OPTA entirely** (no more compare/T3 tier). Deleted espn.json/opta.json.
+- **Added The Ringer (ringer.json) + USA TODAY (usatoday.json) to T2 ×1** → now **10 weighted systems** (PELE/ELO ×4; FIFA/LALAS/BR/YAH/SPNET/ATH/RINGER/USAT ×1). USA TODAY is a tiered ranking with ties (stored as-is). The Ringer needed Australia (31st) recovered via a 2nd targeted fetch — first fetch dropped it.
+- Ratings Key compare section auto-hides when WCX.compare is empty; methodology updated.
+- `computed` date now auto-set each refresh via datetime.date.today().
+
 ## v6 SHIPPED 2026-06-14 (richer projections)
 - **Win/Draw/Loss probabilities** on match cards: analytic twin-Poisson `outcome_probs(total, sup)` in compute → `fixture.prob={h,d,a}` (uses book O/U when available). Replaced the single misleading win% with a 3-segment W/D/L bar + labels.
 - **Standings ADV column**: each team's knockout-reach % from the futures sim.
