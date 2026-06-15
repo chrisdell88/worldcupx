@@ -1,0 +1,202 @@
+{
+ "system": "USAT",
+ "name": "USA TODAY \u2014 World Cup Odds Rankings",
+ "type": "rank",
+ "fetched": "2026-06-15",
+ "url": "https://www.usatoday.com/story/sports/soccer/worldcup/2026/06/13/world-cup-odds-rankings-france-spain/90530474007/",
+ "notes": "tiered ranking with ties",
+ "teams": [
+  {
+   "team": "France",
+   "rank": 1
+  },
+  {
+   "team": "Spain",
+   "rank": 1
+  },
+  {
+   "team": "England",
+   "rank": 3
+  },
+  {
+   "team": "Portugal",
+   "rank": 3
+  },
+  {
+   "team": "Argentina",
+   "rank": 5
+  },
+  {
+   "team": "Brazil",
+   "rank": 5
+  },
+  {
+   "team": "Germany",
+   "rank": 7
+  },
+  {
+   "team": "Netherlands",
+   "rank": 8
+  },
+  {
+   "team": "Belgium",
+   "rank": 9
+  },
+  {
+   "team": "Norway",
+   "rank": 9
+  },
+  {
+   "team": "Colombia",
+   "rank": 11
+  },
+  {
+   "team": "Morocco",
+   "rank": 11
+  },
+  {
+   "team": "Mexico",
+   "rank": 13
+  },
+  {
+   "team": "Japan",
+   "rank": 13
+  },
+  {
+   "team": "United States",
+   "rank": 13
+  },
+  {
+   "team": "Senegal",
+   "rank": 16
+  },
+  {
+   "team": "Switzerland",
+   "rank": 16
+  },
+  {
+   "team": "Turkey",
+   "rank": 16
+  },
+  {
+   "team": "Uruguay",
+   "rank": 16
+  },
+  {
+   "team": "Croatia",
+   "rank": 20
+  },
+  {
+   "team": "Ecuador",
+   "rank": 20
+  },
+  {
+   "team": "Sweden",
+   "rank": 22
+  },
+  {
+   "team": "Austria",
+   "rank": 23
+  },
+  {
+   "team": "Canada",
+   "rank": 23
+  },
+  {
+   "team": "Ivory Coast",
+   "rank": 25
+  },
+  {
+   "team": "South Korea",
+   "rank": 25
+  },
+  {
+   "team": "Algeria",
+   "rank": 27
+  },
+  {
+   "team": "Bosnia and Herzegovina",
+   "rank": 27
+  },
+  {
+   "team": "Egypt",
+   "rank": 27
+  },
+  {
+   "team": "Paraguay",
+   "rank": 27
+  },
+  {
+   "team": "Scotland",
+   "rank": 27
+  },
+  {
+   "team": "Czechia",
+   "rank": 32
+  },
+  {
+   "team": "Australia",
+   "rank": 33
+  },
+  {
+   "team": "Ghana",
+   "rank": 33
+  },
+  {
+   "team": "Iran",
+   "rank": 33
+  },
+  {
+   "team": "Tunisia",
+   "rank": 33
+  },
+  {
+   "team": "DR Congo",
+   "rank": 37
+  },
+  {
+   "team": "Cape Verde",
+   "rank": 38
+  },
+  {
+   "team": "Iraq",
+   "rank": 38
+  },
+  {
+   "team": "Jordan",
+   "rank": 38
+  },
+  {
+   "team": "New Zealand",
+   "rank": 38
+  },
+  {
+   "team": "Panama",
+   "rank": 38
+  },
+  {
+   "team": "Qatar",
+   "rank": 38
+  },
+  {
+   "team": "Saudi Arabia",
+   "rank": 38
+  },
+  {
+   "team": "South Africa",
+   "rank": 38
+  },
+  {
+   "team": "Uzbekistan",
+   "rank": 38
+  },
+  {
+   "team": "Curacao",
+   "rank": 47
+  },
+  {
+   "team": "Haiti",
+   "rank": 47
+  }
+ ]
+}

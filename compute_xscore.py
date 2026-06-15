@@ -114,13 +114,14 @@ SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sources")
 # Tier 1 = core models Chris trusts most (heavy). Tier 2 = FIFA + media (×1).
 # Chris's own rankings will join T1 at 4.0 once provided.
 T1 = {"PELE": 4.0, "ELO": 4.0}
-T2 = {"FIFA": 1.0, "LALAS": 1.0, "BR": 1.0, "YAH": 1.0, "SPNET": 1.0, "ATH": 1.0}
-T3 = {"ESPN"}  # OPTA dropped: only ~6 of 48 ratings public, so the column was misleading
+T2 = {"FIFA": 1.0, "LALAS": 1.0, "BR": 1.0, "YAH": 1.0, "SPNET": 1.0,
+      "ATH": 1.0, "RINGER": 1.0, "USAT": 1.0}
+T3 = set()  # ESPN dropped (partial top-15); OPTA dropped (only ~6 of 48 public)
 FILES = {
     "PELE": "pele.json", "ELO": "elo.json", "FIFA": "fifa.json",
     "LALAS": "foxlalas.json", "BR": "bleacher.json", "YAH": "yahoo.json",
     "SPNET": "sportsnet.json", "ATH": "athletic.json",
-    "ESPN": "espn.json",
+    "RINGER": "ringer.json", "USAT": "usatoday.json",
 }
 
 
@@ -325,7 +326,7 @@ def main():
     futures = simulate_futures(x, groups, fixtures)
 
     out = {
-        "computed": "2026-06-13",
+        "computed": __import__("datetime").date.today().isoformat(),
         "weighted": weighted_systems,
         "compare": compare_systems,
         "tier": {s: (1 if s in T1 else 2) for s in weighted_systems} | {s: 3 for s in compare_systems},
