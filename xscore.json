@@ -1275,9 +1275,9 @@
     "d": 11,
     "a": 5
    },
-   "hs": null,
-   "as": null,
-   "status": "",
+   "hs": 0,
+   "as": 0,
+   "status": "FT",
    "clock": "",
    "book": {
     "spread": 2.5,
@@ -1300,10 +1300,10 @@
     "d": 24,
     "a": 19
    },
-   "hs": null,
-   "as": null,
-   "status": "",
-   "clock": "",
+   "hs": 0,
+   "as": 1,
+   "status": "LIVE",
+   "clock": "20'",
    "book": {
     "spread": 0.5,
     "total": 2.5,
@@ -3094,29 +3094,31 @@
   ],
   "H": [
    {
-    "team": "Cape Verde",
-    "p": 0,
+    "team": "Spain",
+    "p": 1,
     "w": 0,
-    "d": 0,
+    "d": 1,
     "l": 0,
     "gf": 0,
     "ga": 0,
-    "pts": 0,
-    "gd": 0
+    "pts": 1,
+    "gd": 0,
+    "tied": true
+   },
+   {
+    "team": "Cape Verde",
+    "p": 1,
+    "w": 0,
+    "d": 1,
+    "l": 0,
+    "gf": 0,
+    "ga": 0,
+    "pts": 1,
+    "gd": 0,
+    "tied": true
    },
    {
     "team": "Saudi Arabia",
-    "p": 0,
-    "w": 0,
-    "d": 0,
-    "l": 0,
-    "gf": 0,
-    "ga": 0,
-    "pts": 0,
-    "gd": 0
-   },
-   {
-    "team": "Spain",
     "p": 0,
     "w": 0,
     "d": 0,
@@ -3325,53 +3327,53 @@
  },
  "accuracy": {
   "correct": 7,
-  "total": 12
+  "total": 13
  },
  "futures": {
   "Czechia": {
    "grp": 4.0,
-   "ko": 53.4,
+   "ko": 52.5,
    "cup": 0.0
   },
   "Mexico": {
-   "grp": 59.0,
-   "ko": 98.3,
+   "grp": 59.6,
+   "ko": 98.0,
    "cup": 0.4
   },
   "South Africa": {
    "grp": 0.8,
-   "ko": 21.1,
+   "ko": 20.7,
    "cup": 0.0
   },
   "South Korea": {
-   "grp": 36.2,
-   "ko": 95.2,
-   "cup": 0.1
+   "grp": 35.6,
+   "ko": 94.9,
+   "cup": 0.0
   },
   "Bosnia and Herzegovina": {
-   "grp": 16.0,
-   "ko": 64.3,
+   "grp": 16.4,
+   "ko": 64.9,
    "cup": 0.0
   },
   "Canada": {
-   "grp": 30.9,
-   "ko": 79.5,
+   "grp": 31.3,
+   "ko": 79.6,
    "cup": 0.1
   },
   "Qatar": {
    "grp": 6.3,
-   "ko": 37.9,
+   "ko": 37.8,
    "cup": 0.0
   },
   "Switzerland": {
-   "grp": 46.8,
-   "ko": 84.8,
-   "cup": 0.4
+   "grp": 46.0,
+   "ko": 84.4,
+   "cup": 0.3
   },
   "Brazil": {
-   "grp": 51.9,
-   "ko": 97.0,
-   "cup": 6.4
+   "grp": 51.6,
+   "ko": 96.6,
+   "cup": 6.2
   },
   "Haiti": {
    "grp": 0.2,
@@ -3379,32 +3381,32 @@
    "cup": 0.0
   },
   "Morocco": {
-   "grp": 31.8,
-   "ko": 91.5,
+   "grp": 31.3,
+   "ko": 91.2,
    "cup": 0.6
   },
   "Scotland": {
-   "grp": 16.1,
-   "ko": 80.2,
+   "grp": 16.9,
+   "ko": 78.8,
    "cup": 0.0
   },
   "Australia": {
-   "grp": 32.5,
+   "grp": 32.4,
    "ko": 90.9,
    "cup": 0.0
   },
   "Paraguay": {
    "grp": 3.2,
-   "ko": 36.0,
+   "ko": 35.4,
    "cup": 0.0
   },
   "Turkey": {
    "grp": 6.2,
-   "ko": 53.5,
-   "cup": 0.1
+   "ko": 53.0,
+   "cup": 0.2
   },
   "United States": {
-   "grp": 58.0,
+   "grp": 58.2,
    "ko": 96.9,
    "cup": 0.1
   },
@@ -3415,157 +3417,157 @@
   },
   "Ecuador": {
    "grp": 3.1,
-   "ko": 78.8,
+   "ko": 77.0,
    "cup": 0.8
   },
   "Germany": {
-   "grp": 74.1,
+   "grp": 74.8,
    "ko": 99.8,
    "cup": 4.0
   },
   "Ivory Coast": {
-   "grp": 22.7,
-   "ko": 95.6,
+   "grp": 22.0,
+   "ko": 95.1,
    "cup": 0.0
   },
   "Japan": {
-   "grp": 28.7,
-   "ko": 86.5,
+   "grp": 28.5,
+   "ko": 86.9,
    "cup": 0.3
   },
   "Netherlands": {
-   "grp": 44.1,
-   "ko": 92.9,
-   "cup": 2.9
+   "grp": 44.2,
+   "ko": 93.1,
+   "cup": 3.2
   },
   "Sweden": {
-   "grp": 26.1,
-   "ko": 95.0,
+   "grp": 26.3,
+   "ko": 94.5,
    "cup": 0.0
   },
   "Tunisia": {
-   "grp": 1.1,
-   "ko": 8.7,
+   "grp": 0.9,
+   "ko": 8.3,
    "cup": 0.0
   },
   "Belgium": {
-   "grp": 60.4,
-   "ko": 94.5,
+   "grp": 60.5,
+   "ko": 94.3,
    "cup": 1.3
   },
   "Egypt": {
-   "grp": 18.2,
-   "ko": 71.2,
+   "grp": 17.9,
+   "ko": 70.6,
    "cup": 0.0
   },
   "Iran": {
    "grp": 17.8,
-   "ko": 70.4,
+   "ko": 69.8,
    "cup": 0.0
   },
   "New Zealand": {
    "grp": 3.7,
-   "ko": 30.3,
+   "ko": 29.2,
    "cup": 0.0
   },
   "Cape Verde": {
-   "grp": 0.7,
-   "ko": 24.5,
+   "grp": 3.2,
+   "ko": 44.2,
    "cup": 0.0
   },
   "Saudi Arabia": {
-   "grp": 1.2,
-   "ko": 31.2,
+   "grp": 3.0,
+   "ko": 30.4,
    "cup": 0.0
   },
   "Spain": {
-   "grp": 75.9,
-   "ko": 99.5,
-   "cup": 27.7
+   "grp": 58.6,
+   "ko": 97.0,
+   "cup": 27.3
   },
   "Uruguay": {
-   "grp": 22.2,
-   "ko": 90.9,
-   "cup": 0.8
+   "grp": 35.2,
+   "ko": 90.2,
+   "cup": 0.7
   },
   "France": {
-   "grp": 58.7,
-   "ko": 96.4,
-   "cup": 14.1
+   "grp": 58.4,
+   "ko": 96.3,
+   "cup": 13.8
   },
   "Iraq": {
-   "grp": 0.6,
+   "grp": 0.7,
    "ko": 11.4,
    "cup": 0.0
   },
   "Norway": {
-   "grp": 22.6,
-   "ko": 82.2,
-   "cup": 1.0
+   "grp": 22.4,
+   "ko": 81.8,
+   "cup": 0.9
   },
   "Senegal": {
-   "grp": 18.2,
-   "ko": 78.5,
+   "grp": 18.5,
+   "ko": 78.0,
    "cup": 0.5
   },
   "Algeria": {
-   "grp": 8.5,
-   "ko": 61.5,
+   "grp": 8.2,
+   "ko": 60.6,
    "cup": 0.0
   },
   "Argentina": {
-   "grp": 76.5,
-   "ko": 98.4,
-   "cup": 19.2
+   "grp": 76.3,
+   "ko": 98.5,
+   "cup": 19.8
   },
   "Austria": {
-   "grp": 13.1,
-   "ko": 73.2,
+   "grp": 13.7,
+   "ko": 73.3,
    "cup": 0.1
   },
   "Jordan": {
-   "grp": 1.9,
-   "ko": 25.6,
+   "grp": 1.8,
+   "ko": 24.5,
    "cup": 0.0
   },
   "Colombia": {
-   "grp": 42.4,
-   "ko": 93.3,
-   "cup": 2.6
+   "grp": 42.2,
+   "ko": 92.9,
+   "cup": 2.8
   },
   "DR Congo": {
    "grp": 2.8,
-   "ko": 33.1,
+   "ko": 32.7,
    "cup": 0.0
   },
   "Portugal": {
-   "grp": 51.8,
-   "ko": 95.8,
+   "grp": 52.1,
+   "ko": 95.5,
    "cup": 5.4
   },
   "Uzbekistan": {
-   "grp": 3.0,
-   "ko": 34.2,
+   "grp": 2.9,
+   "ko": 33.6,
    "cup": 0.0
   },
   "Croatia": {
-   "grp": 29.8,
-   "ko": 88.0,
-   "cup": 1.0
+   "grp": 29.5,
+   "ko": 88.1,
+   "cup": 1.1
   },
   "England": {
-   "grp": 63.2,
-   "ko": 97.2,
-   "cup": 10.2
+   "grp": 63.9,
+   "ko": 96.9,
+   "cup": 9.9
   },
   "Ghana": {
    "grp": 2.4,
-   "ko": 29.4,
+   "ko": 28.5,
    "cup": 0.0
   },
   "Panama": {
-   "grp": 4.6,
-   "ko": 42.5,
+   "grp": 4.3,
+   "ko": 42.3,
    "cup": 0.0
   }
  }
