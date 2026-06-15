@@ -91,6 +91,24 @@ def _pois(lam):
         if p <= L:
             return k - 1
 
+
+def _pois_pmf(k, lam):
+    return math.exp(-lam) * lam ** k / math.factorial(k)
+
+
+def outcome_probs(total, sup):
+    """Analytic P(home win), P(draw), P(away win) from a twin-Poisson model."""
+    hx = max(0.05, (total + sup) / 2)
+    ax = max(0.05, (total - sup) / 2)
+    ph = pd = pa = 0.0
+    for i in range(11):
+        for j in range(11):
+            p = _pois_pmf(i, hx) * _pois_pmf(j, ax)
+            if i > j: ph += p
+            elif i == j: pd += p
+            else: pa += p
+    return ph, pd, pa
+
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sources")
 
 # Tier 1 = core models Chris trusts most (heavy). Tier 2 = FIFA + media (×1).
@@ -231,10 +249,13 @@ def main():
             elif n in live:
                 status, hs, as_ = "LIVE", live[n].get("hs"), live[n].get("as")
                 clock = live[n].get("clock", "")
+            ptotal = odds[n].get("total") if (n in odds and odds[n].get("total")) else 2.6
+            ph, pd_, pa = outcome_probs(ptotal, zd * SPREAD_K)
             row = {
                 "n": n, "rd": m["RoundNumber"], "date": m["DateUtc"],
                 "loc": m["Location"], "h": h, "a": a, "g": m["Group"][-1],
                 "spread": spread, "hwin": round(pwin * 100),
+                "prob": {"h": round(ph * 100), "d": round(pd_ * 100), "a": round(pa * 100)},
                 "hs": hs, "as": as_, "status": status, "clock": clock,
             }
             if n in odds and odds[n].get("sup") is not None:

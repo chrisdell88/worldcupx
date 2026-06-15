@@ -356,14 +356,15 @@ function Standings({standings,onTeam}){
  return e("div",{className:"gwrap"},order.map((g,gi)=>e("div",{className:"gcard",key:g,style:{"--gc":GROUP_COLORS[g],animationDelay:(gi*0.04)+"s"}},
   e("div",{className:"ghead"},e("span",{className:"gname"},"GROUP "+g)),
   e("table",{className:"stand",style:{width:"100%",borderLeft:"none",fontSize:12}},
-   e("thead",null,e("tr",null,["TEAM","P","W","D","L","GD","PTS"].map((h,i)=>e("th",{key:h,style:{textAlign:i?"center":"left",position:"static"}},h)))),
+   e("thead",null,e("tr",null,["TEAM","P","W","D","L","GD","PTS","ADV"].map((h,i)=>e("th",{key:h,className:h==="ADV"?"tip":null,style:{textAlign:i?"center":"left",position:"static",color:h==="ADV"?"#00e676":undefined}},h,h==="ADV"?e("span",{className:"tiptext"},"Probability of reaching the knockout round (X-Score simulation)"):null)))),
    e("tbody",null,st[g].map((s,i)=>{
     const cls=i<2?"qual":i===2?"qual3":"out";
     return e("tr",{key:s.team},
      e("td",{className:"teamcell clk "+cls,style:{minWidth:0},onClick:()=>onTeam&&onTeam(s.team)},e("span",{className:"flag"},FLAGS[s.team]||""),s.team,s.tied?e("span",{className:"tied-dot",title:"Level on points/GD/GF — tiebreaker pending"},"≈"):null),
      e("td",null,s.p),e("td",null,s.w),e("td",null,s.d),e("td",null,s.l),
      e("td",{style:{color:s.gd>0?"#00e676":s.gd<0?"#ff4444":"#aab"}},(s.gd>0?"+":"")+s.gd),
-     e("td",{className:"xs"},s.pts));
+     e("td",{className:"xs"},s.pts),
+     e("td",{style:{color:"#8899aa",fontSize:11}},(WCX.futures&&WCX.futures[s.team])?Math.round(WCX.futures[s.team].ko)+"%":"—"));
    }))),
   e("div",{style:{fontSize:9,color:"#566",marginTop:8,letterSpacing:.5}},"▎",e("span",{style:{color:"#00e676"}},"top 2 advance")," · ",e("span",{style:{color:"#ffd600"}},"3rd may advance")))));
 }
@@ -490,9 +491,16 @@ function Matchups({ov}){
     e("div",{style:{marginTop:9}},
      e("div",{style:{display:"flex",justifyContent:"space-between",fontSize:10,marginBottom:4}},
       e("span",{style:{color:"#00d4ff"}},"X-SPREAD: "+line,hm),
-      e("span",{style:{color:"#8899aa"}},f.hwin+"% "+f.h.split(" ")[0])),
-     e("div",{style:{height:5,background:"#1c2430",borderRadius:3,overflow:"hidden"}},
-      e("div",{style:{width:Math.min(100,Math.max(0,f.hwin))+"%",height:"100%",background:"linear-gradient(90deg,#00d4ff,#00e676)",transition:"width .6s"}}))),
+      e("span",{style:{color:"#566"}},"WIN / DRAW / WIN")),
+     f.prob?e(React.Fragment,null,
+      e("div",{style:{display:"flex",height:6,borderRadius:3,overflow:"hidden",background:"#1c2430"}},
+       e("div",{style:{width:f.prob.h+"%",background:"#00d4ff",transition:"width .6s"},title:short(f.h)+" "+f.prob.h+"%"}),
+       e("div",{style:{width:f.prob.d+"%",background:"#566370",transition:"width .6s"},title:"Draw "+f.prob.d+"%"}),
+       e("div",{style:{width:f.prob.a+"%",background:"#ff6b35",transition:"width .6s"},title:short(f.a)+" "+f.prob.a+"%"})),
+      e("div",{style:{display:"flex",justifyContent:"space-between",fontSize:9,marginTop:3}},
+       e("span",{style:{color:"#00d4ff"}},short(f.h)+" "+f.prob.h+"%"),
+       e("span",{style:{color:"#8899aa"}},"draw "+f.prob.d+"%"),
+       e("span",{style:{color:"#ff6b35"}},short(f.a)+" "+f.prob.a+"%"))):null),
     f.book?(function(){
      const bs=f.book.spread, bl=bs===0?"PK":short(bs>0?f.h:f.a)+" -"+Math.abs(bs).toFixed(1);
      const eMag=Math.abs(f.book.edge), eTeam=f.book.edge>0?f.h:f.a;
