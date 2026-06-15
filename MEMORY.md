@@ -12,6 +12,15 @@
 - **Team deep-dive**: click any team (Rankings/Standings) → TeamModal: per-system ranks (all weighted + ESPN), best/worst, live group table (team highlighted), fixtures with results or projected X-Spread from team's perspective.
 All verified desktop + mobile, no console errors.
 
+## v8 SHIPPED 2026-06-15 (ATS results — Asian handicap)
+Replaced the crude "X-Score called" accuracy with **BracketX-style ATS grading** (Chris insisted we match BracketX, which grades vs the BOOK line, and track EVERY match — no no-play cutoff).
+- For each completed match: compare our X-Spread to the book's Asian line; bet the side we disagree with the book on; if we agree, back the favorite. Settle **at the book line** with Asian-handicap rules. Whole-number line + exact margin = PUSH; pushes excluded from win %.
+- **0.5 grid for now** (book quarter-lines rounded to nearest 0.5; true quarter-line half-win/half-loss is a later flip Chris flagged). Units = flat −110 (win +0.91, loss −1), 1u/bet. ROI = units/(W+L).
+- `gradeBet(f,xrm)` + the tally in `computeLive` are client-side so the record updates live. Header chip = "X-SPREAD ATS w-l-p · ±Xu (pct% · ROI)". Match cards show "BET <team> <line> · WIN/LOSS/PUSH ±u".
+- **Limitation:** book lines only captured since ~Jun 14 (odds.json), so matchday-1 games (Jun 11–13) have no line and aren't graded. Record covers matches from then.
+- BracketX reference confirmed via its source (/tmp clone): TRACKER array, xATS/kpATS/btATS W/L/PUSH, graded at book line with a ~0.5 no-play→PUSH cutoff; meta brags "56.8% ATS, profited above 52.4%". We use NO cutoff per Chris ("track every match").
+- See [[feedback_confirm_tuning_params]] — surfaced the cutoff choice rather than inventing it.
+
 ## v7 SHIPPED 2026-06-15 (systems swap)
 - **Removed ESPN + OPTA entirely** (no more compare/T3 tier). Deleted espn.json/opta.json.
 - **Added The Ringer (ringer.json) + USA TODAY (usatoday.json) to T2 ×1** → now **10 weighted systems** (PELE/ELO ×4; FIFA/LALAS/BR/YAH/SPNET/ATH/RINGER/USAT ×1). USA TODAY is a tiered ranking with ties (stored as-is). The Ringer needed Australia (31st) recovered via a 2nd targeted fetch — first fetch dropped it.
