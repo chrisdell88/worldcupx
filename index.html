@@ -193,9 +193,9 @@ const ABBR={"South Korea":"S. Korea","South Africa":"S. Africa","United States":
 const short=t=>ABBR[t]||t;
 const FLAGS = {"Czechia":"🇨🇿","Mexico":"🇲🇽","South Africa":"🇿🇦","South Korea":"🇰🇷","Bosnia and Herzegovina":"🇧🇦","Canada":"🇨🇦","Qatar":"🇶🇦","Switzerland":"🇨🇭","Brazil":"🇧🇷","Haiti":"🇭🇹","Morocco":"🇲🇦","Scotland":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","Australia":"🇦🇺","Paraguay":"🇵🇾","Turkey":"🇹🇷","United States":"🇺🇸","Curacao":"🇨🇼","Ecuador":"🇪🇨","Germany":"🇩🇪","Ivory Coast":"🇨🇮","Japan":"🇯🇵","Netherlands":"🇳🇱","Sweden":"🇸🇪","Tunisia":"🇹🇳","Belgium":"🇧🇪","Egypt":"🇪🇬","Iran":"🇮🇷","New Zealand":"🇳🇿","Cape Verde":"🇨🇻","Saudi Arabia":"🇸🇦","Spain":"🇪🇸","Uruguay":"🇺🇾","France":"🇫🇷","Iraq":"🇮🇶","Norway":"🇳🇴","Senegal":"🇸🇳","Algeria":"🇩🇿","Argentina":"🇦🇷","Austria":"🇦🇹","Jordan":"🇯🇴","Colombia":"🇨🇴","DR Congo":"🇨🇩","Portugal":"🇵🇹","Uzbekistan":"🇺🇿","Croatia":"🇭🇷","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Ghana":"🇬🇭","Panama":"🇵🇦"};
 const SYS_INFO = {
- PELE:["Nate Silver PELE International Ratings","T1 core model — raw values, z-scored (4×)","natesilver.net"],
- ELO:["World Football Elo Ratings","T1 core model — raw values, z-scored (4×)","eloratings.net"],
- FIFA:["FIFA Men's World Ranking (points)","T2 — raw rating values, z-scored (1×)","inside.fifa.com"],
+ PELE:["Nate Silver PELE International Ratings","T1 core model — raw rating values","natesilver.net"],
+ ELO:["World Football Elo Ratings","T1 core model — raw rating values","eloratings.net"],
+ FIFA:["FIFA Men's World Ranking (points)","T2 — raw rating values","inside.fifa.com"],
  LALAS:["Fox Sports — Alexi Lalas Power Rankings","T2 — ordinal 1-48","foxsports.com"],
  BR:["Bleacher Report Final 48-Team Power Ranking","T2 — ordinal 1-48","bleacherreport.com"],
  YAH:["Yahoo Sports Power Rankings 1-48","T2 — ordinal 1-48","sports.yahoo.com"],
@@ -429,9 +429,9 @@ function Rankings({onTeam}){
 }
 
 function KeyModal({close}){
- const tiers=[["T1 — CORE MODELS (4× weight)","#00d4ff",WCX.weighted.filter(s=>WCX.tier[s]===1)],
-  ["T2 — FIFA + MEDIA (1× weight)","#c0885a",WCX.weighted.filter(s=>WCX.tier[s]===2)],
-  ["COMPARE / REFERENCE (unweighted)","#8899aa",WCX.compare]].filter(t=>t[2].length);
+ const tiers=[["T1 — CORE MODELS","#00d4ff",WCX.weighted.filter(s=>WCX.tier[s]===1)],
+  ["T2 — FIFA + MEDIA","#c0885a",WCX.weighted.filter(s=>WCX.tier[s]===2)],
+  ["COMPARE / REFERENCE","#8899aa",WCX.compare]].filter(t=>t[2].length);
  return e("div",{className:"modalbg",onClick:close},
   e("div",{className:"modal",onClick:ev=>ev.stopPropagation()},
    e("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:12}},
@@ -443,7 +443,7 @@ function KeyModal({close}){
      e("strong",{style:{color:c,display:"inline-block",minWidth:58}},s),
      SYS_INFO[s][0],
      e("span",{style:{color:"#566"}}," · "+SYS_INFO[s][2]))))),
-   e("p",{style:{fontSize:10,color:"#8899aa",marginTop:8}},"All ",WCX.weighted.length," systems are z-score normalized across the 48-team field and combined by tier weight into the X-Score.")));
+   e("p",{style:{fontSize:10,color:"#8899aa",marginTop:8}},"All ",WCX.weighted.length," systems feed the X-Score, with the Tier 1 core models carrying more influence than Tier 2.")));
 }
 
 function Groups(){
