@@ -81,6 +81,7 @@
   .twrap{overflow-x:auto;padding:12px;background:#0d1117}
   table{border-collapse:collapse;margin:0 auto;background:#0e1218;border-left:3px solid #00d4ff;font-size:12px}
   th{background:#10161f;color:#8899aa;font-weight:500;font-size:9px;letter-spacing:1px;padding:8px 7px;text-align:center;border-bottom:1px solid #1c2430;cursor:help;white-space:nowrap}
+  th.sorted{background:#172230;color:#fff;border-bottom:2px solid #00d4ff}
   td{padding:6px 7px;text-align:center;border-bottom:1px solid #151c26;background:#0e1218;white-space:nowrap}
   tr{animation:rise .4s ease both}
   @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -381,8 +382,15 @@ function Pills({sel,setSel}){
 function Rankings({onTeam}){
  const [sel,setSel]=React.useState("ALL");
  const [key,setKey]=React.useState(false);
+ const [sort,setSort]=React.useState({k:"xr",dir:1});
  const systems=WCX.weighted.concat(WCX.compare);
- const rows=WCX.rows.filter(r=>sel==="ALL"||r.group===sel);
+ const getv=(r,k)=>k==="xr"?r.xr:k==="team"?r.team:k==="grp"?r.group:k==="x"?r.x:k==="best"?r.best:k==="worst"?r.worst:(r.ranks[k]==null?Infinity:r.ranks[k]);
+ const defDir=k=>k==="x"?-1:1; // X-Score sorts high→low by default; everything else low→high
+ const clickSort=k=>setSort(s=>s.k===k?{k,dir:-s.dir}:{k,dir:defDir(k)});
+ const arrow=k=>sort.k===k?(sort.dir===1?" ▲":" ▼"):"";
+ const cmp=(a,b)=>{const va=getv(a,sort.k),vb=getv(b,sort.k);let c=typeof va==="string"?va.localeCompare(vb):(va<vb?-1:va>vb?1:0);c*=sort.dir;return c!==0?c:(a.xr-b.xr);};
+ const rows=WCX.rows.filter(r=>sel==="ALL"||r.group===sel).slice().sort(cmp);
+ const sth=(k,label,extra)=>e("th",Object.assign({className:"tip"+(sort.k===k?" sorted":""),onClick:()=>clickSort(k),style:Object.assign({cursor:"pointer"},(extra&&extra.style)||{})},extra&&extra.tipless?{}:{}),label+arrow(k),extra&&extra.tip?e("span",{className:"tiptext"},extra.tip):null);
  return e(React.Fragment,null,
   e(Pills,{sel,setSel}),
   e("div",{style:{textAlign:"center",padding:"8px 0 2px"}},
@@ -390,15 +398,15 @@ function Rankings({onTeam}){
   e("div",{className:"twrap"},
    e("table",null,
     e("thead",null,e("tr",null,
-     e("th",{className:"tip"},"X#",e("span",{className:"tiptext"},"Composite X-Score rank")),
-     e("th",{className:"tip",style:{textAlign:"left"}},"TEAM",e("span",{className:"tiptext"},"National team")),
-     e("th",{className:"tip"},"GRP",e("span",{className:"tiptext"},"World Cup 2026 group")),
-     e("th",{className:"tip",style:{color:"#00d4ff",fontWeight:700}},"X-SCORE",e("span",{className:"tiptext"},"Tier-weighted mean of per-system z-scores")),
-     e("th",{className:"tip",style:{color:"#00e676"}},"BEST",e("span",{className:"tiptext"},"Best rank across weighted systems")),
-     e("th",{className:"tip",style:{color:"#ff4444"}},"WORST",e("span",{className:"tiptext"},"Worst rank across weighted systems")),
+     sth("xr","X#",{tip:"Composite X-Score rank — click any header to sort"}),
+     sth("team","TEAM",{style:{textAlign:"left"},tip:"National team"}),
+     sth("grp","GRP",{tip:"World Cup 2026 group"}),
+     sth("x","X-SCORE",{style:{color:"#00d4ff",fontWeight:700},tip:"Tier-weighted mean of per-system z-scores"}),
+     sth("best","BEST",{style:{color:"#00e676"},tip:"Best rank across weighted systems"}),
+     sth("worst","WORST",{style:{color:"#ff4444"},tip:"Worst rank across weighted systems"}),
      systems.map(s=>{
       const cls=WCX.tier[s]===1?"t1":WCX.tier[s]===2?"t2":"t3";
-      return e("th",{key:s,className:"tip "+cls},s,e("span",{className:"tiptext"},SYS_INFO[s][0]+" · "+SYS_INFO[s][1]));
+      return e("th",{key:s,className:"tip "+cls+(sort.k===s?" sorted":""),onClick:()=>clickSort(s),style:{cursor:"pointer"}},s+arrow(s),e("span",{className:"tiptext"},SYS_INFO[s][0]+" · "+SYS_INFO[s][1]));
      }))),
     e("tbody",null,rows.map((r,i)=>e("tr",{key:r.team,style:{animationDelay:Math.min(i*0.012,0.35)+"s"}},
      e("td",{className:"xnum"},r.xr),
