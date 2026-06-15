@@ -520,7 +520,21 @@ function Futures(){
   e("span",{style:{minWidth:38,textAlign:"right",color:c,fontWeight:700}},v+"%"),
   e("div",{style:{width:54,height:5,background:"#1c2430",borderRadius:3,overflow:"hidden"}},
    e("div",{style:{width:Math.min(100,v)+"%",height:"100%",background:c}})));
+ // market edge board: upcoming matches where X-Score most disagrees with the book line
+ const edges=WCX.fixtures.filter(x=>x.status!=="FT"&&x.book&&Math.abs(x.book.edge)>=0.5)
+   .sort((a,b)=>Math.abs(b.book.edge)-Math.abs(a.book.edge)).slice(0,8);
  return e(React.Fragment,null,
+  edges.length?e("div",{style:{maxWidth:680,margin:"0 auto",padding:"16px 16px 0"}},
+   e("div",{className:"tm-sec",style:{margin:"0 0 8px"}},"◆ TOP MARKET EDGES (model vs DraftKings)"),
+   edges.map(f=>{
+    const eTeam=f.book.edge>0?f.h:f.a, eMag=Math.abs(f.book.edge);
+    const xl=f.spread===0?"PK":(f.spread>0?short(f.h):short(f.a))+" -"+Math.abs(f.spread).toFixed(1);
+    const bl=f.book.spread===0?"PK":(f.book.spread>0?short(f.h):short(f.a))+" -"+Math.abs(f.book.spread).toFixed(1);
+    return e("div",{className:"tm-fx",key:f.n},
+     e("span",null,e("span",{className:"flag"},FLAGS[f.h]||""),short(f.h)," v ",short(f.a),e("span",{className:"flag",style:{marginLeft:5}},FLAGS[f.a]||"")),
+     e("span",{style:{fontSize:11}},e("span",{style:{color:"#00d4ff"}},"X "+xl),e("span",{style:{color:"#566"}}," · BOOK "+bl),
+      e("span",{className:"edge-badge",style:{marginLeft:8}},short(eTeam)+" +"+eMag.toFixed(1))));
+   })):null,
   e("div",{style:{textAlign:"center",padding:"14px 16px 4px",color:"#8899aa",fontSize:11,letterSpacing:1}},
    "MONTE CARLO · 20,000 SIMULATIONS FROM X-SCORE · CONDITIONED ON RESULTS SO FAR"),
   e("div",{className:"twrap"},
