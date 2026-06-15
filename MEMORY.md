@@ -12,6 +12,12 @@
 - **Team deep-dive**: click any team (Rankings/Standings) → TeamModal: per-system ranks (all weighted + ESPN), best/worst, live group table (team highlighted), fixtures with results or projected X-Spread from team's perspective.
 All verified desktop + mobile, no console errors.
 
+## v6 SHIPPED 2026-06-14 (richer projections)
+- **Win/Draw/Loss probabilities** on match cards: analytic twin-Poisson `outcome_probs(total, sup)` in compute → `fixture.prob={h,d,a}` (uses book O/U when available). Replaced the single misleading win% with a 3-segment W/D/L bar + labels.
+- **Standings ADV column**: each team's knockout-reach % from the futures sim.
+- **FUTURES "Top Market Edges" board**: upcoming fixtures sorted by |X-Spread − book line|, top 8, shown above the title-odds table.
+- Ticker no longer pauses on hover (removed the hover-pause rule per Chris).
+
 ## Current state — v4 base (secure, scheduled, reweighted)
 Tabs: RANKINGS · STANDINGS · GROUPS · MATCHUPS · FUTURES · ABOUT(methodology)
 - **HTTPS LIVE**: cert approved + enforced (forced via `gh api DELETE` then `POST` recreate of the Pages site — the git CNAME toggle was a no-op). http→https 301.
