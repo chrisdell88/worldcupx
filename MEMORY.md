@@ -12,7 +12,16 @@
 - **Team deep-dive**: click any team (Rankings/Standings) → TeamModal: per-system ranks (all weighted + ESPN), best/worst, live group table (team highlighted), fixtures with results or projected X-Spread from team's perspective.
 All verified desktop + mobile, no console errors.
 
-## v8 SHIPPED 2026-06-15 (ATS results — Asian handicap)
+## v9 SHIPPED 2026-06-16 (REBUILD to match BracketX — model comparison, not betting)
+Chris's intent (finally clear): **X-Score = composite of the best models; the results page compares X-Score to its COMPONENT models vs actual results** — exactly how BracketX compared X-Score to KenPom & BartTorvik (+ closing line). NOT betting.
+- **X-Score = average of z(PELE) + z(Elo) ONLY.** FIFA + 7 media lists demoted to reference columns (not in composite). compute T1={PELE,ELO}, T3=the rest.
+- **All betting REMOVED** (ATS record, edge board, BET/units badges, gradeBet, book.edge).
+- **RESULTS tab + header**: per completed match shows projected home margin from X-Score / PELE / Elo / Book vs the ACTUAL margin; leaderboard = MAE + median per model ("does the composite beat its parts"). Computed client-side (computeLive returns `acc`), updates live. compute bakes `fixture.proj={X,PELE,ELO}`; book line kept as reference only.
+- Honest result on 16 games: X-Score MAE 1.64 ≈ Elo 1.64 ≈ PELE 1.65; Book 1.31 (market sharper). Averaging two highly-correlated models barely helps — expected; small sample.
+- **KEY CORRECTION to earlier audit:** BracketX's `SR` matrix is RANKS (1-68), not ratings — its "rating values" copy is marketing. So z-scoring ranks is NOT a flaw and matches BracketX; redundancy across correlated systems is the *intended* error-cancellation design. My earlier "deep dive" critiquing those was wrong because I hadn't read BracketX's source. LESSON: when Chris cites a precedent, read its source BEFORE designing. See [[feedback_confirm_tuning_params]].
+- Open: Chris leaning "PELE+Elo should be the ONLY systems used" — I kept the others as greyed reference columns; he may want them removed entirely. Confirm.
+
+## v8 SHIPPED 2026-06-15 (ATS results — Asian handicap) [SUPERSEDED by v9 — betting removed]
 Replaced the crude "X-Score called" accuracy with **BracketX-style ATS grading** (Chris insisted we match BracketX, which grades vs the BOOK line, and track EVERY match — no no-play cutoff).
 - For each completed match: compare our X-Spread to the book's Asian line; bet the side we disagree with the book on; if we agree, back the favorite. Settle **at the book line** with Asian-handicap rules. Whole-number line + exact margin = PUSH; pushes excluded from win %.
 - **0.5 grid for now** (book quarter-lines rounded to nearest 0.5; true quarter-line half-win/half-loss is a later flip Chris flagged). Units = flat −110 (win +0.91, loss −1), 1u/bet. ROI = units/(W+L).
