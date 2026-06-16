@@ -312,14 +312,14 @@ function computeLive(ov){
 
 function Header({acc,stale}){
  const a=acc||{};
- const beats=a.n&&a.X&&a.X.mae!=null&&[a.PELE,a.ELO,a.BOOK].every(m=>!m||m.mae==null||a.X.mae<=m.mae);
+ const beats=a.n&&a.X&&a.X.mae!=null&&[a.PELE,a.ELO].every(m=>!m||m.mae==null||a.X.mae<=m.mae);
  return e("div",{className:"hdr"},
   e("div",{className:"logo"},"WORLDCUP",e("span",{className:"x"},"X")),
   e("div",{className:"sub"},"COMPOSITE POWER INDEX"),
   e("div",{className:"kick"},e("span",{className:"pulse"}),"WORLD CUP 2026 · 48 TEAMS · X-SCORE = PELE + ELO · UPDATED ",WCX.computed),
   (a.n)?e("div",null,e("span",{className:"acc",style:{borderColor:(beats?"#00e676":"#8899aa")+"55",color:beats?"#00e676":"#cfd8e3"},title:"Average goal error of each model's projected margin vs the actual result, over "+a.n+" completed matches"},
    "PROJECTION ERROR (",a.n,"): ",e("b",{style:{color:"#00d4ff"}},"X-Score "+a.X.mae),
-   "  · PELE "+(a.PELE.mae??"–"),"  · Elo "+(a.ELO.mae??"–"),a.BOOK.mae!=null?"  · Book "+a.BOOK.mae:"")):null,
+   "  · PELE "+(a.PELE.mae??"–"),"  · Elo "+(a.ELO.mae??"–"))):null,
   stale?e("div",null,e("span",{className:"stale"},"⚠ LIVE SCORES MAY BE DELAYED")):null,
   e("div",{className:"ball"},"⚽"));
 }
@@ -600,7 +600,7 @@ function Results({ov,acc}){
  const fx=WCX.fixtures.map(f=>mergeLive(f,ov)).filter(f=>f.status==="FT"&&f.hs!=null).sort((a,b)=>b.n-a.n);
  if(!fx.length)return e("div",{style:{textAlign:"center",padding:40,color:"#8899aa"}},"No completed matches yet — projection accuracy appears here once games are played.");
  const fmtSp=v=>v==null?"–":(v>0?"+":"")+(+v).toFixed(1);
- const models=[["X-SCORE","X","#00d4ff"],["PELE","PELE","#c0885a"],["Elo","ELO","#c0885a"],["Book","BOOK","#8899aa"]];
+ const models=[["X-SCORE","X","#00d4ff"],["PELE","PELE","#c0885a"],["Elo","ELO","#c0885a"]];
  const ranked=models.filter(m=>acc[m[1]]&&acc[m[1]].mae!=null).sort((a,b)=>acc[a[1]].mae-acc[b[1]].mae);
  return e(React.Fragment,null,
   e("div",{style:{textAlign:"center",padding:"16px 16px 6px",color:"#8899aa",fontSize:11,letterSpacing:1}},
@@ -613,19 +613,19 @@ function Results({ov,acc}){
   e("div",{className:"twrap"},e("table",null,
    e("thead",null,e("tr",null,
     e("th",{style:{textAlign:"left"}},"MATCH"),e("th",null,"ACTUAL"),
-    e("th",{style:{color:"#00d4ff"}},"X-SCORE"),e("th",{style:{color:"#c0885a"}},"PELE"),e("th",{style:{color:"#c0885a"}},"ELO"),e("th",{style:{color:"#8899aa"}},"BOOK"))),
+    e("th",{style:{color:"#00d4ff"}},"X-SCORE"),e("th",{style:{color:"#c0885a"}},"PELE"),e("th",{style:{color:"#c0885a"}},"ELO"))),
    e("tbody",null,fx.map(f=>{
     const act=f.hs-f.as;
-    const cands=[["X",f.proj&&f.proj.X],["PELE",f.proj&&f.proj.PELE],["ELO",f.proj&&f.proj.ELO],["BOOK",f.book&&f.book.spread]];
+    const cands=[["X",f.proj&&f.proj.X],["PELE",f.proj&&f.proj.PELE],["ELO",f.proj&&f.proj.ELO]];
     let best=null,be=1e9;cands.forEach(([k,v])=>{if(v!=null&&Math.abs(v-act)<be){be=Math.abs(v-act);best=k;}});
     const cell=(k,v)=>e("td",{key:k,className:best===k?"hi-g":"",style:{fontWeight:best===k?700:400}},fmtSp(v));
     return e("tr",{key:f.n},
      e("td",{className:"teamcell"},e("span",{className:"flag"},FLAGS[f.h]||""),short(f.h)," ",e("b",{style:{color:"#ffd600"}},f.hs+"-"+f.as)," ",short(f.a),e("span",{className:"flag"},FLAGS[f.a]||"")),
      e("td",{style:{fontWeight:700,color:"#fff"}},fmtSp(act)),
-     cell("X",f.proj&&f.proj.X),cell("PELE",f.proj&&f.proj.PELE),cell("ELO",f.proj&&f.proj.ELO),cell("BOOK",f.book&&f.book.spread));
+     cell("X",f.proj&&f.proj.X),cell("PELE",f.proj&&f.proj.PELE),cell("ELO",f.proj&&f.proj.ELO));
    })))),
   e("p",{style:{textAlign:"center",fontSize:10,color:"#566",padding:"6px 16px 16px",maxWidth:680,margin:"0 auto",lineHeight:1.6}},
-   "Each number is that model's projected goal margin for the home team; ACTUAL is the final margin. Green = the projection closest to the result. The X-Score is the composite of PELE + Elo; the book line is shown only as a market reference."));
+   "Each number is that model's projected goal margin for the home team; ACTUAL is the final margin. Green = the projection closest to the result. The X-Score is the composite; PELE and Elo are its two strongest component models."));
 }
 
 function Methodology(){
