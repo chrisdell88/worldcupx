@@ -111,11 +111,12 @@ def outcome_probs(total, sup):
 
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sources")
 
-# X-Score is the composite of PELE + Elo only — the two strongest models (Chris's call).
-# Everything else is compare/reference: shown alongside, NOT in the X-Score.
-T1 = {"PELE": 1.0, "ELO": 1.0}
-T2 = {}
-T3 = {"FIFA", "LALAS", "BR", "YAH", "SPNET", "ATH", "RINGER", "USAT"}
+# X-Score composite: all 10 systems. PELE+Elo weighted heavier (Chris's prior call).
+# NOTE: composition/weights are Chris's decision — do not change without his explicit go-ahead.
+T1 = {"PELE": 4.0, "ELO": 4.0}
+T2 = {"FIFA": 1.0, "LALAS": 1.0, "BR": 1.0, "YAH": 1.0, "SPNET": 1.0,
+      "ATH": 1.0, "RINGER": 1.0, "USAT": 1.0}
+T3 = set()
 FILES = {
     "PELE": "pele.json", "ELO": "elo.json", "FIFA": "fifa.json",
     "LALAS": "foxlalas.json", "BR": "bleacher.json", "YAH": "yahoo.json",
