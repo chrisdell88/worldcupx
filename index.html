@@ -258,8 +258,9 @@ function mergeLive(f,ov){const o=ov[f.n];return o?Object.assign({},f,o):f;}
 function computeLive(ov){
  const groups={},xrm={};WCX.rows.forEach(r=>{groups[r.team]=r.group;xrm[r.team]=r.xr;});
  const stand={};Object.keys(WCX.standings).forEach(g=>{stand[g]={};WCX.standings[g].forEach(s=>{stand[g][s.team]={team:s.team,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0};});});
- let correct=0,total=0;
- let bw=0,bl=0,bp=0,bu=0; // ATS bet record vs the book line + units (flat -110)
+ // prediction-error accumulators: how close each model's projected margin was to actual.
+ // X-Score is compared head-to-head with its component models (PELE, Elo) and the book.
+ const errs={X:[],PELE:[],ELO:[],BOOK:[]};
  WCX.fixtures.map(f=>mergeLive(f,ov)).forEach(f=>{
   if(f.status!=="FT"||f.hs==null||f.as==null)return;
   const g=f.g;
@@ -268,19 +269,13 @@ function computeLive(ov){
    s.p++;s.gf+=gf;s.ga+=ga;
    if(gf>ga){s.w++;s.pts+=3;}else if(gf===ga){s.d++;s.pts++;}else s.l++;
   });
-  total++;
-  if(f.hs===f.as)correct+=Math.abs(f.spread)<0.75?1:0;
-  else correct+=((f.spread>0)===(f.hs>f.as))?1:0;
-  // grade ONLY where our X-Spread disagrees with the book's Asian line — bet the side
-  // our number favors (home OR away). If we agree with the book, there's no edge → no bet.
-  if(f.book&&f.book.spread!=null){
-   const Sb=Math.round(f.book.spread*2)/2, Sx=f.spread;
-   if(Sx!==Sb){
-    const betHome=Sx>Sb;
-    const H=betHome?-Sb:Sb, adj=(betHome?(f.hs-f.as):(f.as-f.hs))+H;
-    if(adj>0){bw++;bu+=0.9091;}else if(adj<0){bl++;bu-=1;}else bp++;
-   }
+  const actual=f.hs-f.as;
+  if(f.proj){
+   if(f.proj.X!=null)errs.X.push(Math.abs(f.proj.X-actual));
+   if(f.proj.PELE!=null)errs.PELE.push(Math.abs(f.proj.PELE-actual));
+   if(f.proj.ELO!=null)errs.ELO.push(Math.abs(f.proj.ELO-actual));
   }
+  if(f.book&&f.book.spread!=null)errs.BOOK.push(Math.abs(f.book.spread-actual));
  });
  // FIFA ordering: overall pts->GD->GF, then head-to-head among teams still level,
  // then X-rank (lots proxy). Teams sharing overall pts/GD/GF are flagged tied.
@@ -308,32 +303,23 @@ function computeLive(ov){
   }
   out[g]=res;
  });
- const bets={w:bw,l:bl,p:bp,units:+bu.toFixed(2),roi:(bw+bl)?Math.round(bu/(bw+bl)*100):0};
- return {standings:out,accuracy:{correct,total},bets};
-}
-// grade one fixture's X-Spread bet vs the book line. null = no line; {res:"PASS"} = no edge (we agree with book)
-function gradeBet(f){
- if(!f.book||f.book.spread==null||f.hs==null||f.as==null)return null;
- const Sb=Math.round(f.book.spread*2)/2, Sx=f.spread;
- if(Sx===Sb)return {res:"PASS"};               // no disagreement with the book → no bet
- const betHome=Sx>Sb;                            // our number favors home (or away)
- const team=betHome?f.h:f.a, line=betHome?-Sb:Sb;
- const adj=(betHome?(f.hs-f.as):(f.as-f.hs))+line;
- const res=adj>0?"WIN":adj<0?"LOSS":"PUSH", units=adj>0?0.91:adj<0?-1:0;
- const lbl=line===0?"PK":(line<0?"-":"+")+Math.abs(line).toFixed(1);
- return {team,line:lbl,res,units};
+ const mae=a=>a.length?+(a.reduce((s,v)=>s+v,0)/a.length).toFixed(2):null;
+ const med=a=>{if(!a.length)return null;const s=[...a].sort((x,y)=>x-y);return +s[Math.floor(s.length/2)].toFixed(2);};
+ const acc={n:errs.X.length};
+ ["X","PELE","ELO","BOOK"].forEach(k=>{acc[k]={mae:mae(errs[k]),med:med(errs[k]),n:errs[k].length};});
+ return {standings:out,acc};
 }
 
-function Header({bets,stale}){
- const b=bets||{w:0,l:0,p:0,units:0,roi:0};
- const graded=b.w+b.l;
- const pct=graded?Math.round(100*b.w/graded):0;
- const up=b.units>=0;
+function Header({acc,stale}){
+ const a=acc||{};
+ const beats=a.n&&a.X&&a.X.mae!=null&&[a.PELE,a.ELO,a.BOOK].every(m=>!m||m.mae==null||a.X.mae<=m.mae);
  return e("div",{className:"hdr"},
   e("div",{className:"logo"},"WORLDCUP",e("span",{className:"x"},"X")),
   e("div",{className:"sub"},"COMPOSITE POWER INDEX"),
-  e("div",{className:"kick"},e("span",{className:"pulse"}),"WORLD CUP 2026 · 48 TEAMS · ",WCX.weighted.length," WEIGHTED SYSTEMS · UPDATED ",WCX.computed),
-  graded?e("div",null,e("span",{className:"acc",style:{borderColor:(up?"#00e676":"#ff4444")+"55",color:up?"#00e676":"#ff4444"},title:"Betting our X-Spread against the sportsbook line, Asian-handicap settled, flat -110"},"⚽ X-SPREAD ATS ",e("b",null,b.w+"-"+b.l+(b.p?"-"+b.p:"")),"  ",e("b",{style:{color:up?"#00e676":"#ff4444"}},(up?"+":"")+b.units.toFixed(1)+"u"),"  ("+pct+"% · ROI "+(b.roi>=0?"+":"")+b.roi+"%)")):null,
+  e("div",{className:"kick"},e("span",{className:"pulse"}),"WORLD CUP 2026 · 48 TEAMS · X-SCORE = PELE + ELO · UPDATED ",WCX.computed),
+  (a.n)?e("div",null,e("span",{className:"acc",style:{borderColor:(beats?"#00e676":"#8899aa")+"55",color:beats?"#00e676":"#cfd8e3"},title:"Average goal error of each model's projected margin vs the actual result, over "+a.n+" completed matches"},
+   "PROJECTION ERROR (",a.n,"): ",e("b",{style:{color:"#00d4ff"}},"X-Score "+a.X.mae),
+   "  · PELE "+(a.PELE.mae??"–"),"  · Elo "+(a.ELO.mae??"–"),a.BOOK.mae!=null?"  · Book "+a.BOOK.mae:"")):null,
   stale?e("div",null,e("span",{className:"stale"},"⚠ LIVE SCORES MAY BE DELAYED")):null,
   e("div",{className:"ball"},"⚽"));
 }
@@ -506,17 +492,6 @@ function Matchups({ov}){
    const live=f.status==="LIVE",ft=f.status==="FT";
    const played=live||ft;
    const tight=Math.abs(f.spread)<=0.5,big=Math.abs(f.spread)>=2;
-   // prediction hit/miss on FT
-   let hm=null;
-   if(ft){
-    const bet=gradeBet(f);
-    if(bet&&bet.res==="PASS")hm=e("span",{className:"hitmiss",style:{background:"#1c2430",color:"#667"}},"NO EDGE vs BOOK");
-    else if(bet){
-     const cls=bet.res==="WIN"?"hit":bet.res==="LOSS"?"miss":"";
-     hm=e("span",{className:"hitmiss "+cls,style:bet.res==="PUSH"?{background:"#2a3545",color:"#aab"}:{}},
-      "BET "+short(bet.team)+" "+bet.line+" · "+bet.res+(bet.units?" "+(bet.units>0?"+":"")+bet.units+"u":""));
-    }
-   }
    const hWon=played&&f.hs>f.as, aWon=played&&f.as>f.hs;
    return e("div",{className:"gcard",key:f.n,style:{"--gc":GROUP_COLORS[f.g],animationDelay:(i*0.03)+"s"}},
     e("div",{className:"ghead"},
@@ -527,7 +502,7 @@ function Matchups({ov}){
      played?e("span",{className:"score"+(live?" goal":""),key:sc},sc):e("span",{className:"xs"},r.x.toFixed(2)))),
     e("div",{style:{marginTop:9}},
      e("div",{style:{display:"flex",justifyContent:"space-between",fontSize:10,marginBottom:4}},
-      e("span",{style:{color:"#00d4ff"}},"X-SPREAD: "+line,hm),
+      e("span",{style:{color:"#00d4ff"}},"X-SPREAD: "+line),
       e("span",{style:{color:"#566"}},"WIN / DRAW / WIN")),
      f.prob?e(React.Fragment,null,
       e("div",{style:{display:"flex",height:6,borderRadius:3,overflow:"hidden",background:"#1c2430"}},
@@ -540,10 +515,8 @@ function Matchups({ov}){
        e("span",{style:{color:"#ff6b35"}},short(f.a)+" "+f.prob.a+"%"))):null),
     f.book?(function(){
      const bs=f.book.spread, bl=bs===0?"PK":short(bs>0?f.h:f.a)+" -"+Math.abs(bs).toFixed(1);
-     const eMag=Math.abs(f.book.edge), eTeam=f.book.edge>0?f.h:f.a;
      return e("div",{className:"bookline"},
-      e("span",null,"BOOK: ",e("span",{className:"bk"},bl),f.book.total?e("span",{style:{color:"#566"}}," · O/U "+f.book.total):null),
-      eMag>=0.75?e("span",{className:"edge-badge",title:"Model projects "+short(eTeam)+" "+eMag.toFixed(1)+" goals stronger than the market line"},"◆ EDGE "+short(eTeam)+" +"+eMag.toFixed(1)):null);
+      e("span",null,e("span",{style:{color:"#566"}},"book ref: "),e("span",{className:"bk"},bl),f.book.total?e("span",{style:{color:"#566"}}," · O/U "+f.book.total):null));
     })():null,
     e("div",{style:{fontSize:9,color:"#566",marginTop:7,letterSpacing:.5}},f.loc.toUpperCase()));
   })));
@@ -557,21 +530,7 @@ function Futures(){
   e("span",{style:{minWidth:38,textAlign:"right",color:c,fontWeight:700}},v+"%"),
   e("div",{style:{width:54,height:5,background:"#1c2430",borderRadius:3,overflow:"hidden"}},
    e("div",{style:{width:Math.min(100,v)+"%",height:"100%",background:c}})));
- // market edge board: upcoming matches where X-Score most disagrees with the book line
- const edges=WCX.fixtures.filter(x=>x.status!=="FT"&&x.book&&Math.abs(x.book.edge)>=0.5)
-   .sort((a,b)=>Math.abs(b.book.edge)-Math.abs(a.book.edge)).slice(0,8);
  return e(React.Fragment,null,
-  edges.length?e("div",{style:{maxWidth:680,margin:"0 auto",padding:"16px 16px 0"}},
-   e("div",{className:"tm-sec",style:{margin:"0 0 8px"}},"◆ TOP MARKET EDGES (model vs DraftKings)"),
-   edges.map(f=>{
-    const eTeam=f.book.edge>0?f.h:f.a, eMag=Math.abs(f.book.edge);
-    const xl=f.spread===0?"PK":(f.spread>0?short(f.h):short(f.a))+" -"+Math.abs(f.spread).toFixed(1);
-    const bl=f.book.spread===0?"PK":(f.book.spread>0?short(f.h):short(f.a))+" -"+Math.abs(f.book.spread).toFixed(1);
-    return e("div",{className:"tm-fx",key:f.n},
-     e("span",null,e("span",{className:"flag"},FLAGS[f.h]||""),short(f.h)," v ",short(f.a),e("span",{className:"flag",style:{marginLeft:5}},FLAGS[f.a]||"")),
-     e("span",{style:{fontSize:11}},e("span",{style:{color:"#00d4ff"}},"X "+xl),e("span",{style:{color:"#566"}}," · BOOK "+bl),
-      e("span",{className:"edge-badge",style:{marginLeft:8}},short(eTeam)+" +"+eMag.toFixed(1))));
-   })):null,
   e("div",{style:{textAlign:"center",padding:"14px 16px 4px",color:"#8899aa",fontSize:11,letterSpacing:1}},
    "MONTE CARLO · 20,000 SIMULATIONS FROM X-SCORE · CONDITIONED ON RESULTS SO FAR"),
   e("div",{className:"twrap"},
@@ -637,39 +596,68 @@ function TeamModal({team,ov,standings,close}){
    e("p",{style:{fontSize:10,color:"#566",marginTop:12}},"X-Score is the tier-weighted mean of this team's z-scores across the weighted systems. Fixture line is from "+team+"'s perspective.")));
 }
 
+function Results({ov,acc}){
+ const fx=WCX.fixtures.map(f=>mergeLive(f,ov)).filter(f=>f.status==="FT"&&f.hs!=null).sort((a,b)=>b.n-a.n);
+ if(!fx.length)return e("div",{style:{textAlign:"center",padding:40,color:"#8899aa"}},"No completed matches yet — projection accuracy appears here once games are played.");
+ const fmtSp=v=>v==null?"–":(v>0?"+":"")+(+v).toFixed(1);
+ const models=[["X-SCORE","X","#00d4ff"],["PELE","PELE","#c0885a"],["Elo","ELO","#c0885a"],["Book","BOOK","#8899aa"]];
+ const ranked=models.filter(m=>acc[m[1]]&&acc[m[1]].mae!=null).sort((a,b)=>acc[a[1]].mae-acc[b[1]].mae);
+ return e(React.Fragment,null,
+  e("div",{style:{textAlign:"center",padding:"16px 16px 6px",color:"#8899aa",fontSize:11,letterSpacing:1}},
+   "HOW CLOSE EACH MODEL'S PROJECTED MARGIN WAS TO THE ACTUAL RESULT · ",acc.n," MATCHES · LOWER = BETTER"),
+  e("div",{className:"gwrap",style:{maxWidth:780}},ranked.map((m,i)=>e("div",{className:"gcard",key:m[1],style:{"--gc":m[2],textAlign:"center"}},
+    e("div",{style:{fontFamily:"Outfit",fontWeight:800,fontSize:15,color:m[2]}},m[0],i===0?e("span",{className:"badge",style:{marginLeft:6}},"MOST ACCURATE"):null),
+    e("div",{style:{fontSize:28,fontWeight:800,fontFamily:"Outfit",color:"#fff",marginTop:4}},acc[m[1]].mae),
+    e("div",{style:{fontSize:10,color:"#8899aa"}},"avg goal error · median "+acc[m[1]].med))),
+  ),
+  e("div",{className:"twrap"},e("table",null,
+   e("thead",null,e("tr",null,
+    e("th",{style:{textAlign:"left"}},"MATCH"),e("th",null,"ACTUAL"),
+    e("th",{style:{color:"#00d4ff"}},"X-SCORE"),e("th",{style:{color:"#c0885a"}},"PELE"),e("th",{style:{color:"#c0885a"}},"ELO"),e("th",{style:{color:"#8899aa"}},"BOOK"))),
+   e("tbody",null,fx.map(f=>{
+    const act=f.hs-f.as;
+    const cands=[["X",f.proj&&f.proj.X],["PELE",f.proj&&f.proj.PELE],["ELO",f.proj&&f.proj.ELO],["BOOK",f.book&&f.book.spread]];
+    let best=null,be=1e9;cands.forEach(([k,v])=>{if(v!=null&&Math.abs(v-act)<be){be=Math.abs(v-act);best=k;}});
+    const cell=(k,v)=>e("td",{key:k,className:best===k?"hi-g":"",style:{fontWeight:best===k?700:400}},fmtSp(v));
+    return e("tr",{key:f.n},
+     e("td",{className:"teamcell"},e("span",{className:"flag"},FLAGS[f.h]||""),short(f.h)," ",e("b",{style:{color:"#ffd600"}},f.hs+"-"+f.as)," ",short(f.a),e("span",{className:"flag"},FLAGS[f.a]||"")),
+     e("td",{style:{fontWeight:700,color:"#fff"}},fmtSp(act)),
+     cell("X",f.proj&&f.proj.X),cell("PELE",f.proj&&f.proj.PELE),cell("ELO",f.proj&&f.proj.ELO),cell("BOOK",f.book&&f.book.spread));
+   })))),
+  e("p",{style:{textAlign:"center",fontSize:10,color:"#566",padding:"6px 16px 16px",maxWidth:680,margin:"0 auto",lineHeight:1.6}},
+   "Each number is that model's projected goal margin for the home team; ACTUAL is the final margin. Green = the projection closest to the result. The X-Score is the composite of PELE + Elo; the book line is shown only as a market reference."));
+}
+
 function Methodology(){
  return e("div",{className:"meth"},
   e("h3",null,"01 — WHAT IS X-SCORE?"),
-  e("p",null,"The X-Score is a ",e("strong",{style:{color:"#fff"}},"composite power rating")," aggregating ",e("strong",{style:{color:"#fff"}},WCX.weighted.length+" independent ranking systems")," across all 48 teams at the 2026 FIFA World Cup. Instead of trusting any single model or analyst, every system is standardized and combined into one consensus number — the same meta-model methodology behind BracketX (NCAA)."),
-  e("h3",null,"02 — Z-SCORE NORMALIZATION"),
-  e("p",null,"Systems publishing ",e("strong",{style:{color:"#00d4ff"}},"raw rating values")," (PELE, Elo, FIFA points) are z-scored on those values across the 48-team field — preserving the true gaps between teams, not just their order. Ordinal media rankings are standardized from inverted rank position."),
-  e("div",{className:"formula"},"z = (value − field mean) ÷ field standard deviation"),
-  e("h3",null,"03 — TIER WEIGHTING"),
-  e("p",null,e("strong",{style:{color:"#00d4ff"}},"T1 (4×)"),": the core models — PELE and Elo, weighted heavily because they're battle-tested rating systems. ",e("strong",{style:{color:"#c0885a"}},"T2 (1×)"),": FIFA ranking points plus the full-field 1–48 media power rankings — Fox (Lalas), Bleacher Report, Yahoo, Sportsnet, The Athletic, The Ringer, and USA TODAY."),
-  e("div",{className:"formula"},"X-Score = Σ(weight × z) ÷ Σ(weight)"),
-  e("h3",null,"04 — DATA INTEGRITY"),
-  e("p",null,"All values are real, fetched from sources. Nothing is estimated. Every weighted system covers all 48 teams — no partial coverage is allowed into the composite. The X-Score is the consensus power index from kickoff; results are tracked live against it."),
-  e("h3",null,"05 — X-SPREAD & WIN PROBABILITY"),
-  e("p",null,"The X-Spread converts the X-Score differential into a projected goal margin, ",e("strong",{style:{color:"#fff"}},"calibrated against DraftKings Asian-handicap lines across 65 fixtures")," (best-fit 0.74 goals per z-unit, error ~0.47 goals), shown to the nearest half-goal. Win probability is a logistic transform of the same differential."),
-  e("div",{className:"formula"},"X-Spread = (X-Score A − X-Score B) × 0.74 goals"),
-  e("h3",null,"06 — RESULTS & ATS RECORD"),
-  e("p",null,"Scores update automatically from ESPN and standings recompute in your browser. The headline tracks the X-Spread ",e("strong",{style:{color:"#fff"}},"against the sportsbook"),": for every completed match we bet the side where our X-Spread disagrees with the book's Asian-handicap line (or back the favorite when we agree), settle it ",e("strong",{style:{color:"#fff"}},"at the book's line under Asian-handicap rules"),", and tally the record plus units at flat −110. Record is W-L (pushes excluded from the %). Lines are graded at the half-goal for now; true quarter-line (half-win/half-loss) settlement comes later. Every completed match is covered — closing lines are backfilled from ESPN for matches that finished before live capture began."),
-  e("h3",null,"07 — WHAT'S NEXT"),
-  e("p",null,"Knockout bracket simulator and futures/title probabilities ship as the group stage resolves — the full BracketX feature set, adapted for the World Cup."));
+  e("p",null,"The X-Score is a ",e("strong",{style:{color:"#fff"}},"composite power rating")," that combines the two strongest international rating models — ",e("strong",{style:{color:"#fff"}},"Nate Silver's PELE and World Football Elo")," — into one number for all 48 teams. Same meta-model idea as BracketX (NCAA): blend the best models, then measure the blend against its parts."),
+  e("h3",null,"02 — HOW IT'S BUILT"),
+  e("p",null,"Each model's rating is z-scored across the 48-team field (so the two scales are comparable), and the X-Score is their average. The other ranking systems on the site (FIFA, Fox/Lalas, Bleacher, Yahoo, Sportsnet, The Athletic, The Ringer, USA TODAY) are shown as ",e("strong",{style:{color:"#8899aa"}},"reference columns only")," — they are not part of the X-Score."),
+  e("div",{className:"formula"},"X-Score = ( z(PELE) + z(Elo) ) ÷ 2"),
+  e("h3",null,"03 — X-SPREAD & WIN PROBABILITY"),
+  e("p",null,"The X-Spread converts the X-Score difference into a projected goal margin (best-fit 0.74 goals per z-unit, calibrated against bookmaker lines), shown to the nearest half-goal. Win/Draw/Loss probabilities come from a twin-Poisson model built on that margin."),
+  e("div",{className:"formula"},"X-Spread = ( X-Score A − X-Score B ) × 0.74 goals"),
+  e("h3",null,"04 — MEASURING THE MODEL (RESULTS tab)"),
+  e("p",null,"For every completed match we show the projected margin from the ",e("strong",{style:{color:"#00d4ff"}},"X-Score"),", from ",e("strong",{style:{color:"#fff"}},"PELE and Elo individually"),", and the ",e("strong",{style:{color:"#fff"}},"sportsbook line")," — next to the ",e("strong",{style:{color:"#fff"}},"actual result"),". We track each one's average error (MAE) to answer the real question: does the composite beat its component models? Exactly how BracketX compared X-Score to KenPom and BartTorvik. Scores update automatically from ESPN."),
+  e("h3",null,"05 — DATA INTEGRITY"),
+  e("p",null,"All values are real, fetched from source. Nothing is estimated. PELE and Elo both cover all 48 teams. Small early sample — the accuracy numbers will stabilize as the tournament goes on."),
+  e("h3",null,"06 — WHAT'S NEXT"),
+  e("p",null,"Knockout bracket and title probabilities as the group stage resolves."));
 }
 
 function App(){
- const tabs=[["RANKINGS","RANKINGS"],["STANDINGS","STANDINGS"],["GROUPS","GROUPS"],["MATCHUPS","MATCHUPS"],["FUTURES","FUTURES"],["METHODOLOGY","ABOUT"]];
- const SLUG={RANKINGS:"rankings",STANDINGS:"standings",GROUPS:"groups",MATCHUPS:"matchups",FUTURES:"futures",METHODOLOGY:"about"};
+ const tabs=[["RANKINGS","RANKINGS"],["STANDINGS","STANDINGS"],["GROUPS","GROUPS"],["MATCHUPS","MATCHUPS"],["RESULTS","RESULTS"],["FUTURES","FUTURES"],["METHODOLOGY","ABOUT"]];
+ const SLUG={RANKINGS:"rankings",STANDINGS:"standings",GROUPS:"groups",MATCHUPS:"matchups",RESULTS:"results",FUTURES:"futures",METHODOLOGY:"about"};
  const fromHash=()=>{const s=(location.hash||"").replace("#","").toLowerCase();return Object.keys(SLUG).find(k=>SLUG[k]===s)||"RANKINGS";};
  const [tab,setTab]=React.useState(fromHash);
  React.useEffect(()=>{const on=()=>setTab(fromHash());window.addEventListener("hashchange",on);return ()=>window.removeEventListener("hashchange",on);},[]);
  const go=k=>{setTab(k);if(history.replaceState)history.replaceState(null,"","#"+SLUG[k]);else location.hash=SLUG[k];};
  const {ov,stale}=useLive();
- const {standings,bets}=React.useMemo(()=>computeLive(ov),[ov]);
+ const {standings,acc}=React.useMemo(()=>computeLive(ov),[ov]);
  const [team,setTeam]=React.useState(null);
  return e(React.Fragment,null,
-  e(Header,{bets,stale}),
+  e(Header,{acc,stale}),
   e(Ticker,{ov}),
   e(NextMatch,{ov}),
   e("div",{className:"tabwrap"},e("div",{className:"tabs"},tabs.map(([k,lbl])=>e("button",{key:k,className:"tab"+(tab===k?" on":""),onClick:()=>go(k)},lbl)))),
@@ -677,6 +665,7 @@ function App(){
   tab==="STANDINGS"&&e(Standings,{standings,onTeam:setTeam}),
   tab==="GROUPS"&&e(Groups),
   tab==="MATCHUPS"&&e(Matchups,{ov}),
+  tab==="RESULTS"&&e(Results,{ov,acc}),
   tab==="FUTURES"&&e(Futures),
   tab==="METHODOLOGY"&&e(Methodology),
   team&&e(TeamModal,{team,ov,standings,close:()=>setTeam(null)}),
