@@ -21,6 +21,7 @@ from name_map import normalize
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
 FIXTURE_FEED = "https://fixturedownload.com/feed/json/fifa-world-cup-2026"
 ESPN = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
+SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary"
 # tournament dates to sweep ESPN for live/recent (UTC yyyymmdd). Group stage window.
 ESPN_DATES = [f"202606{d:02d}" for d in range(11, 28)] + [f"202607{d:02d}" for d in range(1, 20)]
 
@@ -33,6 +34,22 @@ def get(url):
 
 def pair_key(a, b):
     return tuple(sorted([a, b]))
+
+
+def home_line(odds_obj):
+    """Closing-preferred home Asian-handicap line from an ESPN odds object."""
+    ps = (odds_obj.get("pointSpread") or {}).get("home") or {}
+    return next(((ps.get(p) or {}).get("line") for p in ("close", "open", "current")
+                 if (ps.get(p) or {}).get("line") not in (None, "")), None)
+
+
+def summary_odds(event_id):
+    """Past games drop inline odds; the per-event summary retains the closing line."""
+    try:
+        pc = get(f"{SUMMARY}?event={event_id}").get("pickcenter") or []
+        return pc[0] if pc else None
+    except Exception:
+        return None
 
 
 def main():
@@ -55,6 +72,14 @@ def main():
     live_matches = []
     espn_ft = {}  # pair_key -> (home_norm, hs, as) for FT games ESPN knows
     odds_out = {}  # match number -> {sup, total} (DraftKings line via ESPN)
+    # already-captured lines — so we only hit the summary endpoint for matches still missing one
+    have_odds = set()
+    _op = os.path.join(SRC, "odds.json")
+    if os.path.exists(_op):
+        try:
+            have_odds = {int(k) for k in json.load(open(_op))}
+        except Exception:
+            have_odds = set()
     for date in ESPN_DATES:
         try:
             d = get(f"{ESPN}?dates={date}")
@@ -92,20 +117,22 @@ def main():
                 })
             elif state == "post" and hs is not None:
                 espn_ft[pk] = (h, hs, as_)
-            # bookmaker line (DraftKings via ESPN) — store home goal-supremacy aligned to feed home
-            o = (comp.get("odds") or [None])[0]
-            if o:
-                ps = (o.get("pointSpread") or {}).get("home") or {}
-                line = next((( ps.get(ph) or {}).get("line") for ph in ("open", "close", "current")
-                             if (ps.get(ph) or {}).get("line") not in (None, "")), None)
-                if line is not None:
-                    try:
-                        sup = -float(str(line).replace("+", ""))  # -handicap = home supremacy (ESPN home)
-                        if normalize(m["HomeTeam"]) != h:
-                            sup = -sup  # align to feed's home team
-                        odds_out[m["MatchNumber"]] = {"sup": sup, "total": o.get("overUnder")}
-                    except ValueError:
-                        pass
+            # bookmaker line (DraftKings via ESPN) — home goal-supremacy aligned to feed home.
+            # inline odds for upcoming/live; summary endpoint backfills the closing line for
+            # already-finished matches (whose inline odds ESPN has dropped).
+            n = m["MatchNumber"]
+            src = (comp.get("odds") or [None])[0]
+            if (not src or home_line(src) is None) and n not in have_odds and ev.get("id"):
+                src = summary_odds(ev["id"]) or src
+            line = home_line(src) if src else None
+            if line is not None:
+                try:
+                    sup = -float(str(line).replace("+", ""))  # -handicap = home supremacy (ESPN home)
+                    if normalize(m["HomeTeam"]) != h:
+                        sup = -sup  # align to feed's home team
+                    odds_out[n] = {"sup": sup, "total": src.get("overUnder")}
+                except ValueError:
+                    pass
 
     # 3. patch fixtures: if ESPN says FT but feed hasn't caught up, fill the score
     patched = 0

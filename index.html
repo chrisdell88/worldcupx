@@ -271,12 +271,15 @@ function computeLive(ov){
   total++;
   if(f.hs===f.as)correct+=Math.abs(f.spread)<0.75?1:0;
   else correct+=((f.spread>0)===(f.hs>f.as))?1:0;
-  // grade our X-Spread as a bet vs the book's Asian line (rounded to 0.5 for now)
+  // grade ONLY where our X-Spread disagrees with the book's Asian line — bet the side
+  // our number favors (home OR away). If we agree with the book, there's no edge → no bet.
   if(f.book&&f.book.spread!=null){
    const Sb=Math.round(f.book.spread*2)/2, Sx=f.spread;
-   const betHome=Sx>Sb?true:Sx<Sb?false:(Sb>0?true:Sb<0?false:(xrm[f.h]<=xrm[f.a]));
-   const H=betHome?-Sb:Sb, adj=(betHome?(f.hs-f.as):(f.as-f.hs))+H;
-   if(adj>0){bw++;bu+=0.9091;}else if(adj<0){bl++;bu-=1;}else bp++;
+   if(Sx!==Sb){
+    const betHome=Sx>Sb;
+    const H=betHome?-Sb:Sb, adj=(betHome?(f.hs-f.as):(f.as-f.hs))+H;
+    if(adj>0){bw++;bu+=0.9091;}else if(adj<0){bl++;bu-=1;}else bp++;
+   }
   }
  });
  // FIFA ordering: overall pts->GD->GF, then head-to-head among teams still level,
@@ -308,11 +311,12 @@ function computeLive(ov){
  const bets={w:bw,l:bl,p:bp,units:+bu.toFixed(2),roi:(bw+bl)?Math.round(bu/(bw+bl)*100):0};
  return {standings:out,accuracy:{correct,total},bets};
 }
-// grade one fixture's X-Spread bet vs the book line — returns null if no line to grade
-function gradeBet(f,xrm){
+// grade one fixture's X-Spread bet vs the book line. null = no line; {res:"PASS"} = no edge (we agree with book)
+function gradeBet(f){
  if(!f.book||f.book.spread==null||f.hs==null||f.as==null)return null;
  const Sb=Math.round(f.book.spread*2)/2, Sx=f.spread;
- const betHome=Sx>Sb?true:Sx<Sb?false:(Sb>0?true:Sb<0?false:((xrm[f.h]||99)<=(xrm[f.a]||99)));
+ if(Sx===Sb)return {res:"PASS"};               // no disagreement with the book → no bet
+ const betHome=Sx>Sb;                            // our number favors home (or away)
  const team=betHome?f.h:f.a, line=betHome?-Sb:Sb;
  const adj=(betHome?(f.hs-f.as):(f.as-f.hs))+line;
  const res=adj>0?"WIN":adj<0?"LOSS":"PUSH", units=adj>0?0.91:adj<0?-1:0;
@@ -505,8 +509,9 @@ function Matchups({ov}){
    // prediction hit/miss on FT
    let hm=null;
    if(ft){
-    const bet=gradeBet(f,xrm);
-    if(bet){
+    const bet=gradeBet(f);
+    if(bet&&bet.res==="PASS")hm=e("span",{className:"hitmiss",style:{background:"#1c2430",color:"#667"}},"NO EDGE vs BOOK");
+    else if(bet){
      const cls=bet.res==="WIN"?"hit":bet.res==="LOSS"?"miss":"";
      hm=e("span",{className:"hitmiss "+cls,style:bet.res==="PUSH"?{background:"#2a3545",color:"#aab"}:{}},
       "BET "+short(bet.team)+" "+bet.line+" · "+bet.res+(bet.units?" "+(bet.units>0?"+":"")+bet.units+"u":""));
@@ -648,7 +653,7 @@ function Methodology(){
   e("p",null,"The X-Spread converts the X-Score differential into a projected goal margin, ",e("strong",{style:{color:"#fff"}},"calibrated against DraftKings Asian-handicap lines across 65 fixtures")," (best-fit 0.74 goals per z-unit, error ~0.47 goals), shown to the nearest half-goal. Win probability is a logistic transform of the same differential."),
   e("div",{className:"formula"},"X-Spread = (X-Score A − X-Score B) × 0.74 goals"),
   e("h3",null,"06 — RESULTS & ATS RECORD"),
-  e("p",null,"Scores update automatically from ESPN and standings recompute in your browser. The headline tracks the X-Spread ",e("strong",{style:{color:"#fff"}},"against the sportsbook"),": for every completed match we bet the side where our X-Spread disagrees with the book's Asian-handicap line (or back the favorite when we agree), settle it ",e("strong",{style:{color:"#fff"}},"at the book's line under Asian-handicap rules"),", and tally the record plus units at flat −110. Record is W-L (pushes excluded from the %). Lines are graded at the half-goal for now; true quarter-line (half-win/half-loss) settlement comes later. Note: book lines have only been captured since June 14, so the record covers matches from then on."),
+  e("p",null,"Scores update automatically from ESPN and standings recompute in your browser. The headline tracks the X-Spread ",e("strong",{style:{color:"#fff"}},"against the sportsbook"),": for every completed match we bet the side where our X-Spread disagrees with the book's Asian-handicap line (or back the favorite when we agree), settle it ",e("strong",{style:{color:"#fff"}},"at the book's line under Asian-handicap rules"),", and tally the record plus units at flat −110. Record is W-L (pushes excluded from the %). Lines are graded at the half-goal for now; true quarter-line (half-win/half-loss) settlement comes later. Every completed match is covered — closing lines are backfilled from ESPN for matches that finished before live capture began."),
   e("h3",null,"07 — WHAT'S NEXT"),
   e("p",null,"Knockout bracket simulator and futures/title probabilities ship as the group stage resolves — the full BracketX feature set, adapted for the World Cup."));
 }
