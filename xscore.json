@@ -2397,10 +2397,10 @@
     "d": 24,
     "a": 19
    },
-   "hs": null,
-   "as": null,
-   "status": "",
-   "clock": "",
+   "hs": 0,
+   "as": 0,
+   "status": "LIVE",
+   "clock": "21'",
    "book": {
     "spread": 1.5,
     "total": 2.5
