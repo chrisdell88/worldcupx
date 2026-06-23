@@ -1,5 +1,5 @@
 {
- "computed": "2026-06-22",
+ "computed": "2026-06-23",
  "weighted": [
   "PELE",
   "ELO",
@@ -2619,10 +2619,10 @@
     "d": 25,
     "a": 53
    },
-   "hs": 0,
-   "as": 0,
-   "status": "LIVE",
-   "clock": "34'",
+   "hs": 1,
+   "as": 2,
+   "status": "FT",
+   "clock": "",
    "book": {
     "spread": -1.5,
     "total": 2.5
@@ -2698,7 +2698,7 @@
    "status": "",
    "clock": "",
    "book": {
-    "spread": 1.5,
+    "spread": 2.5,
     "total": 2.5
    }
   },
@@ -2911,9 +2911,9 @@
     "USAT": 2.06
    },
    "prob": {
-    "h": 74,
-    "d": 18,
-    "a": 8
+    "h": 71,
+    "d": 17,
+    "a": 13
    },
    "hs": null,
    "as": null,
@@ -2921,7 +2921,7 @@
    "clock": "",
    "book": {
     "spread": 2.5,
-    "total": 2.5
+    "total": 3.5
    }
   },
   {
@@ -3281,9 +3281,9 @@
     "USAT": 1.26
    },
    "prob": {
-    "h": 70,
-    "d": 20,
-    "a": 10
+    "h": 67,
+    "d": 18,
+    "a": 15
    },
    "hs": null,
    "as": null,
@@ -3291,7 +3291,7 @@
    "clock": "",
    "book": {
     "spread": 1.5,
-    "total": 2.5
+    "total": 3.5
    }
   },
   {
@@ -3429,9 +3429,9 @@
     "USAT": -1.66
    },
    "prob": {
-    "h": 7,
-    "d": 18,
-    "a": 75
+    "h": 12,
+    "d": 16,
+    "a": 71
    },
    "hs": null,
    "as": null,
@@ -3439,7 +3439,7 @@
    "clock": "",
    "book": {
     "spread": -1.5,
-    "total": 2.5
+    "total": 3.5
    }
   },
   {
@@ -3466,9 +3466,9 @@
     "USAT": -2.0
    },
    "prob": {
-    "h": 7,
-    "d": 18,
-    "a": 75
+    "h": 12,
+    "d": 16,
+    "a": 72
    },
    "hs": null,
    "as": null,
@@ -3476,7 +3476,7 @@
    "clock": "",
    "book": {
     "spread": -1.5,
-    "total": 2.5
+    "total": 3.5
    }
   },
   {
@@ -4104,24 +4104,24 @@
     "gd": 0
    },
    {
-    "team": "Jordan",
-    "p": 1,
-    "w": 0,
+    "team": "Algeria",
+    "p": 2,
+    "w": 1,
     "d": 0,
     "l": 1,
-    "gf": 1,
-    "ga": 3,
-    "pts": 0,
+    "gf": 2,
+    "ga": 4,
+    "pts": 3,
     "gd": -2
    },
    {
-    "team": "Algeria",
-    "p": 1,
+    "team": "Jordan",
+    "p": 2,
     "w": 0,
     "d": 0,
-    "l": 1,
-    "gf": 0,
-    "ga": 3,
+    "l": 2,
+    "gf": 2,
+    "ga": 5,
     "pts": 0,
     "gd": -3
    }
@@ -4222,52 +4222,52 @@
   ]
  },
  "accuracy": {
-  "correct": 28,
-  "total": 43
+  "correct": 29,
+  "total": 44
  },
  "futures": {
   "Czechia": {
    "grp": 0.0,
-   "ko": 25.3,
+   "ko": 23.8,
    "cup": 0.0
   },
   "Mexico": {
-   "grp": 92.1,
+   "grp": 92.3,
    "ko": 100.0,
-   "cup": 0.5
+   "cup": 0.4
   },
   "South Africa": {
    "grp": 0.0,
-   "ko": 19.4,
+   "ko": 18.8,
    "cup": 0.0
   },
   "South Korea": {
-   "grp": 7.9,
-   "ko": 92.7,
+   "grp": 7.7,
+   "ko": 93.3,
    "cup": 0.0
   },
   "Bosnia and Herzegovina": {
    "grp": 0.0,
-   "ko": 52.5,
+   "ko": 51.9,
    "cup": 0.0
   },
   "Canada": {
-   "grp": 52.3,
+   "grp": 52.2,
    "ko": 100.0,
    "cup": 0.0
   },
   "Qatar": {
    "grp": 0.0,
-   "ko": 23.0,
+   "ko": 23.1,
    "cup": 0.0
   },
   "Switzerland": {
-   "grp": 47.7,
+   "grp": 47.8,
    "ko": 100.0,
-   "cup": 0.4
+   "cup": 0.5
   },
   "Brazil": {
-   "grp": 64.5,
+   "grp": 63.6,
    "ko": 100.0,
    "cup": 6.1
   },
@@ -4277,13 +4277,13 @@
    "cup": 0.0
   },
   "Morocco": {
-   "grp": 31.9,
+   "grp": 32.4,
    "ko": 100.0,
-   "cup": 0.6
+   "cup": 0.7
   },
   "Scotland": {
-   "grp": 3.5,
-   "ko": 81.8,
+   "grp": 3.9,
+   "ko": 81.7,
    "cup": 0.0
   },
   "Australia": {
@@ -4292,53 +4292,53 @@
    "cup": 0.0
   },
   "Paraguay": {
-   "grp": 0.3,
-   "ko": 78.9,
-   "cup": 0.1
+   "grp": 0.2,
+   "ko": 79.1,
+   "cup": 0.0
   },
   "Turkey": {
    "grp": 0.0,
    "ko": 19.4,
-   "cup": 0.1
+   "cup": 0.0
   },
   "United States": {
-   "grp": 98.8,
+   "grp": 98.9,
    "ko": 100.0,
    "cup": 0.1
   },
   "Curacao": {
    "grp": 0.0,
-   "ko": 14.2,
+   "ko": 14.0,
    "cup": 0.0
   },
   "Ecuador": {
    "grp": 0.0,
-   "ko": 30.9,
+   "ko": 30.4,
    "cup": 0.3
   },
   "Germany": {
-   "grp": 99.7,
+   "grp": 99.8,
    "ko": 100.0,
-   "cup": 4.1
+   "cup": 3.9
   },
   "Ivory Coast": {
-   "grp": 0.3,
-   "ko": 94.4,
+   "grp": 0.2,
+   "ko": 94.2,
    "cup": 0.0
   },
   "Japan": {
-   "grp": 30.8,
+   "grp": 30.3,
    "ko": 100.0,
    "cup": 0.4
   },
   "Netherlands": {
-   "grp": 62.4,
+   "grp": 62.8,
    "ko": 100.0,
-   "cup": 3.0
+   "cup": 3.1
   },
   "Sweden": {
-   "grp": 6.8,
-   "ko": 93.9,
+   "grp": 6.9,
+   "ko": 93.7,
    "cup": 0.0
   },
   "Tunisia": {
@@ -4347,74 +4347,74 @@
    "cup": 0.0
   },
   "Belgium": {
-   "grp": 21.6,
-   "ko": 92.3,
+   "grp": 21.2,
+   "ko": 92.1,
    "cup": 1.2
   },
   "Egypt": {
-   "grp": 56.2,
+   "grp": 56.4,
    "ko": 100.0,
    "cup": 0.0
   },
   "Iran": {
-   "grp": 22.2,
-   "ko": 66.6,
+   "grp": 22.4,
+   "ko": 65.3,
    "cup": 0.0
   },
   "New Zealand": {
    "grp": 0.0,
-   "ko": 7.9,
+   "ko": 8.0,
    "cup": 0.0
   },
   "Cape Verde": {
-   "grp": 2.7,
-   "ko": 60.6,
+   "grp": 2.8,
+   "ko": 60.7,
    "cup": 0.0
   },
   "Saudi Arabia": {
    "grp": 0.0,
-   "ko": 40.5,
+   "ko": 40.2,
    "cup": 0.0
   },
   "Spain": {
-   "grp": 81.8,
+   "grp": 81.7,
    "ko": 100.0,
-   "cup": 28.3
+   "cup": 28.2
   },
   "Uruguay": {
    "grp": 15.5,
-   "ko": 46.6,
+   "ko": 45.3,
    "cup": 0.4
   },
   "France": {
    "grp": 77.7,
    "ko": 100.0,
-   "cup": 14.5
+   "cup": 14.3
   },
   "Iraq": {
    "grp": 0.0,
-   "ko": 4.5,
+   "ko": 4.0,
    "cup": 0.0
   },
   "Norway": {
    "grp": 22.3,
    "ko": 100.0,
-   "cup": 1.0
+   "cup": 1.2
   },
   "Senegal": {
    "grp": 0.0,
-   "ko": 63.8,
+   "ko": 63.3,
    "cup": 0.3
   },
   "Algeria": {
    "grp": 0.0,
-   "ko": 54.2,
+   "ko": 78.0,
    "cup": 0.0
   },
   "Argentina": {
-   "grp": 99.9,
+   "grp": 100.0,
    "ko": 100.0,
-   "cup": 19.5
+   "cup": 19.6
   },
   "Austria": {
    "grp": 0.1,
@@ -4423,47 +4423,47 @@
   },
   "Jordan": {
    "grp": 0.0,
-   "ko": 15.5,
+   "ko": 1.2,
    "cup": 0.0
   },
   "Colombia": {
-   "grp": 60.9,
-   "ko": 99.0,
-   "cup": 2.8
+   "grp": 61.3,
+   "ko": 99.1,
+   "cup": 2.9
   },
   "DR Congo": {
-   "grp": 4.3,
-   "ko": 49.4,
+   "grp": 4.0,
+   "ko": 48.3,
    "cup": 0.0
   },
   "Portugal": {
-   "grp": 34.1,
-   "ko": 90.3,
-   "cup": 4.7
+   "grp": 33.9,
+   "ko": 90.4,
+   "cup": 4.8
   },
   "Uzbekistan": {
-   "grp": 0.8,
-   "ko": 30.6,
+   "grp": 0.9,
+   "ko": 30.7,
    "cup": 0.0
   },
   "Croatia": {
-   "grp": 3.4,
-   "ko": 83.1,
-   "cup": 0.8
+   "grp": 3.7,
+   "ko": 83.2,
+   "cup": 0.9
   },
   "England": {
-   "grp": 93.3,
+   "grp": 93.2,
    "ko": 99.9,
-   "cup": 10.5
+   "cup": 10.3
   },
   "Ghana": {
-   "grp": 2.9,
-   "ko": 71.6,
+   "grp": 2.8,
+   "ko": 70.7,
    "cup": 0.0
   },
   "Panama": {
    "grp": 0.4,
-   "ko": 16.5,
+   "ko": 15.5,
    "cup": 0.0
   }
  }
